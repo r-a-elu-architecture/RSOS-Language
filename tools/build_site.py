@@ -15,9 +15,9 @@ CUE = "https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/"
 SITE = "https://r-a-elu-architecture.github.io/RSOS-Language/"
 
 PAGES = [  # file, nav label, <title>, description
-    ("index", "Home", "RSOS Language: an executable spatial-symbolic language for humans and AI",
-     "A programming language whose programs are spatial compositions. On real AI agents it kept every copy of the "
-     "shared state true and healed every drift without a model call."),
+    ("index", "Home", "RSOS Language: an executable language for human–AI and AI–AI communication",
+     "An executable spatial-symbolic language for human–AI and AI–AI communication, with a cross-domain engine. On "
+     "real AI agents it kept every copy of the shared state true and healed every drift without a model call."),
     ("results", "Results", "Results: every pre-registered test, failures included | RSOS Language",
      "A1, A2, A3 and A3b on real LLM agents, HT1 on a person, and the full failure map."),
     ("try", "Try it", "Try it: editor and keyboard | RSOS Language",
