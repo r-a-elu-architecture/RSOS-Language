@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "RSOS Language: a spatial-symbolic programming language for humans and AI"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: "R. A. Elu"
+    alias: "r-a-elu-architecture"
+version: "0.2.0.dev1"
+license: Apache-2.0
+repository-code: "https://github.com/r-a-elu-architecture/RSOS-Language"
+keywords: [visual programming, human-AI interaction, mental models, agent systems, spatial language]
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24304404"
+    description: "Whitepaper v1"
+  - type: doi
+    value: "10.5281/zenodo.24304403"
+    description: "Whitepaper, all versions (concept DOI)"
+  - type: doi
+    value: "10.5281/zenodo.24301903"
+    description: "RSOS Multimodal Cue Framework v2.1.0"
