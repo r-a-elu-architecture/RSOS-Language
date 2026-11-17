@@ -13,6 +13,8 @@ program runs in two places:
 **[Open the editor →](docs/editor.html)** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
+**First real-host test (A1, 17 Nov 2026, pre-registered):** three LLM agents (planner, worker, checker) on 8 tasks. The RSOS palace protocol used about 7× fewer channel tokens than JSON with full state (2,563 vs 17,311), finished 7/8 tasks exactly correct (JSON 5/8), and caught and healed 24/24 injected drifts with 0 model calls (38 tokens per repair). Summaries + retrieval: 0/8 correct, 24/24 drifts kept. One model family, 8 tasks. Report: [`experiments/A1_REPORT.md`](experiments/A1_REPORT.md).
+
 ## What makes it different
 
 - **Where you place an operator decides what it does.** The same spell corrector placed at a module's head, heart,
