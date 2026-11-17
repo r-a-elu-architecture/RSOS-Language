@@ -5,6 +5,7 @@ type: software
 authors:
   - name: "R. A. Elu"
     alias: "r-a-elu-architecture"
+    orcid: "https://orcid.org/0009-0000-1456-2467"
 version: "0.2.0"
 date-released: "2026-11-17"
 license: Apache-2.0
