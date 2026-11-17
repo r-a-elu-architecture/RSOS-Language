@@ -28,7 +28,10 @@
   .up { color:var(--ok); } .down { color:var(--bad); }
   button { font:inherit; border:1px solid #c9c4b6; background:#fff; border-radius:8px; padding:5px 10px; cursor:pointer; }
   footer { color:var(--muted); font-size:12.5px; padding:0 24px 24px; max-width:1000px; }
-#scene text,#scene .placed{pointer-events:none}
+#scene text,#scene .ghost{pointer-events:none}
+#scene .placed{cursor:grab;touch-action:none}
+.chip{touch-action:none}
+#scene .zone.near-drop{fill:#ffd99a;stroke-width:2.5}
 #scene .zone{cursor:pointer}
 #task{max-width:100%;width:100%}
 .back{font-size:14px;color:#1d7f55;text-decoration:none}
@@ -54,7 +57,7 @@
       <button id="reset">return to baseline</button>
     </div>
     <svg id="scene" viewBox="0 0 1100 440" role="img" aria-label="The workflow as a painting"></svg>
-    <p class="hint" id="hint">Choose a guest above.</p>
+    <p class="hint" id="hint">Drag a guest onto its host: it snaps to the head, heart, brain or near. Or choose it and click a dashed circle. Drag a placed guest off its host to remove it.</p>
   </section>
   <aside class="card">
     <h2 style="font-size:16px;margin:0 0 6px">The program</h2>
@@ -127,7 +130,7 @@ function draw() {
       const zones = {head:[x, y-r-14], heart:[x, y+8], brain:[x, y-12], near:[x+r+22, y]};
       for (const [place,[zx,zy]] of Object.entries(zones)) {
         if (!CHOICES[selected].includes(place)) continue;
-        const z = el("circle", {cx:zx, cy:zy, r:11, fill:"#fff7e6", stroke:"#c8781e", "stroke-dasharray":"3 2", class:"zone",
+        const z = el("circle", {cx:zx, cy:zy, r:11, fill:"#fff7e6", stroke:"#c8781e", "stroke-dasharray":"3 2", class:"zone", "data-place":place,
                                 tabindex:0, role:"button", "aria-label":`${selected} at the ${place} of ${n}`}, s);
         const put = () => { state[selected] = place; update(); };
         z.addEventListener("click", put); z.addEventListener("keydown", e => { if (e.key === "Enter") put(); });
@@ -141,10 +144,11 @@ function draw() {
     placed.forEach((gn, j) => {
       const p = state[gn];
       const [ox,oy] = {head:[0,-r-14], heart:[0,8], brain:[0,-12], near:[r+22,0]}[p];
-      el("rect", {x:x+ox-6+j*13, y:y+oy-6, width:12, height:12, fill: p==="brain" ? "#7b5ea7" : "#c8781e", stroke:"#333", class:"placed"}, s)
+      el("rect", {x:x+ox-6+j*13, y:y+oy-6, width:12, height:12, fill: p==="brain" ? "#7b5ea7" : "#c8781e", stroke:"#333", class:"placed", "data-guest":gn}, s)
         .appendChild(document.createElementNS(svgNS,"title")).textContent = `${gn} at ${p}`;
     });
   }
+  s.querySelectorAll("circle.zone").forEach(z => s.appendChild(z));   // drop zones above placed guests, so they stay clickable
   el("text", {x:16, y:28, "font-size":14, "font-weight":"bold"}, s, "Sky = supervision · ground = input and output · left to right = the flow");
 }
 function metrics() {
@@ -170,6 +174,55 @@ document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () =
 document.getElementById("heal").addEventListener("click", () => { state.heal = state.heal ? null : "on"; update(); });
 document.getElementById("reset").addEventListener("click", () => { for (const k in state) state[k] = null; selected = null;
   document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed","false")); update(); });
+// ---- drag and drop: a guest snaps to the nearest measured place (head, heart, brain, near) ----
+const scene = document.getElementById("scene");
+let drag = null, suppressClick = false;
+function svgPoint(e) { const p = scene.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+  return p.matrixTransform(scene.getScreenCTM().inverse()); }
+function nearestZone(pt) {
+  let best = null, bd = 1e9;
+  scene.querySelectorAll("circle.zone").forEach(z => {
+    const d = Math.hypot(pt.x - +z.getAttribute("cx"), pt.y - +z.getAttribute("cy")); if (d < bd) { bd = d; best = z; } });
+  return [best, bd];
+}
+function beginDrag(g, e) {
+  selected = g;
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.guest === g ? "true" : "false"));
+  draw();
+  drag = {g, ghost: el("rect", {width:14, height:14, fill:"#c8781e", stroke:"#333", opacity:.85, class:"ghost"}, scene)};
+  moveDrag(e);
+}
+function moveDrag(e) {
+  const pt = svgPoint(e); drag.ghost.setAttribute("x", pt.x - 7); drag.ghost.setAttribute("y", pt.y - 7);
+  const [z, d] = nearestZone(pt);
+  scene.querySelectorAll("circle.zone").forEach(c => c.classList.toggle("near-drop", c === z && d <= 40));
+}
+function endDrag(e) {
+  const pt = svgPoint(e), [z, d] = nearestZone(pt), g = drag.g;
+  const [hx, hy] = pos(TARGET[g]);
+  drag.ghost.remove(); drag = null;
+  if (z && d <= 40) state[g] = z.dataset.place;                       // snapped to a measured place
+  else if (Math.hypot(pt.x - hx, pt.y - hy) > 70) state[g] = null;    // dropped away from its host: removed
+  update();
+}
+scene.addEventListener("pointerdown", e => {
+  const t = e.target.closest && e.target.closest(".placed, .zone"); if (!t) return;
+  const g = t.classList.contains("placed") ? t.dataset.guest
+          : (selected && state[selected] === t.dataset.place ? selected : null);   // grab a placed guest by its zone
+  if (!g) return;                                                                  // empty zone: a click places
+  e.preventDefault(); beginDrag(g, e);
+});
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("pointerdown", e => {
+  const x0 = e.clientX, y0 = e.clientY, g = b.dataset.guest;
+  const mv = ev => { if (!drag && Math.hypot(ev.clientX - x0, ev.clientY - y0) > 6) { suppressClick = true; beginDrag(g, ev); } };
+  const up = () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up);
+    setTimeout(() => { suppressClick = false; }, 0); };   // only the click that ends this drag is swallowed
+  window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
+}));
+window.addEventListener("pointermove", e => { if (drag) moveDrag(e); });
+window.addEventListener("pointerup", e => { if (drag) endDrag(e); });
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", e => {
+  if (suppressClick) { suppressClick = false; e.stopImmediatePropagation(); } }, true));
 // a program can be shared as a link: #spell_corrector=brain&cache=heart&grey=on
 for (const part of location.hash.slice(1).split("&")) {
   const [k, v] = part.split("="); if (k in state && v && (CHOICES[k] || []).includes(v)) state[k] = v;
