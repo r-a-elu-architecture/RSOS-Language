@@ -16,6 +16,12 @@ program runs in two places:
 **[Open the editor →](docs/editor.html)** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
+**Results (17 Nov 2026, pre-registered, real LLM agents; whitepaper v2: [doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392)):**
+a protocol designed by the RSOS White Dragon engine (A3b) used 0.55× the BPE channel tokens of a Slipstream-style
+anchor protocol while keeping every copy of the shared state true in 16/16 tasks (anchor protocol 0/16) and healing
+every injected drift without a model call. The White Dragon also redesigned a weak agent system, cutting errors by
+63% (A2). Of 27 predictions on real hosts, 18 passed and 9 failed; all are reported.
+
 **First real-host test (A1, 17 Nov 2026, pre-registered):** three LLM agents (planner, worker, checker) on 8 tasks. The RSOS palace protocol used about 7× fewer channel tokens than JSON with full state (2,563 vs 17,311), finished 7/8 tasks exactly correct (JSON 5/8), and caught and healed 24/24 injected drifts with 0 model calls (38 tokens per repair). Summaries + retrieval: 0/8 correct, 24/24 drifts kept. One model family, 8 tasks. Report: [`experiments/A1_REPORT.md`](experiments/A1_REPORT.md).
 
 ## Purpose

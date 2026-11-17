@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 (17 November 2026)
+
+- Whitepaper v2: doi:10.5281/zenodo.24320392.
+- A2 (knowing White Dragon, errors −63%), A3 (head to head vs compact protocols), A3b (hologram palace: 0.55× BPE
+  of the anchor protocol, every copy true, 0-call heal), HT1 (failed), keyboard layer with functional check (12/12).
+- Research programme (24 domains); seed purpose statement.
+
 ## 0.2.0 (17 November 2026)
 
 First public release.
