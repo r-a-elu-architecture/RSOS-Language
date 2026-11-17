@@ -1,7 +1,9 @@
 # Responsible use
 
-RSOS is developed for beneficial purposes: to heal, transform, signal, evolve and develop people, teams,
-organisations and systems, and to improve communication between humans and AI.
+RSOS grew from one seed: healing, transforming, signalling and evolving. It integrates the whole of human
+experience, including its shadow, so that what is integrated can be transformed rather than denied. Because its seed
+is healing, RSOS is used with consent and for the good of the person or system it works with, never to harm or
+coerce.
 
 The design carries this purpose. Consent and harm checks are compiled into the language (compiler errors
 E018–E021); operations on people require their consent; the White Dragon admits only changes that are measurable,

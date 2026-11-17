@@ -20,8 +20,10 @@ brain or beside a module, and see the measured effect.
 
 ## Purpose
 
-RSOS is developed for beneficial purposes: to heal, transform, signal, evolve and develop people, teams,
-organisations and systems, and to improve communication between humans and AI. See [`RESPONSIBLE_USE.md`](RESPONSIBLE_USE.md),
+RSOS grew from one seed: healing, transforming, signalling and evolving. It integrates the whole of human
+experience, including its shadow, so that what is integrated can be transformed rather than denied. Because its seed
+is healing, RSOS is used with consent and for the good of the person or system it works with, never to harm or
+coerce. See [`RESPONSIBLE_USE.md`](RESPONSIBLE_USE.md),
 [`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`TRADEMARKS.md`](TRADEMARKS.md).
 
 ## What makes it different

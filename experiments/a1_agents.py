@@ -321,6 +321,104 @@ def dragon_heal(sender_text, receiver_text):
     return "\n".join(out), req + "\n" + "\n".join(reply), decisions
 
 
+# ---------------------------------------------------------------- A3 baselines: D (Slipstream-style), E (ACCP-style)
+# Re-implementations from the published descriptions (see PREREGISTRATION_A3.md); not the original systems.
+
+ALL_FIELDS = FIELDS + ["max_conn", "tier"]
+UCR_KEYS = [f"{s}.{f}" for s in SERVICES for f in ALL_FIELDS]
+UCR_VALS = OWNERS + REGIONS + LEVELS + ["gold", "silver", "bronze"]
+K_OF = {k: f"K{i:02d}" for i, k in enumerate(UCR_KEYS)}
+V_OF = {v: f"V{i:02d}" for i, v in enumerate(UCR_VALS)}
+OF_ANCHOR = {a: k for k, a in K_OF.items()} | {a: v for v, a in V_OF.items()}
+UCR_TABLE = "\n".join(f"{a} {x}" for a, x in OF_ANCHOR.items())     # agreed once, out of band
+_KEY_RE = re.compile(r"(?<![\w.])(" + "|".join(sorted(map(re.escape, UCR_KEYS), key=len, reverse=True)) + r")(?![\w])")
+_VAL_RE = re.compile(r"(?<![\w-])(" + "|".join(sorted(map(re.escape, UCR_VALS), key=len, reverse=True)) + r")(?![\w-])")
+_ANC_RE = re.compile(r"\b([KV]\d\d)\b")
+
+
+def qdec(text):
+    if text.startswith("~"):                     # raw payload marker (quantisation not lossless)
+        return text[1:]
+    return _ANC_RE.sub(lambda m: OF_ANCHOR.get(m.group(1), m.group(1)), text)
+
+
+def qenc(text):
+    """Quantise keys and enumerated values in free text to anchors; raw text if the round trip is not lossless."""
+    enc = _VAL_RE.sub(lambda m: V_OF[m.group(1)], _KEY_RE.sub(lambda m: K_OF[m.group(1)], text))
+    return enc if not enc.startswith("~") and qdec(enc) == text else "~" + text
+
+
+def edits_between(old, new):
+    """[(key, value | None for delete)] turning dict old into dict new."""
+    out = [(k, None) for k in old if k not in new]
+    out += [(k, new[k]) for k in old if k in new and new[k] != old[k]]
+    out += [(k, new[k]) for k in new if k not in old]
+    return out
+
+
+def apply_ed(state, ed):
+    s = dict(state)
+    for k, v in ed:
+        if v is None:
+            s.pop(k, None)
+        else:
+            s[k] = v
+    return s
+
+
+def slip(src, dst, force, obj, payload=""):
+    return f"SLIP v3 {src} {dst} {force} {obj}" + (f" {payload}" if payload else "")
+
+
+def d_payload(ed):
+    return " ".join(("-" + K_OF.get(k, k)) if v is None else f"{K_OF.get(k, k)}={V_OF.get(v, v)}" for k, v in ed)
+
+
+def d_decode(msg, strict=False):
+    """Edits from a `SLIP v3 .. Commit|Inform Edit <payload>` message; strict: raise on any malformed item."""
+    parts = msg.split(" ")
+    if parts[:2] != ["SLIP", "v3"] or len(parts) < 6 or parts[5] != "Edit":
+        raise ValueError("bad header")
+    ed = []
+    for it in parts[6:]:
+        if it.startswith("-"):
+            k = OF_ANCHOR.get(it[1:], it[1:])
+            if strict and (it[1:] not in OF_ANCHOR or not k.count(".")):
+                raise ValueError(it)
+            ed.append((k, None))
+        else:
+            a, _, v = it.partition("=")
+            k, v = OF_ANCHOR.get(a, a), OF_ANCHOR.get(v, v)
+            if strict and (a not in OF_ANCHOR or not valid_line(f"{k} = {v}")):
+                raise ValueError(it)
+            ed.append((k, v))
+    return ed
+
+
+def e_msg(seq, base, ed):
+    lines = [("-" + k) if v is None else f"{k}={v}" for k, v in ed]
+    return "\n".join([f"ACCP s={seq} v={base}>{base + 1} DELTA"] + lines)
+
+
+def e_decode(msg, strict=False):
+    rows = msg.split("\n")
+    m = re.fullmatch(r"ACCP s=(\d+) v=(\d+)>(\d+) DELTA", rows[0])
+    if not m:
+        raise ValueError("bad header")
+    ed = []
+    for r in rows[1:]:
+        if r.startswith("-"):
+            if strict and not re.fullmatch(r"[a-z]+\.[a-z_]+", r[1:]):
+                raise ValueError(r)
+            ed.append((r[1:], None))
+        else:
+            k, _, v = r.partition("=")
+            if strict and not valid_line(f"{k} = {v}"):
+                raise ValueError(r)
+            ed.append((k, v))
+    return int(m.group(1)), int(m.group(2)), ed
+
+
 # ---------------------------------------------------------------- one task under one condition
 
 def run_task(cond, seed, mods=None, tag=None):
@@ -357,12 +455,22 @@ def run_task(cond, seed, mods=None, tag=None):
     store = dict(task["init"])             # C: shared memory
     journal = dict(task["init"])           # A2 memory_journal: last approved value per line
     books = {r: text_of(task["init"]) for r in ("planner", "worker", "checker")}   # P
+    reps = {r: dict(task["init"]) for r in ("planner", "worker", "checker")}      # D, E replicas
+    acked = dict(task["init"])             # E: worker's last acknowledged version
+    ver = {"planner": 0, "checker": 0}     # E: state version numbers
+    seq = [0]                              # E: per-session message sequence
+
+    def nseq():
+        seq[0] += 1
+        return seq[0]
     step_fail = 0
     for st, req in enumerate(task["requests"]):
         ctx["step"], ctx["attempt"] = st, 0
         # ---------- planner
         if cond == "P":
             view = books["planner"]
+        elif cond in ("D", "E"):
+            view = text_of(reps["planner"])
         elif cond == "C":
             view = "\n".join(retrieve(to_lines(store), req, K))
         else:
@@ -388,6 +496,14 @@ def run_task(cond, seed, mods=None, tag=None):
                     d_ev.update({"detected_by": "green_dot", "recovery_tok": ntok(chan),
                                  "recovery_sec": time.time() - t0, "resend_tok": ntok(books["planner"]),
                                  "filter": dec})
+        elif cond in ("D", "E"):
+            if cond == "D":
+                send(st, "planner", "worker", slip("pl", "wk", "Request", "Edit", qenc(instr)))
+            else:
+                send(st, "planner", "worker", f"ACCP s={nseq()} TASK\n{instr}")
+            if dr:
+                reps["worker"][dr[0]] = dr[1]
+                d_ev = {"step": st, "key": dr[0], "true": truths[st][dr[0]], "wrong": dr[1]}
         elif cond in ("A", "B"):
             ws = dict(approved)
             if dr:
@@ -409,8 +525,13 @@ def run_task(cond, seed, mods=None, tag=None):
                 if bad:
                     send(st, "memory", "memory", "restore " + " ".join(bad), kind="heal")
             send(st, "planner", "worker", json.dumps({"instruction": instr, "summary": req}))
+        if d_ev:                                   # A3: corrupted copy already repaired by the protocol alone?
+            pre = {"P": lambda: state_of_text(books["worker"]), "D": lambda: reps["worker"],
+                   "E": lambda: reps["worker"]}.get(cond, lambda: {})()
+            d_ev["pre_worker_true"] = pre.get(d_ev["key"]) == d_ev["true"]
         # ---------- worker / checker loop
         feedback = ""
+        last_ed = None
         ok = False
         t_det = None
         for attempt in range(MAX_RETRY + 1):
@@ -445,6 +566,54 @@ def run_task(cond, seed, mods=None, tag=None):
                         dp = dec_text
                     books["planner"] = dp
                     books["worker"] = new_text
+                    ok = True
+                    break
+                feedback = reason
+            elif cond in ("D", "E"):
+                base_w = reps["worker"]
+                if feedback and last_ed is not None:     # A3 amendment 1: show the worker what its rejected message said
+                    fb += ("\nYour rejected message carried these line changes" +
+                           (" (since the last acknowledged version)" if cond == "E" else "") + ":\n" +
+                           ("\n".join(f"DEL {k}" if v is None else f"SET {k} = {v}" for k, v in last_ed) or "(none)"))
+                wtext, _, _ = call("worker", f"Instruction: {instr}{fb}\n\nYour state:\n{text_of(base_w)}\n\n{W_P}")
+                new_state = apply_edits(base_w, wtext)
+                if cond == "D":
+                    ed = edits_between(base_w, new_state)
+                    m = slip("wk", "ck", "Commit", "Edit", d_payload(ed))
+                    ed_rx = d_decode(m)
+                else:
+                    ed = edits_between(acked, new_state)          # lines changed since last acknowledged version
+                    m = e_msg(nseq(), ver["checker"], ed)
+                    _, base, ed_rx = e_decode(m)
+                    assert base == ver["checker"]
+                send(st, "worker", "checker", m)
+                last_ed = ed
+                dec = apply_ed(reps["checker"], ed_rx)
+                cprompt = (f"Change request: {req}\nInstruction: {instr}\n\nChanges the worker made (decoded):\n"
+                           f"{diff_view(reps['checker'], dec)}\n\n{C_OUT}")
+                ctext, so, _ = call("checker", cprompt)
+                good, reason = parse_verdict(ctext, so)
+                if cond == "D":
+                    send(st, "checker", "worker", slip("ck", "wk", "Accept" if good else "Reject", "Edit",
+                                                       "" if good else qenc(reason)))
+                else:
+                    send(st, "checker", "worker", f"ACCP s={nseq()} {'ACK' if good else 'NAK'} v={ver['checker'] + 1}"
+                         + ("" if good else "\n" + reason))
+                if good:
+                    reps["checker"] = dec
+                    if cond == "D":
+                        fm = slip("ck", "pl", "Inform", "Edit", d_payload(ed))
+                        send(st, "checker", "planner", fm)
+                        reps["planner"] = apply_ed(reps["planner"], d_decode(fm))
+                    else:
+                        fm = e_msg(nseq(), ver["planner"], ed)
+                        send(st, "checker", "planner", fm)
+                        _, base, ed_p = e_decode(fm)
+                        assert base == ver["planner"]
+                        reps["planner"] = apply_ed(reps["planner"], ed_p)
+                        ver["planner"] += 1; ver["checker"] += 1
+                        acked = dict(new_state)
+                    reps["worker"] = new_state
                     ok = True
                     break
                 feedback = reason
@@ -542,17 +711,29 @@ def run_task(cond, seed, mods=None, tag=None):
                 books["worker"] = books["planner"]
         # ---------- drift outcome at approval
         cur = state_of_text(books["planner"]) if cond == "P" else (approved if cond in ("A", "B") else store)
+        if cond in ("D", "E"):
+            cur = reps["planner"]
+        copies = ([state_of_text(b) for b in books.values()] if cond == "P" else
+                  list(reps.values()) if cond in ("D", "E") else [cur])
         if d_ev:
+            d_ev["healed"] = all(c.get(d_ev["key"]) == d_ev["true"] for c in copies)
+            d_ev["healed_zero_call"] = d_ev["healed"] and d_ev["pre_worker_true"]
             d_ev["caught"] = cur.get(d_ev["key"]) == d_ev["true"]
             d_ev.setdefault("detected_by", "checker_or_worker" if d_ev["caught"] else "none")
             drift_events.append(d_ev)
     final = state_of_text(books["planner"]) if cond == "P" else (approved if cond in ("A", "B") else store)
+    if cond in ("D", "E"):
+        final = reps["planner"]
+    copies = ([state_of_text(b) for b in books.values()] if cond == "P" else
+              list(reps.values()) if cond in ("D", "E") else [final])
     truth = task["final"]
     keys = set(truth) | set(final)
     acc = sum(final.get(k) == truth.get(k) for k in keys) / len(keys)
     for e in drift_events:
         e["silent_in_final"] = final.get(e["key"]) != e["true"]
+        e["in_any_copy_final"] = any(c.get(e["key"]) != e["true"] for c in copies)
     res = {"cond": cond, "seed": seed, "tag": tag, "success": final == truth, "line_acc": acc,
+           "replica_success": all(c == truth for c in copies),
            "final_errors": sorted(k for k in keys if final.get(k) != truth.get(k)),
            "steps_failed": step_fail, "n_msgs": len(msgs), "n_calls": len(calls),
            "channel_tok": sum(m["tok"] for m in msgs), "channel_bytes": sum(m["bytes"] for m in msgs),
@@ -564,7 +745,7 @@ def run_task(cond, seed, mods=None, tag=None):
                         for c in calls],
            "per_msg": [{k: m[k] for k in ("step", "attempt", "from", "to", "tok", "bytes", "kind")} for m in msgs]}
     with _lock:
-        with open(TRANSCRIPTS, "a") as f:
+        with open(os.environ.get("A_TRANSCRIPTS", TRANSCRIPTS), "a") as f:
             f.write(json.dumps({"cond": cond, "seed": seed, "tag": tag, "msgs": msgs, "calls": log}) + "\n")
     print(f"{cond} {seed} success={res['success']} acc={acc:.3f} chan={res['channel_tok']} "
           f"billed={res['billed_tok']} calls={len(calls)} wall={res['wall_sec']:.0f}s "
@@ -584,6 +765,8 @@ def scaffold():
 
 
 def main_run(conds=CONDS, seeds=SEEDS, workers=8, out="a1_runs.json"):
+    if out != "a1_runs.json":
+        os.environ.setdefault("A_TRANSCRIPTS", os.path.join(ROOT, "results", out.replace("_runs.json", "_transcripts.jsonl")))
     jobs = [(c, s) for s in seeds for c in conds]
     with ThreadPoolExecutor(workers) as ex:
         runs = list(ex.map(lambda j: run_task(*j), jobs))
@@ -596,6 +779,9 @@ def main_run(conds=CONDS, seeds=SEEDS, workers=8, out="a1_runs.json"):
 if __name__ == "__main__":
     if sys.argv[1] == "run":
         main_run()
+    elif sys.argv[1] == "run_a3":                       # A3 head to head (PREREGISTRATION_A3.md)
+        main_run(conds=["P", "A", "D", "E"], seeds=list(range(100, 108)) + list(range(300, 308)),
+                 workers=int(os.environ.get("A3_WORKERS", "10")), out="a3_runs.json")
     elif sys.argv[1] == "smoke":
         c = sys.argv[2]
         global_runs = run_task(c, 999)
