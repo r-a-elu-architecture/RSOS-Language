@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Website (GitHub Pages, `docs/`): home, results with every failure, try it (editor, keyboard), paper and
+  reproduction, research programme, family (cue framework). Built from `tools/site/` by `tools/build_site.py`.
+
 ## 0.2.1 (17 November 2026)
 
 - Whitepaper v2: doi:10.5281/zenodo.24320392.

@@ -1,34 +1,114 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RSOS Language</title>
-<style>
-body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:#1e2430;background:#f7f6f2}
-.wrap{max-width:900px;margin:0 auto;padding:40px 24px}
-h1{font-size:34px;margin:0 0 8px}.lead{font-size:19px;color:#3d4556}
-a.btn{display:inline-block;background:#c8781e;color:#fff;text-decoration:none;padding:10px 18px;border-radius:8px;margin:14px 10px 0 0}
-a.sec{display:inline-block;color:#1e2430;border:1px solid #c9c4b6;text-decoration:none;padding:9px 16px;border-radius:8px;margin:14px 10px 0 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:28px}
-.card{background:#fff;border:1px solid #e2e0d8;border-radius:10px;padding:16px}
-.card h3{margin:0 0 6px;font-size:16px}table{border-collapse:collapse;width:100%;font-size:14px;margin-top:10px}
-td{border-bottom:1px solid #eee;padding:5px 4px}.num{text-align:right}footer{color:#5b6475;font-size:13px;margin-top:30px}
-</style></head><body><div class="wrap">
-<h1>RSOS Language</h1>
-<p class="lead">A spatial-symbolic programming language for humans and AI. Write a program as a scene: place, pierce,
-enter, colour, connect. The same program runs as an AI agent and as a person's practised mental model.</p>
-<a class="btn" href="editor.html">Open the editor</a><a class="sec" href="https://github.com/r-a-elu-architecture/RSOS-Language">Source</a>
-<div class="grid">
-<div class="card"><h3>The place decides</h3>The same capability at a module's head, heart, brain or beside it gives four different, measured results.</div>
-<div class="card"><h3>One program, two runtimes</h3>An agent's change and a person's practice session from the same lines, checked for equivalence.</div>
-<div class="card"><h3>Safety in the compiler</h3>Consent, a constitution of seven checks, safety modes and return to baseline, before anything reaches a person.</div>
-<div class="card"><h3>Every result reproducible</h3>Pre-registered experiments, seeds and result hashes; the failures are published with the successes.</div>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RSOS Language: an executable spatial-symbolic language for humans and AI</title>
+<meta name="description" content="A programming language whose programs are spatial compositions. On real AI agents it kept every copy of the shared state true and healed every drift without a model call.">
+<link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/">
+<meta property="og:title" content="RSOS Language: an executable spatial-symbolic language for humans and AI">
+<meta property="og:description" content="A programming language whose programs are spatial compositions. On real AI agents it kept every copy of the shared state true and healed every drift without a model call.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
+<b>RSOS</b>
+<a class="here" href="index.html" aria-current="page">Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+</div></div>
+<div class="wrap">
+<header class="top">
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
+<nav class="main" aria-label="Site"><a href="index.html" aria-current="page">Home</a><a href="results.html">Results</a><a href="try.html">Try it</a><a href="paper.html">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+</header>
 </div>
-<h2 style="font-size:20px;margin-top:34px">Measured so far</h2>
-<table>
-<tr><td>Support agent edited as a painting: accuracy on held-out tickets</td><td class="num">0.488 → 0.780</td></tr>
-<tr><td>The same program as an agent and as a person's session (house of rooms)</td><td class="num">0.488 → 0.762; equivalence passes</td></tr>
-<tr><td>Meaning carried by structure vs by names between agents</td><td class="num">98.3% vs 3.3%</td></tr>
-<tr><td>A placement rule found by search, applied to a different host</td><td class="num">0.339 → 0.805</td></tr>
-<tr><td>Earlier claims in random worlds and on real datasets with a simple learner</td><td class="num">did not reproduce</td></tr>
-</table>
-<footer>Apache 2.0 · Research and development software; not a medical device · Full results: results/BUILD_REPORT.md</footer>
-</div></body></html>
+<main id="main">
+<div class="wrap">
+<div class="hero">
+<h1>A language you compose as a scene, and run on people and AI agents.</h1>
+<p class="lead">In RSOS a program is a spatial composition: objects, places, rooms, flows, beams, colours and dots,
+in an order that is the program. Operators such as heal, contain, transplant and pierce act on any host: a person, a
+team, an AI agent, an organisation. Consent and harm checks are part of the compiler.</p>
+<a class="cta" href="results.html">See the measured results</a><a class="cta quiet" href="try.html">Try the editor</a>
+
+<div class="stats" aria-label="Headline results from whitepaper v2">
+<div class="stat"><div class="n">0.55×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol</div><div class="s">BPE tokens (o200k); 0.64× by regex count · A3b</div></div>
+<div class="stat"><div class="n">16 / 16</div><div class="l">tasks with every copy of the shared state true</div><div class="s">anchor protocol: 0 / 16 · A3b</div></div>
+<div class="stat"><div class="n">48 / 48</div><div class="l">injected drifts healed with zero model calls</div><div class="s">and zero channel tokens per heal · A3b</div></div>
+</div>
+<p class="muted small">Pre-registered tests on real LLM agents (about 11,800 model calls). 27 predictions on real hosts:
+18 passed, 9 failed. The failures are on the results page, next to the passes.</p>
+</div>
+</div>
+
+<section><div class="wrap split">
+<div>
+<h2>What a program looks like</h2>
+<p class="intro">A mental model placed on a real object. The work table is a robot; each part carries one composed
+model; a symbol anchors it and opens it on demand. The same lines compile for a person's practice or for an AI
+agent's workflow.</p>
+<p class="muted small">This is <code>examples/robot_head.rsl</code> from the repository. It compiles with
+<code>python -m rsoslang check</code> to 23 operations and 0 errors.</p>
+<a class="more" href="try.html">Write your own →</a>
+</div>
+<pre aria-label="RSOS example program"><code><span class="k">HOUSE</span> mind <span class="k">FOR</span> person
+<span class="k">ROOM</span> eagle <span class="k">PERSPECTIVE</span> above <span class="k">IN</span> mind
+<span class="k">OBJECT</span> robot <span class="k">KIND</span> work_table <span class="k">IN</span> eagle
+<span class="k">PART</span> robot.head <span class="k">KIND</span> decision_model
+<span class="k">MODEL</span> robot.head = associated + confidence
+    + analogical_reasoning <span class="k">IN</span> eagle <span class="k">FOR</span> decision
+<span class="k">MODEL</span> robot.hand = top_view + dissociated
+    + future_pacing + action <span class="k">IN</span> eagle <span class="k">FOR</span> action
+<span class="k">OBJECT</span> couch <span class="k">KIND</span> furniture <span class="k">IN</span> eagle <span class="k">REPRESENTS</span> langgraph
+<span class="k">DEDICATE</span> couch <span class="k">TO</span> hypothesis_testing
+<span class="k">FORM</span> couch <span class="k">DIRECTIONS</span> forward -> hypothesis
+    ; backward -> contradiction ; up -> framing
+<span class="k">ANCHOR</span> eagle_calculator <span class="k">TO</span> robot.head
+<span class="k">FUTUREPACE</span> eagle_calculator <span class="k">SCENARIOS</span> 3
+<span class="k">OPEN</span> eagle_calculator <span class="k">FROM</span> kinesthetic <span class="k">SCOPE</span> whole</code></pre>
+</div></section>
+
+<section><div class="wrap">
+<h2>Four parts, one language</h2>
+<div class="grid">
+<div class="card"><h3>Self-healing communication</h3><p>Agents share a book of meanings. Each message carries a
+green dot, a check of the state it refers to, so drift is caught and the changed part is healed from the book, with
+no model call.</p><a class="more" href="results.html#a3b">A1, A3, A3b →</a></div>
+<div class="card"><h3>The White Dragon engine</h3><p>It breaks a host into parts, picks a mechanism from another
+domain for each, and sets the depth, the order and the predicted gain. Tested against blind and weighted
+choice.</p><a class="more" href="results.html#a2">A2 →</a></div>
+<div class="card"><h3>Mental-model construction</h3><p>Reasoning and decisions are built as a house: rooms are
+states, objects are models, each part of an object carries one model. People run and edit them; they do not just
+recall them.</p><a class="more" href="programme.html">Programme →</a></div>
+<div class="card"><h3>Governance in the compiler</h3><p>Operations on people need their consent (E018), standing
+consent needs a declared network with laws (E021), and the Spine blocks predicted harm (E019), all at compile
+time.</p><a class="more" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use →</a></div>
+</div>
+</div></section>
+
+<section><div class="wrap split">
+<div>
+<h2>The claim, worded to its evidence</h2>
+<p class="intro">In pre-registered tests on real LLM agents, a protocol designed by the White Dragon used 0.55× the
+BPE channel tokens of a Slipstream-style anchor protocol. It kept every copy of the shared state true in 16 of 16
+tasks, against 0 of 16, and repaired every injected drift without a model call.</p>
+</div>
+<div>
+<p class="note">Check values and restore-from-journal are old ideas in databases and file systems. To our knowledge,
+RSOS is the first agent communication language in which detection and in-place healing are part of the protocol, and
+the first whose protocol was designed by a cross-domain engine tested against blind alternatives.</p>
+<p class="muted small">Missed: the 5× target. 87% of what remains is the planner's free prose, which must be restored
+word for word. The next test, A3c, is pre-registered.</p>
+</div>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
+Text CC BY 4.0<br>Research and development software, not a medical device.</div>
+<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+</div></footer>
+</body>
+</html>

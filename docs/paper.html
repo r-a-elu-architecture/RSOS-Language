@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whitepaper, citation and reproduction | RSOS Language</title>
+<meta name="description" content="Whitepaper v2 and v1, software DOIs, how to cite and how to reproduce every result.">
+<link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/paper.html">
+<meta property="og:title" content="Whitepaper, citation and reproduction | RSOS Language">
+<meta property="og:description" content="Whitepaper v2 and v1, software DOIs, how to cite and how to reproduce every result.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
+<b>RSOS</b>
+<a class="here" href="index.html" aria-current="page">Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+</div></div>
+<div class="wrap">
+<header class="top">
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
+<nav class="main" aria-label="Site"><a href="index.html">Home</a><a href="results.html">Results</a><a href="try.html">Try it</a><a href="paper.html" aria-current="page">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+</header>
+</div>
+<main id="main">
+<div class="wrap">
+<div class="hero">
+<h1>Whitepaper, citation and reproduction.</h1>
+<p class="lead">Whitepaper v2 reports every pre-registered result on real hosts, what has only been shown in
+simulation, and every failure. Code, specification, experiments, results and the transcripts of the agent runs are
+open.</p>
+<a class="cta" href="https://doi.org/10.5281/zenodo.24320392">Read whitepaper v2</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/whitepaper/RSOS_Whitepaper_v2.pdf">PDF on GitHub</a>
+</div>
+</div>
+
+<section><div class="wrap split">
+<div>
+<h2>Identifiers</h2>
+<dl class="doi">
+<dt>Whitepaper, all versions</dt><dd><a href="https://doi.org/10.5281/zenodo.24304403">10.5281/zenodo.24304403</a></dd>
+<dt>Whitepaper v2</dt><dd><a href="https://doi.org/10.5281/zenodo.24320392">10.5281/zenodo.24320392</a></dd>
+<dt>Whitepaper v1</dt><dd><a href="https://doi.org/10.5281/zenodo.24304404">10.5281/zenodo.24304404</a></dd>
+<dt>Software 0.2.1</dt><dd><a href="https://doi.org/10.5281/zenodo.24321030">10.5281/zenodo.24321030</a></dd>
+<dt>Software 0.2.0</dt><dd><a href="https://doi.org/10.5281/zenodo.24317658">10.5281/zenodo.24317658</a></dd>
+<dt>Cue Framework v2.1.0</dt><dd><a href="https://doi.org/10.5281/zenodo.24301903">10.5281/zenodo.24301903</a></dd>
+<dt>Author</dt><dd><a href="https://orcid.org/0009-0000-1456-2467">ORCID 0009-0000-1456-2467</a></dd>
+</dl>
+</div>
+<div>
+<h2>Cite</h2>
+<pre aria-label="Citation"><code>R. A. Elu. RSOS: an executable spatial-symbolic
+language for human–AI and AI–AI communication.
+Whitepaper v2, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.24304403</code></pre>
+<p class="muted small">The concept DOI always resolves to the latest version. <code>CITATION.cff</code> in the
+repository gives the same in machine-readable form.</p>
+</div>
+</div></section>
+
+<section><div class="wrap split">
+<div>
+<h2>Reproduce</h2>
+<p class="intro"><code>./reproduce.sh</code> runs the test suite and reruns the simulation experiments. The agent
+experiments are re-analysed from their recorded runs, with no new model calls. Each results file carries a SHA-256
+hash of its numbers, so a re-analysis either matches the published hash or shows where it differs.</p>
+<pre aria-label="Re-analyse the agent experiments"><code>cd experiments
+python3 a1_analyse.py    <span class="c"># A1  → d224abbf…</span>
+python3 a2_analyse.py    <span class="c"># A2  → 8916f4de…</span>
+python3 a3_analyse.py    <span class="c"># A3  → ff058345…</span>
+python3 a3b_analyse.py   <span class="c"># A3b → 0ae0d031… (needs tiktoken)</span>
+python3 ht1_score.py     <span class="c"># HT1 → e1f8266b…</span></code></pre>
+<p class="note">The A3b analysis needs <code>tiktoken</code> (o200k). Without it, the analysis stops instead of
+reporting BPE counts of −1.</p>
+</div>
+<div class="card"><h3>What changed from v1 to v2</h3>
+<ul class="plain">
+<li>v1 described the language and fixed the predictions of the first real-host test.</li>
+<li>v2 reports that test (A1) and three more (A2, A3, A3b), plus the first human test (HT1).</li>
+<li>Comparison now includes re-implementations of two published compact protocols.</li>
+<li>The keyboard layer, the failure map and the 24-domain programme are new.</li>
+</ul></div>
+</div></section>
+
+<section><div class="wrap">
+<h2>Related work</h2>
+<p class="intro">Compact agent messaging is an active field. Each system below optimises one axis: size, structure
+or term meaning. A3 and A3b measure the one they leave open: whether every copy of the shared state stays true, and
+what it costs to make it true again.</p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Work</th><th scope="col">What it does</th></tr></thead>
+<tbody>
+<tr><th scope="row">Slipstream</th><td>Maps messages onto shared concept anchors; reports 82% fewer tokens.</td></tr>
+<tr><th scope="row">ACCP (IETF draft)</th><td>Compact frames, an intent ontology, checkpoints and delta encoding; reports 60–90% fewer tokens.</td></tr>
+<tr><th scope="row">AACP (IETF draft)</th><td>Typed coordination format; recurring instructions encoded by cache and pattern lookup.</td></tr>
+<tr><th scope="row">CLSR (ICML 2026)</th><td>Agents evolve compact symbolic reasoning languages; 3–6× fewer generated tokens than chain of thought.</td></tr>
+<tr><th scope="row">Verifiable Semantics for A2A</th><td>Certifies terms behaviourally and recertifies them on drift.</td></tr>
+</tbody></table></div>
+<p class="muted small">Earlier work by the author: <i>The Recursive Symbolic Operating System (RSOS)</i>, whitepaper
+v1.0/v1.1, August 2025. Its validation claims were internal; the pre-registered programme reported here replaces them.</p>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
+Text CC BY 4.0<br>Research and development software, not a medical device.</div>
+<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+</div></footer>
+</body>
+</html>

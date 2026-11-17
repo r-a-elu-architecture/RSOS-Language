@@ -1,0 +1,78 @@
+<div class="wrap">
+<div class="hero">
+<h1>A language you compose as a scene, and run on people and AI agents.</h1>
+<p class="lead">In RSOS a program is a spatial composition: objects, places, rooms, flows, beams, colours and dots,
+in an order that is the program. Operators such as heal, contain, transplant and pierce act on any host: a person, a
+team, an AI agent, an organisation. Consent and harm checks are part of the compiler.</p>
+<a class="cta" href="results.html">See the measured results</a><a class="cta quiet" href="try.html">Try the editor</a>
+
+<div class="stats" aria-label="Headline results from whitepaper v2">
+<div class="stat"><div class="n">0.55×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol</div><div class="s">BPE tokens (o200k); 0.64× by regex count · A3b</div></div>
+<div class="stat"><div class="n">16 / 16</div><div class="l">tasks with every copy of the shared state true</div><div class="s">anchor protocol: 0 / 16 · A3b</div></div>
+<div class="stat"><div class="n">48 / 48</div><div class="l">injected drifts healed with zero model calls</div><div class="s">and zero channel tokens per heal · A3b</div></div>
+</div>
+<p class="muted small">Pre-registered tests on real LLM agents (about 11,800 model calls). 27 predictions on real hosts:
+18 passed, 9 failed. The failures are on the results page, next to the passes.</p>
+</div>
+</div>
+
+<section><div class="wrap split">
+<div>
+<h2>What a program looks like</h2>
+<p class="intro">A mental model placed on a real object. The work table is a robot; each part carries one composed
+model; a symbol anchors it and opens it on demand. The same lines compile for a person's practice or for an AI
+agent's workflow.</p>
+<p class="muted small">This is <code>examples/robot_head.rsl</code> from the repository. It compiles with
+<code>python -m rsoslang check</code> to 23 operations and 0 errors.</p>
+<a class="more" href="try.html">Write your own →</a>
+</div>
+<pre aria-label="RSOS example program"><code><span class="k">HOUSE</span> mind <span class="k">FOR</span> person
+<span class="k">ROOM</span> eagle <span class="k">PERSPECTIVE</span> above <span class="k">IN</span> mind
+<span class="k">OBJECT</span> robot <span class="k">KIND</span> work_table <span class="k">IN</span> eagle
+<span class="k">PART</span> robot.head <span class="k">KIND</span> decision_model
+<span class="k">MODEL</span> robot.head = associated + confidence
+    + analogical_reasoning <span class="k">IN</span> eagle <span class="k">FOR</span> decision
+<span class="k">MODEL</span> robot.hand = top_view + dissociated
+    + future_pacing + action <span class="k">IN</span> eagle <span class="k">FOR</span> action
+<span class="k">OBJECT</span> couch <span class="k">KIND</span> furniture <span class="k">IN</span> eagle <span class="k">REPRESENTS</span> langgraph
+<span class="k">DEDICATE</span> couch <span class="k">TO</span> hypothesis_testing
+<span class="k">FORM</span> couch <span class="k">DIRECTIONS</span> forward -> hypothesis
+    ; backward -> contradiction ; up -> framing
+<span class="k">ANCHOR</span> eagle_calculator <span class="k">TO</span> robot.head
+<span class="k">FUTUREPACE</span> eagle_calculator <span class="k">SCENARIOS</span> 3
+<span class="k">OPEN</span> eagle_calculator <span class="k">FROM</span> kinesthetic <span class="k">SCOPE</span> whole</code></pre>
+</div></section>
+
+<section><div class="wrap">
+<h2>Four parts, one language</h2>
+<div class="grid">
+<div class="card"><h3>Self-healing communication</h3><p>Agents share a book of meanings. Each message carries a
+green dot, a check of the state it refers to, so drift is caught and the changed part is healed from the book, with
+no model call.</p><a class="more" href="results.html#a3b">A1, A3, A3b →</a></div>
+<div class="card"><h3>The White Dragon engine</h3><p>It breaks a host into parts, picks a mechanism from another
+domain for each, and sets the depth, the order and the predicted gain. Tested against blind and weighted
+choice.</p><a class="more" href="results.html#a2">A2 →</a></div>
+<div class="card"><h3>Mental-model construction</h3><p>Reasoning and decisions are built as a house: rooms are
+states, objects are models, each part of an object carries one model. People run and edit them; they do not just
+recall them.</p><a class="more" href="programme.html">Programme →</a></div>
+<div class="card"><h3>Governance in the compiler</h3><p>Operations on people need their consent (E018), standing
+consent needs a declared network with laws (E021), and the Spine blocks predicted harm (E019), all at compile
+time.</p><a class="more" href="{REPO}/blob/main/RESPONSIBLE_USE.md">Responsible use →</a></div>
+</div>
+</div></section>
+
+<section><div class="wrap split">
+<div>
+<h2>The claim, worded to its evidence</h2>
+<p class="intro">In pre-registered tests on real LLM agents, a protocol designed by the White Dragon used 0.55× the
+BPE channel tokens of a Slipstream-style anchor protocol. It kept every copy of the shared state true in 16 of 16
+tasks, against 0 of 16, and repaired every injected drift without a model call.</p>
+</div>
+<div>
+<p class="note">Check values and restore-from-journal are old ideas in databases and file systems. To our knowledge,
+RSOS is the first agent communication language in which detection and in-place healing are part of the protocol, and
+the first whose protocol was designed by a cross-domain engine tested against blind alternatives.</p>
+<p class="muted small">Missed: the 5× target. 87% of what remains is the planner's free prose, which must be restored
+word for word. The next test, A3c, is pre-registered.</p>
+</div>
+</div></section>

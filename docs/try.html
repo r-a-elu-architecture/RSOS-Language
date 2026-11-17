@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Try it: editor and keyboard | RSOS Language</title>
+<meta name="description" content="Compose RSOS programs as paintings in the editor, or key them in with the RSOS keyboard layer.">
+<link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/try.html">
+<meta property="og:title" content="Try it: editor and keyboard | RSOS Language">
+<meta property="og:description" content="Compose RSOS programs as paintings in the editor, or key them in with the RSOS keyboard layer.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
+<b>RSOS</b>
+<a class="here" href="index.html" aria-current="page">Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+</div></div>
+<div class="wrap">
+<header class="top">
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
+<nav class="main" aria-label="Site"><a href="index.html">Home</a><a href="results.html">Results</a><a href="try.html" aria-current="page">Try it</a><a href="paper.html">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+</header>
+</div>
+<main id="main">
+<div class="wrap">
+<div class="hero">
+<h1>Write RSOS three ways.</h1>
+<p class="lead">Compose a program as a painting, key it in with the RSOS keyboard, or write it as text and compile it.
+All three produce the same language and run through the same compiler checks.</p>
+</div>
+</div>
+
+<section id="editor"><div class="wrap split">
+<div>
+<h2>The painting editor</h2>
+<p class="intro">Place objects in a scene, connect them, colour them and set their order. The editor compiles the
+painting to RSOS and back, so you can move between the picture and the text.</p>
+<a class="cta" href="editor.html">Open the editor</a>
+</div>
+<div class="card"><h3>Good first steps</h3>
+<ul class="plain">
+<li>Load an example and look at how each object becomes a statement.</li>
+<li>Move one object to another room and watch the compiled program change.</li>
+<li>Remove a consent line from a person-facing program to see the compiler refuse it (E018).</li>
+</ul></div>
+</div></section>
+
+<section id="keyboard"><div class="wrap split">
+<div>
+<h2>The RSOS keyboard</h2>
+<p class="intro">One key or chord emits a whole component, operator, perspective, state, depth, order or direction,
+so a program goes in at the speed it is seen and no required slot can be left out silently. Practice mode runs short
+sessions and draws your learning curve.</p>
+<a class="cta" href="keyboard.html">Open the keyboard</a>
+</div>
+<div class="card"><h3>How it was checked</h3>
+<p>Twelve targets were keyed by a headless browser, compiled and decoded blind from the code alone. The first run
+passed 8 of 12 and found one bug (an operator key overwrote a finished model). After the fix: 12 of 12, with 88 of 89
+fields recovered (0.989). The human test, HT2, follows a learning phase.</p></div>
+</div></section>
+
+<section id="code"><div class="wrap split">
+<div>
+<h2>Text and the compiler</h2>
+<p class="intro">Install from the repository and check any example. The compiler reports errors and warnings by code,
+including the consent and harm checks.</p>
+<p class="muted small">An MCP server (<code>rsoslang.mcp_server</code>) lets an AI assistant compile and run RSOS
+programs as tools.</p>
+</div>
+<pre aria-label="Install and run"><code><span class="c"># get the code</span>
+git clone https://github.com/r-a-elu-architecture/RSOS-Language
+cd RSOS-Language
+pip install -e .
+
+<span class="c"># check and compile an example</span>
+python -m rsoslang check examples/robot_head.rsl
+python -m rsoslang ir examples/sol_remote.rsl
+
+<span class="c"># reproduce every result</span>
+./reproduce.sh</code></pre>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
+Text CC BY 4.0<br>Research and development software, not a medical device.</div>
+<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+</div></footer>
+</body>
+</html>

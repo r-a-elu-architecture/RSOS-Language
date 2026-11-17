@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results: every pre-registered test, failures included | RSOS Language</title>
+<meta name="description" content="A1, A2, A3 and A3b on real LLM agents, HT1 on a person, and the full failure map.">
+<link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/results.html">
+<meta property="og:title" content="Results: every pre-registered test, failures included | RSOS Language">
+<meta property="og:description" content="A1, A2, A3 and A3b on real LLM agents, HT1 on a person, and the full failure map.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
+<b>RSOS</b>
+<a class="here" href="index.html" aria-current="page">Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+</div></div>
+<div class="wrap">
+<header class="top">
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
+<nav class="main" aria-label="Site"><a href="index.html">Home</a><a href="results.html" aria-current="page">Results</a><a href="try.html">Try it</a><a href="paper.html">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+</header>
+</div>
+<main id="main">
+<div class="wrap">
+<div class="hero">
+<h1>Every pre-registered test, failures included.</h1>
+<p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
+recorded, and each results file carries a hash. On real hosts: 27 predictions, 18 passed and 9 failed.</p>
+<p class="muted small">Host for A1–A3b: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
+requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
+pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2, §7–§9, and the files in
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/results"><code>results/</code></a>.</p>
+</div>
+</div>
+
+<section id="a3b"><div class="wrap">
+<h2>A3b · The hologram palace</h2>
+<p class="intro">The White Dragon designed a compact protocol in one call, with its own predicted size (H-dragon).
+A hand-built control used the anchor protocol's formats plus the green dot (H-copy). 16 tasks per arm, 1,374 new
+calls; palace, D and E were reused from A3 after all 48 of their runs replayed with 0 mismatches.
+<span class="muted">sha256 <code>0ae0d031…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">Palace</th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">H-copy</th><th scope="col" class="n">H-dragon</th></tr></thead>
+<tbody>
+<tr><th scope="row">Channel tokens per task (BPE)</th><td class="n">2,699 (3,131)</td><td class="n">1,468 (1,860)</td><td class="n">1,290 (1,695)</td><td class="n"><b>932 (1,023)</b></td></tr>
+<tr><th scope="row">× D, regex / BPE</th><td class="n">1.84 / 1.68</td><td class="n">1 / 1</td><td class="n">0.88 / 0.91</td><td class="n"><b>0.64 / 0.55</b></td></tr>
+<tr><th scope="row">Exact success</th><td class="n">16/16</td><td class="n">16/16</td><td class="n">12/16</td><td class="n"><b>16/16</b></td></tr>
+<tr><th scope="row">Every copy true</th><td class="n">16/16</td><td class="n">0/16</td><td class="n">12/16</td><td class="n"><b>16/16</b></td></tr>
+<tr><th scope="row">Drift healed with 0 model calls</th><td class="n">48/48</td><td class="n">0/48</td><td class="n">47/48</td><td class="n"><b>48/48</b></td></tr>
+<tr><th scope="row">Channel tokens per heal</th><td class="n">37.9</td><td class="n">—</td><td class="n">2.0</td><td class="n"><b>0</b></td></tr>
+<tr><th scope="row">Truncations silently accepted</th><td class="n">0 (A3)</td><td class="n">13/1,150</td><td class="n">0/1,175</td><td class="n"><b>0/1,140</b></td></tr>
+</tbody></table></div>
+<p><span class="tag pass">5 of 7 pass</span> for H-dragon: smaller than D (B1), full integrity (B3), success ≥ D (B4),
+better than H-copy (B5), heal cost (B7). <span class="tag fail">B2 failed</span> target 0.2× D, reached 0.64×.
+<span class="tag fail">B6 failed</span> the engine predicted 321 tokens per task; 932 were measured. H-copy: 2 of 5
+pass; its four inexact tasks were model edit errors that the checker approved.</p>
+<p class="note"><b>Why 5× was missed, measured.</b> Where the engine landed, cost fell close to the floor: verdicts
+854 → 32 tokens per task, edits 196 → 44, forwards 187 → 49, heal 114 → 0. 87% of what remains is the planner's free
+prose (808 tokens), which must be restored word for word. The engine had named this as its main uncertainty: right
+about where, wrong about how much.</p>
+</div></section>
+
+<section id="a3"><div class="wrap">
+<h2>A3 · Head to head with compact protocols</h2>
+<p class="intro">D and E are re-implementations from the published descriptions of Slipstream (shared concept
+anchors) and ACCP (deltas with sequence numbers), not the original systems. 16 tasks × 4 arms, 3,200 calls.
+<span class="muted">sha256 <code>ff058345…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">Palace (A1)</th><th scope="col" class="n">JSON</th><th scope="col" class="n">D · Slipstream-style</th><th scope="col" class="n">E · ACCP-style</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact success</th><td class="n"><b>16/16</b></td><td class="n">4/16</td><td class="n"><b>16/16</b></td><td class="n">1/16</td></tr>
+<tr><th scope="row">Every copy true at the end</th><td class="n"><b>16/16</b></td><td class="n">4/16</td><td class="n">0/16</td><td class="n">1/16</td></tr>
+<tr><th scope="row">Channel tokens per task</th><td class="n">2,699</td><td class="n">17,442</td><td class="n"><b>1,468</b></td><td class="n">2,773</td></tr>
+<tr><th scope="row">Drift healed with 0 model calls</th><td class="n"><b>48/48</b></td><td class="n">0/48</td><td class="n">0/48</td><td class="n">0/48</td></tr>
+<tr><th scope="row">Drift left in some copy</th><td class="n"><b>0</b></td><td class="n">0</td><td class="n">40</td><td class="n">6</td></tr>
+<tr><th scope="row">Truncations silently accepted</th><td class="n">0</td><td class="n">0</td><td class="n">13/1,150</td><td class="n">99/1,955</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">2 of 4 pass</span> healing (R2), success (R3). <span class="tag fail">R1 failed</span> the
+palace was 1.84× the size of D, from formats inherited from A1, not from its integrity layer.
+<span class="tag fail">R4 failed</span> on channel tokens against E (38 vs 96 per repair); counting model work, the
+palace's repair costs 0.9% of E's. The anchor protocol stays right only because no agent reads the drifted copy: 40 of
+48 corruptions stayed latent. A4 tests whether they turn into wrong answers.</p>
+</div></section>
+
+<section id="a2"><div class="wrap">
+<h2>A2 · The knowing White Dragon redesigns a weak host</h2>
+<p class="intro">Host: A1's summaries-plus-retrieval workflow, 5.83 wrong lines per task. Given only its parts,
+weaknesses and a cross-domain library, the engine landed four changes in order. The first was a memory journal with
+per-line check and restore, drawn from DNA mismatch repair and ledger reconciliation. 6 tasks per stage, 5,687 calls.
+<span class="muted">sha256 <code>8916f4de…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Arm</th><th scope="col" class="n">Wrong lines after 4 landings</th><th scope="col" class="n">Change</th><th scope="col" class="n">Billed tokens</th></tr></thead>
+<tbody>
+<tr class="us"><th scope="row">Knowing</th><td class="n"><b>2.17</b></td><td class="n"><b>−63%</b></td><td class="n">+20%</td></tr>
+<tr><th scope="row">Blind</th><td class="n">8.17</td><td class="n">worse</td><td class="n">+95%</td></tr>
+<tr><th scope="row">Weighted (F1b rule)</th><td class="n">3.33</td><td class="n">−43%</td><td class="n">+72%</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">4 of 4 pass</span> knowing beats blind and weighted; gain on 3 of 4 landings; predicted total
+gain within 16% of measured; the map's order beats a shuffled order. The engine re-derived the palace's green dot and
+heal on its own, from other domains, and placed it first.</p>
+</div></section>
+
+<section id="a1"><div class="wrap">
+<h2>A1 · Palace against three strong baselines</h2>
+<p class="intro">8 tasks per arm, 1,522 calls. <span class="muted">sha256 <code>d224abbf…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">Palace</th><th scope="col" class="n">JSON full state</th><th scope="col" class="n">Structured output</th><th scope="col" class="n">Summaries + retrieval</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact success</th><td class="n"><b>7/8</b></td><td class="n">5/8</td><td class="n">5/8</td><td class="n">0/8</td></tr>
+<tr><th scope="row">Channel tokens per task</th><td class="n"><b>2,563</b></td><td class="n">17,311</td><td class="n">24,425</td><td class="n">4,561</td></tr>
+<tr><th scope="row">Drift caught</th><td class="n"><b>24/24</b></td><td class="n">24/24</td><td class="n">23/24</td><td class="n">0/24</td></tr>
+<tr><th scope="row">Per repair: channel tokens / model tokens / time</th><td class="n"><b>38 / 0 / 0.15 ms</b></td><td class="n">875 / 6,894 / 13.8 s</td><td class="n">1,607 / 10,214 / 13.0 s</td><td class="n">—</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">5 of 6 pass</span> <span class="tag fail">P2 failed</span> a checker that remembers the last
+approved state also caught all drift. Against full-state baselines the difference is the cost and determinism of
+repair, not the detection rate; against the memory pattern common in production, detection itself differs: 24/24 vs
+0/24.</p>
+</div></section>
+
+<section id="ht1"><div class="wrap split">
+<div>
+<h2>HT1 · Human input</h2>
+<p class="intro">The author entered six of his own models as typed symbols and as text. Symbols were faster on 0 of 5
+timed tasks while also at least as accurate, so <span class="fail">K1 failed</span>. Mean accuracy was 0.88 for
+symbols and 0.96 for text; where symbols were faster, an element had been dropped.</p>
+<p class="muted small">The text was written as shorthand, so HT1 compares two compressed forms by the same person.
+sha256 <code>e1f8266b…</code></p>
+</div>
+<div>
+<h3>What followed</h3>
+<p>Typing was the bottleneck, so an RSOS keyboard layer was built: one key or chord emits a whole component or
+operator. An automated check keyed 12 targets and decoded them blind from the code alone: 12/12 after one bug fix,
+88 of 89 fields recovered (0.989). HT2 runs after a learning phase with a pre-registered plateau gate.</p>
+<a class="more" href="try.html#keyboard">Open the keyboard →</a>
+</div>
+</div></section>
+
+<section id="failures"><div class="wrap">
+<h2>The failure map</h2>
+<p class="intro">All 23 pre-registered failures to date are listed with their cause and the next test. Of the first
+20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3b answered two of them
+(A3 R1 and R4) and added three: the prose floor, the engine's size prediction, and H-copy's edit errors.</p>
+<a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/FAILURES_MAP.md">Read the full failure map</a>
+</div></section>
+
+<section id="earlier"><div class="wrap">
+<h2>Earlier results: simulation and code</h2>
+<div class="tw"><table>
+<thead><tr><th scope="col">Test</th><th scope="col">Result</th></tr></thead>
+<tbody>
+<tr><th scope="row">C1 palace messages</th><td>280/280 decoded exactly; drift detected 366/366</td></tr>
+<tr><th scope="row">T7 structure vs names</th><td>meaning carried by structure 98.3% vs names 3.3%; <span class="fail">with 10% relation noise: 47.5% (failed)</span></td></tr>
+<tr><th scope="row">T8 one program, two runtimes</th><td>a person's session and an agent from the same program (agent accuracy 0.488 → 0.762)</td></tr>
+<tr><th scope="row">V1 sense keys (simulation)</th><td>one rich sense channel opens the anchored state 0.90–0.92 vs a name key 0.18</td></tr>
+<tr><th scope="row">H3c evolve-healing (simulation)</th><td>quality −0.19 → +0.67; harmful copies 4.95% → 0.60%</td></tr>
+<tr><th scope="row">E1, F1b White Dragon growth (simulation)</th><td>deficit targeting 2.5×; <span class="fail">entry reinforcement +0.02 (failed)</span></td></tr>
+</tbody></table></div>
+</div></section>
+
+<section id="limits"><div class="wrap split">
+<div>
+<h2>Limits</h2>
+<ul class="plain">
+<li>One model family (Haiku-class, one provider). The cross-family test is open.</li>
+<li>8–16 tasks per arm: integrity and token differences are large; success differences of one or two tasks are not
+established.</li>
+<li>One task family: structured state editing. Free-text collaboration is untested.</li>
+<li>Competitors are re-implemented from public descriptions; our lossless quantiser favours D.</li>
+</ul>
+</div>
+<div>
+<ul class="plain">
+<li>The zero-token heal assumes a second, untouched copy; with both corrupted it costs 18.5 tokens per drift
+(offline).</li>
+<li>A2 and A3b each used one engine design call, so the variance between calls is unmeasured.</li>
+<li>Human evidence: one person, the inventor. No effect on people has been shown.</li>
+<li>Three of five ledger instruments tested did not track their claims and are being rebuilt.</li>
+</ul>
+</div>
+</div></section>
+</main>
+<footer><div class="wrap">
+<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
+Text CC BY 4.0<br>Research and development software, not a medical device.</div>
+<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+</div></footer>
+</body>
+</html>
