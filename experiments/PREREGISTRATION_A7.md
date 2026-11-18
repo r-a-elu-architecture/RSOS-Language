@@ -98,3 +98,12 @@ calls. Error split by request kind is part of the table.
 effect (S1 off: thinking tokens 0 in 0/48 tasks; the CLI ignores `MAX_THINKING_TOKENS=0`, `alwaysThinkingEnabled:false`
 and `--effort low` for `claude-haiku-5-5`). Cell stopped per the brief; S2 off and the `off` analysis not run. P1b and
 P3b keep their wording and have no verdict until a working control is committed and replay-checked.
+
+**Amendment log (18 Nov 2026, 13:20 Kyiv, before any A7c run).** A7c backend: `experiments/a7_local.py` (Ollama on the
+owner's PC, `A7_BACKEND=ollama`). Model **qwen2.5:1.5b** ("larger if the machine allows": an i7-4510U, 16 GB RAM, no GPU;
+1.5B is the largest that runs S1 in about two hours). Every arm and every call: temperature 0, seed 0, context 8192
+tokens; cost 0; no CLI scaffold. Arms B2 and X5b on S1 (P11 is defined on S1); X5r and S2 only if time allows. The
+harness, prompts, audit rule and integrity layer are unchanged; the local model is the auditor as well as the planner,
+for both arms. P11 unchanged: X5b ≥ 12/16 exact on S1 where B2 on the same model ≤ 4/16. Results label `local_qwen15`.
+Wiring checked against a stub server (calls, token counts and result files), 0 real model calls.
+

@@ -32,6 +32,10 @@ claude mcp add rsos -- rsoslang mcp              # or with no install: claude mc
 python experiments/a5_runtime_equivalence.py     # from a clone: this runtime replays every measured plan, 32/32 match
 ```
 
+**MCP:** listed in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos) as `io.github.r-a-elu-architecture/rsos` (0.3.1). Works in any MCP
+client over stdio (Claude Code, Claude Desktop, Cursor, …). Verified on 18 Nov 2026 on Windows 11: `pip install rsoslang`
+then `claude mcp add` → Connected; `uvx rsoslang mcp` starts with no install step.
+
 **[Drop it in (Python or MCP) →](STATE.md)** · **[StateBench →](bench/)** · **[Replicate it →](REPLICATE.md)** ·
 **[All results, failures included →](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)**
 

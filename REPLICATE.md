@@ -24,6 +24,15 @@ python experiments/a7_run.py run S2
 python experiments/a7_analyse.py default
 ```
 
+## A7c: on any laptop, $0, any open model (Ollama)
+
+```bash
+ollama pull qwen2.5:1.5b                          # or any model Ollama serves
+A7_BACKEND=ollama A7_LABEL=local_qwen15 python experiments/a7_run.py run S1 B2,X5b
+# Windows PowerShell: $env:A7_BACKEND="ollama"; $env:A7_LABEL="local_qwen15"; py experiments/a7_run.py run S1 B2,X5b
+# other model: set A7_LOCAL_MODEL (e.g. llama3.2:3b) and a new A7_LABEL; a new model is a new result, please label it
+```
+
 # A5: one plan against one call per step (about 1 hour, under $1 at API prices)
 
 **Claim (A5, pre-registered):** in a three-agent workflow that edits a shared 30-line state over 14 change requests

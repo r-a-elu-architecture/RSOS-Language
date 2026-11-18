@@ -35,7 +35,11 @@ operations name keys and the runtime computes every value.</p>
 </tbody></table></div>
 <pre aria-label="Install as an MCP tool"><code><span class="c"># Claude Code, or any MCP client</span>
 pip install rsoslang
-claude mcp add rsos -- rsoslang mcp</code></pre>
+claude mcp add rsos -- rsoslang mcp
+
+<span class="c"># or with no install</span>
+claude mcp add rsos -- uvx rsoslang mcp</code></pre>
+<p class="muted small">In the <a href="https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos">official MCP Registry</a> as <code>io.github.r-a-elu-architecture/rsos</code> (0.3.1). Any MCP client over stdio: Claude Code, Claude Desktop, Cursor and others. Verified on Windows 11, 18 Nov 2026: <code>claude mcp add</code> → Connected. On PyPI as <a href="https://pypi.org/project/rsoslang/">rsoslang</a>.</p>
 </div>
 </div></section>
 

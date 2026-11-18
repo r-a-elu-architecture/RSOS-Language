@@ -40,6 +40,9 @@ pip install rsoslang
 claude mcp add rsos -- rsoslang mcp
 ```
 
+Official MCP Registry: [`io.github.r-a-elu-architecture/rsos`](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos) (0.3.1). Verified on Windows 11 (18 Nov 2026): `pip install
+rsoslang`, `claude mcp add` → Connected; `uvx rsoslang mcp` starts with no install.
+
 Claude Desktop or any other MCP client: a stdio server with command `rsoslang` and argument `mcp` (or command `uvx`,
 arguments `rsoslang mcp`: no install step). From a clone without installing: `claude mcp add rsos -- python -m rsoslang.mcp_server`
 run from the repository with `PYTHONPATH=src`.

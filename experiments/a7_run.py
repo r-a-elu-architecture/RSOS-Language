@@ -25,12 +25,16 @@ import a7_arms as S                        # noqa: E402
 R = os.path.join(A.ROOT, "results")
 SEEDS = R5.SEEDS
 THINK = os.environ.get("A7_THINK", "default")
+BACKEND = os.environ.get("A7_BACKEND", "cli")           # cli (claude -p) or ollama (A7c, local model)
+LABEL = os.environ.get("A7_LABEL", THINK)                # results file label, e.g. local_qwen15
 _lock = threading.Lock()
 FROZEN = ["a1_agents.py", "a3_run.py", "a3b_hologram.py", "a3b_hdragon.py", "a4_latent.py", "a4_analyse.py",
           "a5_arms.py", "a5_run.py", "a5_llm.py", "a5_cost.py", "a5_analyse.py", "a5_prices.json"]
 
 
 def scaffold(set_name, phase):
+    if BACKEND == "ollama":                              # no CLI, no scaffold: every token is the agent's own
+        return
     """Null calls: the CLI scaffold of this machine, removed in the api basis (as A5). Own file, A5's untouched."""
     import a5_llm as L
     rows = []
@@ -39,7 +43,7 @@ def scaffold(set_name, phase):
         rows.append(r["in"] + r["cache_w"] + r["cache_r"])
     with _lock:
         with open(os.path.join(R, "a7_scaffold.jsonl"), "a") as f:
-            f.write(json.dumps({"set": set_name, "phase": phase, "think": THINK, "tokens": rows}) + "\n")
+            f.write(json.dumps({"set": set_name, "phase": phase, "think": LABEL, "tokens": rows}) + "\n")
 
 
 def setup(set_name):
@@ -47,6 +51,9 @@ def setup(set_name):
         import a4_latent as A4
         A4.patch()
     S.thinking(THINK)
+    if BACKEND == "ollama":
+        import a7_local
+        a7_local.install()
 
 
 def run_one(arm, set_name, seed, tag=None):
@@ -54,6 +61,7 @@ def run_one(arm, set_name, seed, tag=None):
     if set_name == "S2":
         res["computes"] = R5.computes_of(task, res["final_state"])
     res["set"] = set_name
+    res["label"], res["backend"] = LABEL, BACKEND
     return res
 
 
@@ -114,7 +122,7 @@ def replaycheck(set_name):
                    and out["same_audit_selection_all_arms"]
                    and all(o["success"] == o["tasks"] == 16 and o["invalid"] == 0 and o["healed_zero_call"] == 48
                            for o in out["oracle"].values()))
-    json.dump(out, open(os.path.join(R, f"a7_replay_check_{set_name}_{THINK}.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(R, f"a7_replay_check_{set_name}_{LABEL}.json"), "w"), indent=1)
     print(json.dumps({k: v for k, v in out.items() if k != "oracle"} |
                      {"oracle": {a: {k: v for k, v in o.items() if k != "audited_steps"}
                                  for a, o in out["oracle"].items()}}, indent=1))
@@ -141,19 +149,19 @@ def smoke(set_name, arms):
 
 def main_run(set_name, arms):
     setup(set_name)
-    res_path = os.path.join(R, f"a7_results_{set_name}_{THINK}.jsonl")
-    os.environ["A7_TRANSCRIPTS"] = os.path.join(R, f"a7_transcripts_{set_name}_{THINK}.jsonl")
+    res_path = os.path.join(R, f"a7_results_{set_name}_{LABEL}.jsonl")
+    os.environ["A7_TRANSCRIPTS"] = os.path.join(R, f"a7_transcripts_{set_name}_{LABEL}.jsonl")
     done = set()
     if os.path.exists(res_path):
         for line in open(res_path):
             r = json.loads(line)
             done.add((r["arm"], r["seed"]))
     todo = [(a, s) for a in arms for s in SEEDS[set_name] if (a, s) not in done]
-    print(f"{set_name} think={THINK}: done {len(done)}, live {len(todo)}", flush=True)
+    print(f"{set_name} label={LABEL} backend={BACKEND}: done {len(done)}, live {len(todo)}", flush=True)
     if not todo:
         return
     scaffold(set_name, "start")
-    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "4"))) as ex:
+    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "4"))) as ex:
         futs = [ex.submit(run_one, a, set_name, s) for a, s in todo]
         for fu in as_completed(futs):
             r = fu.result()

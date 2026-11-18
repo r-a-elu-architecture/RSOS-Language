@@ -83,8 +83,9 @@ def summary(set_name, think, P, runs, sc):
         if arm in out and "B2" in out and out[arm]["tasks"] == out["B2"]["tasks"]:
             a, b = out[arm]["_ca"], out["B2"]["_ca"]
             o = out[arm]
-            o["cost_ratio_vs_B2"] = o["cost_api"] / out["B2"]["cost_api"]
-            o["cost_ratio_vs_B2_ci"] = ratio_ci(a, b)
+            if out["B2"]["cost_api"] > 0:                    # local models (A7c) cost 0: no ratio
+                o["cost_ratio_vs_B2"] = o["cost_api"] / out["B2"]["cost_api"]
+                o["cost_ratio_vs_B2_ci"] = ratio_ci(a, b)
             pb, pa = out["B2"]["cost_per_correct_api"], o["cost_per_correct_api"]
             o["cost_per_correct_ratio_vs_B2"] = (pa / pb) if (pa and pb) else None
             o["reach_distance_x"] = (pb / pa) if (pa and pb) else None       # how many times below M*
@@ -93,9 +94,17 @@ def summary(set_name, think, P, runs, sc):
     return out
 
 
-def verdicts(T):
+def verdicts(T, label="default"):
     def g(s, a, k):
         return T.get(s, {}).get(a, {}).get(k)
+    if label.startswith("local"):                         # A7c: P11 on S1 (pre-registration section 5)
+        if g("S1", "X5b", "tasks") != 16 or g("S1", "B2", "tasks") != 16:
+            return {"status": "incomplete"}
+        return {"P11_local_floor": g("S1", "X5b", "exact") >= 12 and g("S1", "B2", "exact") <= 4,
+                "S1_exact": {a: g("S1", a, "exact") for a in ARMS if g("S1", a, "tasks")},
+                "S1_steps_wrong_or_failed": {a: g("S1", a, "steps_wrong") + g("S1", a, "steps_failed")
+                                             for a in ARMS if g("S1", a, "tasks")},
+                "S1_invalid": {a: g("S1", a, "invalid") for a in ARMS if g("S1", a, "tasks")}}
     have = all(g(s, a, "tasks") == 16 for s in SETS for a in ARMS)
     if not have:
         return {"status": "incomplete"}
@@ -124,7 +133,7 @@ if __name__ == "__main__":
         SC[s] = {"mean": sc, "tokens": toks}
         T[s] = summary(s, think, P, load(s, think), sc)
     payload = {"think": think, "price_sheet": C.prices()["run_time_sheet"], "scaffold": SC, "tables": T,
-               "predictions": verdicts(T)}
+               "predictions": verdicts(T, think)}
     path, dig = save(f"a7_{think}", payload)
     print(json.dumps({"tables": T, "predictions": payload["predictions"]}, indent=1))
     print("saved", path, dig)
