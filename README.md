@@ -95,17 +95,25 @@ RSOS_CUE_FRAMEWORK=/path/to/RSOS-Multimodal-Cue-Framework python -m rsoslang ses
 
 ## Use it from Claude or any MCP assistant
 
-```json
-{"mcpServers": {"rsos-language": {"command": "python", "args": ["-m", "rsoslang.mcp_server"],
-  "env": {"RSOS_CUE_FRAMEWORK": "/path/to/RSOS-Multimodal-Cue-Framework"}}}}
+```bash
+pip install rsoslang
+claude mcp add rsos -- rsoslang mcp              # or: claude mcp add rsos -- uvx rsoslang mcp
 ```
 
-The tools are `rsos_statements`, `rsos_check`, `rsos_compile`, `rsos_session`, `rsos_paint_workflow`,
-`rsos_apply_gestures` and `rsos_paint_graph`.
+Any other MCP client: a stdio server with command `rsoslang` and argument `mcp`
+(`{"mcpServers": {"rsos": {"command": "rsoslang", "args": ["mcp"]}}}`).
+
+**State Runtime tools:** `rsos_state_new`, `rsos_state_prompt`, `rsos_state_apply`, `rsos_state_sync`,
+`rsos_state_get` (see [STATE.md](STATE.md)). **Language tools:** `rsos_statements`, `rsos_check`, `rsos_compile`,
+`rsos_session`, `rsos_paint_workflow`, `rsos_apply_gestures`, `rsos_paint_graph`. Person-facing sessions need the
+cue framework (`RSOS_CUE_FRAMEWORK=/path/to/RSOS-Multimodal-Cue-Framework`).
 
 ## Results
 
-See `results/BUILD_REPORT.md`. It covers every pre-registered test, the ones that failed included.
+Every pre-registered test, the ones that failed included, on the
+[results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html); the failure map is
+[`experiments/FAILURES_MAP.md`](experiments/FAILURES_MAP.md); the next tests are in [NEXT_TESTS.md](NEXT_TESTS.md).
+Earlier simulation and code results: [`results/BUILD_REPORT.md`](results/BUILD_REPORT.md).
 
 ## Licence
 
