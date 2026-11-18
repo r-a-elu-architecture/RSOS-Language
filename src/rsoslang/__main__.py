@@ -5,6 +5,7 @@
   statements        list every statement with its register links and an example
   register          show which register rows (U1–U87) the language covers
   session FILE      a person's practice session: RSX program and the cue framework's timeline
+  mcp               run the MCP server (stdio): the State Runtime and the language as tools
 """
 
 import json
@@ -26,6 +27,10 @@ def main(argv=None):
         print(__doc__)
         return 0
     cmd = argv[0]
+    if cmd == "mcp":
+        from .mcp_server import main as serve
+        serve()
+        return 0
     if cmd == "statements":
         if "--json" in argv:
             from .grammar import signature
@@ -68,4 +73,8 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
+    sys.exit(main())
+
+
+def cli():
     sys.exit(main())

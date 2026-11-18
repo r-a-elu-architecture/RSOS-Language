@@ -20,7 +20,7 @@ set and integrity layer, packaged. Verify them yourself: [REPLICATE.md](REPLICAT
 ## In 60 seconds (Python)
 
 ```bash
-pip install -e .            # from a clone of this repository
+pip install rsoslang        # or, from a clone of this repository: pip install -e .
 ```
 
 ```python
@@ -36,11 +36,27 @@ healed = led.sync(worker_copy)                      # any agent's copy: drift re
 ## As an MCP tool (Claude Code, Claude Desktop, any MCP client)
 
 ```bash
-claude mcp add rsos -- python -m rsoslang.mcp_server
+pip install rsoslang
+claude mcp add rsos -- rsoslang mcp
+```
+
+Claude Desktop or any other MCP client: a stdio server with command `rsoslang` and argument `mcp` (or command `uvx`,
+arguments `rsoslang mcp`: no install step). From a clone without installing: `claude mcp add rsos -- python -m rsoslang.mcp_server`
+run from the repository with `PYTHONPATH=src`.
+
+```text
+Try it: "Start an RSOS state with auth.timeout_ms=700 and auth.retries=3, then apply: raise the timeout by 100 and set
+retries to 5. Show me the green dot."
 ```
 
 Tools: `rsos_state_new`, `rsos_state_prompt` (one prompt for all requests), `rsos_state_apply` (execute a plan),
 `rsos_state_sync` (heal an agent's copy, 0 model calls), `rsos_state_get`.
+
+## In a LangGraph workflow
+
+[`examples/langgraph_state.py`](examples/langgraph_state.py): three nodes (planner, runtime, agents) replace a
+model call per step with one call for the whole task; every agent's copy is synced to the green dot with zero model
+calls. The nodes are plain functions, so the example also runs without LangGraph installed.
 
 ## The operations
 

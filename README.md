@@ -14,6 +14,12 @@ the best setup built for the same agents at API prices, **8× faster**, **32/32 
 with **zero model calls**. When agents compute from their own copies, a Slipstream-style anchor protocol got **0 of
 16** tasks right; RSOS stayed right.
 
+```bash
+pip install rsoslang                             # or, from a clone: pip install -e .
+claude mcp add rsos -- rsoslang mcp              # or with no install: claude mcp add rsos -- uvx rsoslang mcp
+python experiments/a5_runtime_equivalence.py     # from a clone: this runtime replays every measured plan, 32/32 match
+```
+
 **[Drop it in (Python or MCP) →](STATE.md)** · **[Replicate it, under $1 →](REPLICATE.md)** ·
 **[All results, failures included →](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)**
 
@@ -87,3 +93,5 @@ See `results/BUILD_REPORT.md`. It covers every pre-registered test, the ones tha
 ## Licence
 
 Apache 2.0. Research and development software; not a medical device.
+
+<!-- mcp-name: io.github.r-a-elu-architecture/rsos -->

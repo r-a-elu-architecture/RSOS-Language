@@ -1,7 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 (18 Nov 2026)
 
+- Package: `pip install rsoslang` (PyPI), `rsoslang mcp` runs the MCP server; `server.json` for the official MCP
+  Registry; MCP SDK 1.x and 2.x supported.
+- `experiments/a5_runtime_equivalence.py`: the shipped `rsoslang.state` runtime replays every recorded A5 plan, 32/32
+  final states match the measured run (0 model calls).
+- `examples/langgraph_state.py`: the State Runtime as LangGraph nodes (1 model call for a whole task).
+- `tools/build_hf.sh`: the Hugging Face dataset (results, transcripts, pre-registrations, reports) and editor Space.
 - **RSOS State Runtime** (`rsoslang.state`): the model writes operations for a whole task in one call; the runtime
   executes them, checks every copy against the green dot and heals drift with zero model calls. Python API and five
   MCP tools (`rsos_state_new`, `rsos_state_prompt`, `rsos_state_apply`, `rsos_state_sync`, `rsos_state_get`).

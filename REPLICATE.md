@@ -28,6 +28,7 @@ counts with the table in `experiments/A5_REPORT.md` §1.
 
 ```bash
 python experiments/a5_analyse.py                 # recomputes results/a5_cost.json from the recorded runs (sha 9cd1eb92…)
+python experiments/a5_runtime_equivalence.py     # the shipped rsoslang.state runtime replays every recorded X5 plan: 32/32 final states match
 python experiments/a3c_edges_check.py            # A3c per-edge numbers from text-free counts
 ```
 

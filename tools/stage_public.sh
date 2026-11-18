@@ -19,7 +19,7 @@ rm -f experiments/PREREGISTRATION_S2B.md experiments/s2b_*.py experiments/ht1/ow
 # sensitive-term guard below protects the owner's history, so these wait for the owner's decision.
 rm -f results/a3c_transcripts_Hp.jsonl results/a3c_replay_a3P_Hp_transcripts.jsonl
 find . -name __pycache__ -prune -exec rm -rf {} +
-if grep -rqiE --exclude=stage_public.sh "suicid|psychos|schizo|depress|PTSD|hospital" .; then echo "STOP: sensitive term found"; exit 1; fi
+if grep -rqiE --exclude=stage_public.sh --exclude=build_hf.sh "suicid|psychos|schizo|depress|PTSD|hospital" .; then echo "STOP: sensitive term found"; exit 1; fi
 grep -rlE --exclude=stage_public.sh "owner_turns|corpus/chat-" . | sed 's/^/owner to review (mentions the private chat corpus): /' || true
 python3 -m pytest -q | tail -1
 echo "staged: $OUT ($(find . -type f | wc -l) files)"

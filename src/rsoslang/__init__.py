@@ -10,7 +10,7 @@ from .parser import parse, Program
 from .compiler import compile_source, compile_file
 from .diagnostics import Diagnostic
 
-__version__ = "0.2.0.dev1"
+__version__ = "0.3.0"
 LANGUAGE_VERSION = "0.2"
 
 __all__ = ["tokenize", "parse", "Program", "compile_source", "compile_file", "Diagnostic",

@@ -1,6 +1,7 @@
 """MCP server for the RSOS Language: lets Claude or any MCP-capable assistant read, write and run RSOS programs.
 
-Run:  python -m rsoslang.mcp_server        (stdio transport)
+Run:  rsoslang mcp   (or rsoslang-mcp, or python -m rsoslang.mcp_server)        stdio transport
+Install:  pip install rsoslang      No install:  uvx rsoslang mcp
 
 Tools
   rsos_statements      the language: every statement with its signature and an example
@@ -21,15 +22,24 @@ Tools
 
 import json
 
-from mcp.server.mcpserver import MCPServer
+try:                                   # MCP Python SDK 2.x
+    from mcp.server.mcpserver import MCPServer
+except ImportError:                    # SDK 1.x: the same server under its earlier name
+    try:
+        from mcp.server.fastmcp import FastMCP as MCPServer
+    except ImportError as e:
+        raise SystemExit("rsoslang MCP server needs the MCP SDK: pip install mcp") from e
 
 from . import compile_source
 from .grammar import STATEMENTS, signature
 
-server = MCPServer(name="rsos-language", version="0.2.0",
-                   instructions="RSOS Language: write programs as scenes (place, pierce, enter, colour, connect). "
-                                "Use rsos_statements to learn the language, rsos_check before running anything, and "
-                                "rsos_apply_gestures to measure an effect. Person-facing programs need CONSENT.")
+server = MCPServer(name="rsos-language", version="0.3.0",
+                   instructions="RSOS State Runtime: for work that edits a shared state over many steps, call rsos_state_new, "
+                                "then rsos_state_prompt once for ALL requests, answer that prompt with operations, and "
+                                "pass them to rsos_state_apply: the runtime computes every value. Use rsos_state_sync "
+                                "to check and heal any agent's copy (0 model calls). RSOS Language: write programs as "
+                                "scenes; use rsos_statements to learn it and rsos_check before running anything. "
+                                "Person-facing programs need CONSENT.")
 _DATA = {}
 
 
