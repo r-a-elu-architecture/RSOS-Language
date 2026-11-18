@@ -10,6 +10,13 @@ Tools
   rsos_paint_workflow  the 12-module support agent as a painting, with measured metrics
   rsos_apply_gestures  apply gestures (RSOS statements) to the support agent; measured before/after on held-out tickets
   rsos_paint_graph     paint an external agent graph (LangGraph-style JSON) and turn gestures into graph edits
+
+  RSOS State Runtime (the model decides, the language executes; A4, A5):
+  rsos_state_new       start a shared state; returns its id and green dot
+  rsos_state_prompt    one prompt that turns ALL of a task's requests into RSOS operations (any model)
+  rsos_state_apply     execute operations or a whole '#n' plan; the runtime computes every value
+  rsos_state_sync      check an agent's copy against the green dot and heal drifted lines (0 model calls)
+  rsos_state_get       the agreed state and its green dot
 """
 
 import json
@@ -96,6 +103,53 @@ def rsos_paint_graph(graph_json: str, gestures_json: str = "[]") -> str:
     scene = read_graph(json.loads(graph_json))
     edits = patch(scene, [tuple(g) for g in json.loads(gestures_json)])
     return json.dumps({"scene": scene, "edits": edits})
+
+
+# ---- RSOS State Runtime (A4, A5) -------------------------------------------------------------------------------
+_LEDGERS = {}
+
+
+def _ledger(state_id):
+    if state_id not in _LEDGERS:
+        raise ValueError(f"unknown state id {state_id!r}; call rsos_state_new first")
+    return _LEDGERS[state_id]
+
+
+@server.tool(description="Start a shared state (JSON object of dotted keys to values). Returns its id and green dot.")
+def rsos_state_new(state_json: str) -> str:
+    from .state import Ledger
+    led = Ledger(json.loads(state_json))
+    sid = f"s{len(_LEDGERS) + 1}"
+    _LEDGERS[sid] = led
+    return json.dumps({"id": sid, "dot": led.dot, "keys": len(led.state)})
+
+
+@server.tool(description="One prompt for a whole task: give a JSON list of change requests; send the returned system and "
+                         "user text to any model; pass its reply to rsos_state_apply. One call instead of one per step.")
+def rsos_state_prompt(state_id: str, requests_json: str) -> str:
+    from .state import plan_prompt
+    return json.dumps(plan_prompt(json.loads(requests_json), _ledger(state_id).state), ensure_ascii=False)
+
+
+@server.tool(description="Execute RSOS operations, or a whole plan with '#n' step headers, on the shared state. The "
+                         "runtime reads and computes every value; failed steps come back with a reason and change nothing.")
+def rsos_state_apply(state_id: str, operations: str) -> str:
+    from .state import parse_plan
+    led = _ledger(state_id)
+    plan = parse_plan(operations)
+    out = led.apply_plan(plan) if plan else led.apply(operations)
+    return json.dumps(out, ensure_ascii=False)
+
+
+@server.tool(description="Check an agent's copy (JSON object) against the agreed state's green dot and heal every drifted "
+                         "line, with zero model calls. Returns the healed copy and the list of drifted keys.")
+def rsos_state_sync(state_id: str, replica_json: str) -> str:
+    return json.dumps(_ledger(state_id).sync(json.loads(replica_json)), ensure_ascii=False)
+
+
+@server.tool(description="The agreed shared state and its green dot.")
+def rsos_state_get(state_id: str) -> str:
+    return _ledger(state_id).to_json()
 
 
 def main():

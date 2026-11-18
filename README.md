@@ -6,6 +6,17 @@
 [doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software release 0.2.0:
 [doi:10.5281/zenodo.24317658](https://doi.org/10.5281/zenodo.24317658).
 
+## RSOS State Runtime: 2 model calls instead of 42
+
+**For multi-agent workflows that edit shared state.** The model decides; the language executes. On real LLM agents
+(pre-registered, every failure reported): a 14-step task in **2 model calls instead of 42**, **2.8–3.7× cheaper** than
+the best setup built for the same agents at API prices, **8× faster**, **32/32 correct**, every injected drift healed
+with **zero model calls**. When agents compute from their own copies, a Slipstream-style anchor protocol got **0 of
+16** tasks right; RSOS stayed right.
+
+**[Drop it in (Python or MCP) →](STATE.md)** · **[Replicate it, under $1 →](REPLICATE.md)** ·
+**[All results, failures included →](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)**
+
 **A spatial-symbolic programming language for humans and AI.** You write a program the way you think it: objects in
 a scene, placed, touched, pierced, entered, coloured, connected by lines, kept in the rooms of a house. The same
 program runs in two places:
