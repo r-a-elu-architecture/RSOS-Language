@@ -36,29 +36,29 @@ redesigns the host it runs on. Consent and harm checks are part of the compiler.
 <div class="stats" aria-label="Headline results">
 <div class="stat"><div class="n">0.106×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol, with every copy of the shared state true</div><div class="s">BPE tokens; with a local predictor (labelled) · 0.141× with zero model calls · A3c</div></div>
 <div class="stat"><div class="n">0 / 16</div><div class="l">tasks right for the anchor protocol once agents compute from their copies; RSOS stays right</div><div class="s">93 of 96 wrong values traced to hidden drift; palace 16 / 16 · A4</div></div>
-<div class="stat"><div class="n">2 calls</div><div class="l">per task instead of 42: 2.8–3.7× cheaper than one call per step, 32 / 32 exact</div><div class="s">same agents, API prices · A5 · one-call JSON baseline: A7, next</div></div>
+<div class="stat"><div class="n">32 / 32</div><div class="l">exact with the planner shown no state value, against 31 / 32 for one-call JSON Patch, at 0.79–0.91× its cost per correct task</div><div class="s">same model, seeds, hash check and audit rule · A7a</div></div>
 </div>
-<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 41 predictions on real
-hosts: 25 passed, 16 failed. The failures are on the results page, next to the passes.</p>
+<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 49 predictions on real
+hosts: 29 passed, 20 failed. The failures are on the results page, next to the passes.</p>
 </div>
 </div>
 
 <section id="state-runtime"><div class="wrap split">
 <div>
-<h2>RSOS State Runtime: 2 model calls instead of 42</h2>
+<h2>Blind planning: the model names keys, the runtime computes values</h2>
 <p class="intro">For multi-agent workflows that edit shared state. The model decides what should change; the RSOS
 runtime executes it, checks every agent's copy and heals drift. A whole task fits in one model call, because the
 operations name keys and the runtime computes every value.</p>
-<a class="cta" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/STATE.md">Drop it in: Python or MCP</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/REPLICATE.md">Replicate it, under $1</a>
+<a class="cta" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/STATE.md">Drop it in: Python or MCP</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/bench">Score your framework: StateBench</a>
 </div>
 <div>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">One call per step</th><th scope="col" class="n">RSOS</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">One call per step</th><th scope="col" class="n">One-call JSON Patch</th><th scope="col" class="n">RSOS blind</th></tr></thead>
 <tbody>
-<tr><th scope="row">Model calls, 14-step task</th><td class="n">42–43</td><td class="n"><b>2.2–2.4</b></td></tr>
-<tr><th scope="row">Cost per task</th><td class="n">1×</td><td class="n"><b>0.27–0.35×</b></td></tr>
-<tr><th scope="row">Time per task</th><td class="n">~100 s</td><td class="n"><b>12 s</b></td></tr>
-<tr><th scope="row">Tasks fully correct</th><td class="n">31/32</td><td class="n"><b>32/32</b></td></tr>
+<tr><th scope="row">Model calls, 14-step task</th><td class="n">42–43</td><td class="n">2.0–2.3</td><td class="n"><b>2.3–2.4</b></td></tr>
+<tr><th scope="row">Cost per correct task</th><td class="n">2.8–3.0×</td><td class="n">1×</td><td class="n"><b>0.79–0.91×</b></td></tr>
+<tr><th scope="row">Tasks fully correct</th><td class="n">31/32</td><td class="n">31/32</td><td class="n"><b>32/32</b></td></tr>
+<tr><th scope="row">State values the planner sees</th><td class="n">all</td><td class="n">all</td><td class="n"><b>none</b></td></tr>
 </tbody></table></div>
 <pre aria-label="Install as an MCP tool"><code><span class="c"># Claude Code, or any MCP client</span>
 pip install rsoslang

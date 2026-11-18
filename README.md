@@ -6,14 +6,25 @@
 [doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software release 0.2.0:
 [doi:10.5281/zenodo.24317658](https://doi.org/10.5281/zenodo.24317658).
 
-## RSOS State Runtime: 2 model calls instead of 42
+## Blind planning: the model names keys, the runtime computes values
 
-**For multi-agent workflows that edit shared state.** The model decides; the language executes. On real LLM agents
-(pre-registered, every failure reported): a 14-step task in **2 model calls instead of 42**, **2.8–3.7× cheaper** than
-the same agents run one model call per step (our per-step protocol, API prices), **8× faster**, **32/32 correct**, every injected drift healed
-with **zero model calls**. When agents compute from their own copies, a Slipstream-style anchor protocol (our
-re-implementation, without the hash check and restore) got **0 of 16** tasks right; RSOS stayed right. **Not yet
-measured:** a one-call JSON baseline given the same hash check and restore (A7, next).
+**For multi-agent workflows that edit shared state.** The planner writes the whole task as operations that name keys
+and relations (`INHERIT auth.retries search.retries CAP 8`), never values; a deterministic runtime computes every
+value, hash-checks every agent's copy and heals drift with zero model calls.
+
+**Against the most efficient market pattern we could build** (A7a, pre-registered: one call writes the whole task as
+JSON Patch, one audit call, the same model, seeds, hash check and audit rule), RSOS **matched or beat it on every
+measured axis**: **32/32 exact vs 31/32**, **0.79–0.91× its cost per correct task** (95% CI below 1 on both task
+sets), about 2 calls per task for both, **while the planner never saw a single state value**. The market pattern's one
+failure was a step whose values depend on earlier steps; it stayed wrong after three attempts although the auditor
+named the error each time. Against one model call per step (A5): **2.2–2.4 calls instead of 42–43, 0.27–0.35× the
+cost, 12 s instead of ~100 s.**
+
+**Limits:** one task family (30 keys, 14 requests), one model family (Claude Haiku 5.5), 32 tasks per arm; margins at
+this scale are small. The next tests, with predictions fixed in advance, are in **[NEXT_TESTS.md](NEXT_TESTS.md)**.
+
+**Try to break it.** Score any framework on the same 32 tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a
+scorer, no harness needed), or re-run A7 on a Claude plan for $0. Every result, confirming or not, is listed.
 
 ```bash
 pip install rsoslang                             # or, from a clone: pip install -e .
@@ -21,7 +32,7 @@ claude mcp add rsos -- rsoslang mcp              # or with no install: claude mc
 python experiments/a5_runtime_equivalence.py     # from a clone: this runtime replays every measured plan, 32/32 match
 ```
 
-**[Drop it in (Python or MCP) →](STATE.md)** · **[Replicate it, under $1 →](REPLICATE.md)** ·
+**[Drop it in (Python or MCP) →](STATE.md)** · **[StateBench →](bench/)** · **[Replicate it →](REPLICATE.md)** ·
 **[All results, failures included →](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)**
 
 **A spatial-symbolic programming language for humans and AI.** You write a program the way you think it: objects in

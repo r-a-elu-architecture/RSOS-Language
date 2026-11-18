@@ -29,13 +29,38 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 41 predictions, 25 passed and 16 failed.</p>
+recorded, and each results file carries a hash. On real hosts: 49 predictions, 29 passed and 20 failed.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
 <a href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/results"><code>results/</code></a>.</p>
 </div>
 </div>
+
+<section id="a7a"><div class="wrap">
+<h2>A7a · Against the market's most efficient pattern, and blind planning</h2>
+<p class="intro">M* is the most efficient market pattern we could build for the same agents: one call writes the whole
+task as JSON Patch with values the model computes from the full state, then one audit call. RSOS writes operations
+for the whole task; the blind arm's planner is shown no state value at all. Same model (Haiku 5.5), seeds, retries,
+hash check, zero-call healing and one audit rule for every arm. 96 live tasks, pre-registered.
+<span class="muted">sha256 <code>42be52d5…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">S1 M*</th><th scope="col" class="n">S1 RSOS</th><th scope="col" class="n">S1 RSOS blind</th><th scope="col" class="n">S2 M*</th><th scope="col" class="n">S2 RSOS</th><th scope="col" class="n">S2 RSOS blind</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact</th><td class="n">15/16</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td class="n">16/16</td><td class="n">16/16</td><td class="n"><b>16/16</b></td></tr>
+<tr><th scope="row">Calls per task</th><td class="n">2.25</td><td class="n">2.38</td><td class="n">2.38</td><td class="n">2.00</td><td class="n">2.19</td><td class="n">2.25</td></tr>
+<tr><th scope="row">Cost per correct task ($×10⁻³)</th><td class="n">1.530</td><td class="n">1.251</td><td class="n"><b>1.204</b></td><td class="n">1.433</td><td class="n">1.327</td><td class="n"><b>1.304</b></td></tr>
+<tr><th scope="row">÷ M* (95% CI)</th><td class="n">1</td><td class="n">0.82</td><td class="n"><b>0.79</b> [0.79, 0.90]</td><td class="n">1</td><td class="n">0.93</td><td class="n"><b>0.91</b> [0.87, 0.95]</td></tr>
+<tr><th scope="row">Drifts healed at 0 calls</th><td class="n">48/48</td><td class="n">48/48</td><td class="n">48/48</td><td class="n">48/48</td><td class="n">48/48</td><td class="n">48/48</td></tr>
+</tbody></table></div>
+<p>Passed: blind planning loses no exactness (P2); M*'s errors sit on state-dependent steps (P6, one error: an owner
+transfer after earlier changes, wrong on all three attempts although the auditor named it); one plan (P7); healing in
+every arm (P8). Failed: M* never fell to 13/16 (P1); cost per correct halved (P3; measured 0.79/0.91); blind input
+halved (P4: the operation grammar outweighs a 30-key state); M* thinks twice as much (P5). The margins are small at
+this scale; the next cells (thinking off, depth 16, 224 steps, a local 0.5B model) have their predictions fixed in
+<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/NEXT_TESTS.md">the roadmap</a>.</p>
+<a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/A7_REPORT.md">Read the A7a report</a>
+</div></section>
 
 <section id="a5"><div class="wrap">
 <h2>A5 · The model bill: one plan for the whole task against one call per step</h2>
@@ -209,10 +234,10 @@ operator. An automated check keyed 12 targets and decoded them blind from the co
 
 <section id="failures"><div class="wrap">
 <h2>The failure map</h2>
-<p class="intro">All 31 pre-registered failures to date are listed with their cause and the next test. Of the first
+<p class="intro">All 35 pre-registered failures to date are listed with their cause and the next test. Of the first
 20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3c answered two more
 (the prose floor and the engine's size prediction). Every remaining failure of the integrity protocols is a single
-model error on a true copy, never a codec or integrity failure; the cost failures of A5 point to thinking tokens.</p>
+model error on a true copy, never a codec or integrity failure; the cost failures of A5 point to thinking tokens; A7a's four show that M*'s margin is small at this scale.</p>
 <a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/FAILURES_MAP.md">Read the full failure map</a>
 </div></section>
 

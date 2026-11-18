@@ -1,4 +1,30 @@
-# Replicate the core claim (about 1 hour, under $1 at API prices)
+# Replicate the core claims
+
+Three levels: **verify** our numbers in one minute with no model call; **score your own framework** on the same 32
+tasks with [StateBench](bench/); or **re-run** A7a or A5 (about an hour; $0 on a Claude plan, under $1 at API prices).
+
+## Verify in one minute (0 model calls)
+
+```bash
+pip install -e . tiktoken
+python experiments/a7_run.py replaycheck S1      # the A7 harness: every arm, given correct plans, is exact; pass: true
+python experiments/a7_analyse.py default         # recomputes results/a7_default.json: results_sha256 42be52d5…
+```
+
+## A7a: against the market's most efficient pattern (M*)
+
+**Claim (pre-registered):** with the same model (Haiku 5.5), seeds, hash check, healing and audit rule, one-call JSON
+Patch (M\*) was exact on 31/32 tasks; RSOS blind (the planner shown no state value) on 32/32, at 0.787× (S1) and
+0.910× (S2) M\*'s cost per correct task. Failure would be: RSOS blind below M\* on exactness, or its cost per correct
+task above M\*'s on either set.
+
+```bash
+python experiments/a7_run.py run S1              # B2 (M*), X5r, X5b: 48 tasks
+python experiments/a7_run.py run S2
+python experiments/a7_analyse.py default
+```
+
+# A5: one plan against one call per step (about 1 hour, under $1 at API prices)
 
 **Claim (A5, pre-registered):** in a three-agent workflow that edits a shared 30-line state over 14 change requests
 with 3 injected drifts, the RSOS assembly line (X5: the model writes RSOS operations for the whole task in one call,

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1 (18 Nov 2026)
+
+- **A7a results:** against one-call JSON Patch with the same model, seeds, hash check and audit rule (M\*), RSOS blind
+  (the planner shown no state value) was 32/32 exact vs 31/32, at 0.79× / 0.91× M\*'s cost per correct task.
+  Pre-registration, code, results, transcripts and report in `experiments/` and `results/`.
+- **RSOS-StateBench v1** (`bench/`): the 32 tasks as plain JSONL and a scorer, for any framework or model; leaderboard.
+- `NEXT_TESTS.md`: the next tests with their predictions fixed in advance. `REPLICATE.md`: verify in one minute,
+  score your own framework, or re-run. Replication issue template.
+- Wording: B1 is RSOS's own per-step protocol, not the market's best (corrected on 18 Nov).
+
 ## 0.3.0 (18 Nov 2026)
 
 - Package: `pip install rsoslang` (PyPI), `rsoslang mcp` runs the MCP server; `server.json` for the official MCP

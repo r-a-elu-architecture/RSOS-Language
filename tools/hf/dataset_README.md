@@ -20,10 +20,11 @@ pre-registered before it ran; every failed prediction is included.
 drift, the RSOS State Runtime used **2.2–2.4 model calls per task instead of 42–43**, **0.27–0.35× the cost** of the
 same agents run one model call per step (our per-step protocol, API prices), and was **32/32 exact**. Under drift where agents compute from
 their own copies (A4), a Slipstream-style anchor protocol (our re-implementation, without the hash check and restore) got
-0/16 tasks right. Not yet measured: a one-call JSON baseline with the same hash check (A7).
+0/16 tasks right. A7a: against one-call JSON Patch with the same hash check, RSOS blind was 32/32 vs 31/32 at 0.79–0.91×
+its cost per correct task, the planner shown no state value.
 
-**Limits:** one model family, one task family, 16 tasks per set. The 10× cost target was missed. 41 pre-registered
-predictions so far: 25 passed, 16 failed.
+**Limits:** one model family, one task family, 16 tasks per set. The 10× cost target was missed. 49 pre-registered
+predictions so far: 29 passed, 20 failed.
 
 ## Contents
 

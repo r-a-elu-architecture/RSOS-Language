@@ -33,7 +33,7 @@ except ImportError:                    # SDK 1.x: the same server under its earl
 from . import compile_source
 from .grammar import STATEMENTS, signature
 
-server = MCPServer(name="rsos-language", version="0.3.0",
+server = MCPServer(name="rsos-language", version="0.3.1",
                    instructions="RSOS State Runtime: for work that edits a shared state over many steps, call rsos_state_new, "
                                 "then rsos_state_prompt once for ALL requests, answer that prompt with operations, and "
                                 "pass them to rsos_state_apply: the runtime computes every value. Use rsos_state_sync "

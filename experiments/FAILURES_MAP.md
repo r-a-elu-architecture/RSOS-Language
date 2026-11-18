@@ -72,3 +72,16 @@ measured yet; one error-source experiment answers 23–26 together.
 **Pattern:** the integrity layer held everywhere (48/48 heals, 0 drift-traced values, 0 wrong steps approved by the
 audit). The cost gap is now thinking tokens and audit calls, not calls per step; the assembly line removed the
 per-step dependency.
+
+## New from A7a (18 Nov 2026)
+
+| # | Test | Failure | Objects | Dragon logic applies? | Next landing |
+|---|---|---|---|---|---|
+| 32 | A7a P1 | M\* (B2) 15/16 and 16/16 exact, never ≤ 13/16; its one failure is a REHOST step (S1 seed 107) uncorrected by 2 retries | Runtime / Patch | Partly | A7b depth 16 / horizon 224 (P9), where state-dependent steps dominate |
+| 33 | A7a P3 | X5b cost per correct 0.787× / 0.910× of B2 (target ≤ 0.5); REACH distance 1.27× / 1.10× | Cost / Scale | Yes | Grow state, not requests (P10); thinking off (P3b) |
+| 34 | A7a P4 | Blind input 1.07× / 1.14× B2, not ≤ 0.5×: the grammar outweighs a 30-key state | Grammar / State | Yes | Compress the operation grammar to a static cached prefix; test at larger state |
+| 35 | A7a P5 | B2 thinking 1.10× / 1.05× X5b, not ≥ 2× | Planner / Thinking | No (at this scale) | A7b thinking-off cell |
+
+**Pattern:** at A5's scale M\* is a near-tie. RSOS's measured edge is one error class (values computed from state),
+seen once. The tests that can show a large gap are the scale cells in A7b.
+| 36 | A7b think-off | Thinking control failed: `MAX_THINKING_TOKENS=0`, `alwaysThinkingEnabled:false` and `--effort low` all ignored by the CLI for Haiku 5.5 (S1: 0/48 tasks at 0 thinking); P1b, P3b no verdict | Switch / Model | No (instrument failure) | Amendment: a thinking control the API honours (direct API call with thinking disabled, or a model without adaptive thinking), replay-checked before rerun |
