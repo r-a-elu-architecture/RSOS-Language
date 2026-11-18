@@ -173,12 +173,23 @@ def main_run(set_name, arms):
         return
     scaffold(set_name, "start")
     with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "2" if BACKEND == "openai" else "4"))) as ex:
-        futs = [ex.submit(run_one, a, set_name, s) for a, s in todo]
+        futs = {ex.submit(run_one, a, set_name, s): (a, s) for a, s in todo}
+        errors = []
         for fu in as_completed(futs):
-            r = fu.result()
+            try:
+                r = fu.result()
+            except Exception as e:  # noqa: BLE001  a provider error stops one task, never the others' results
+                errors.append({"arm": futs[fu][0], "seed": futs[fu][1], "error": str(e)[:300]})
+                print(f"{set_name} {futs[fu][0]} {futs[fu][1]} NOT RUN: {str(e)[:120]}", flush=True)
+                continue
             with _lock:
                 with open(res_path, "a") as f:
                     f.write(json.dumps(r) + "\n")
+        if errors:
+            with open(os.path.join(R, f"a7_errors_{set_name}_{LABEL}.jsonl"), "a") as f:
+                for e in errors:
+                    f.write(json.dumps(e) + "\n")
+            print(f"{len(errors)} task(s) not run (provider errors); run the same command again later to resume")
     scaffold(set_name, "end")
 
 

@@ -18,6 +18,8 @@ rm -f experiments/PREREGISTRATION_S2B.md experiments/s2b_*.py experiments/ht1/ow
 # 47,424-word alphabet, and five coded messages contain clinical words as code digits (no meaning, no person). The
 # sensitive-term guard below protects the owner's history, so these wait for the owner's decision.
 rm -f results/a3c_transcripts_Hp.jsonl results/a3c_replay_a3P_Hp_transcripts.jsonl
+# held until the owner approves the technical report (18 Nov)
+rm -f whitepaper/BLIND_PLANNING_REPORT.md whitepaper/RSOS_Blind_Planning_Report.pdf whitepaper/report.css
 find . -name __pycache__ -prune -exec rm -rf {} +
 if grep -rqiE --exclude=stage_public.sh --exclude=build_hf.sh "suicid|psychos|schizo|depress|PTSD|hospital" .; then echo "STOP: sensitive term found"; exit 1; fi
 grep -rlE --exclude=stage_public.sh "owner_turns|corpus/chat-" . | sed 's/^/owner to review (mentions the private chat corpus): /' || true
