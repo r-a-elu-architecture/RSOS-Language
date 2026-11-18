@@ -18,8 +18,9 @@ pre-registered before it ran; every failed prediction is included.
 
 **Headline (A5):** in a three-agent workflow that edits a shared 30-line state over 14 change requests with injected
 drift, the RSOS State Runtime used **2.2–2.4 model calls per task instead of 42–43**, **0.27–0.35× the cost** of the
-best baseline built for the same agents (API prices), and was **32/32 exact**. Under drift where agents compute from
-their own copies (A4), a Slipstream-style anchor protocol (our re-implementation) got 0/16 tasks right.
+same agents run one model call per step (our per-step protocol, API prices), and was **32/32 exact**. Under drift where agents compute from
+their own copies (A4), a Slipstream-style anchor protocol (our re-implementation, without the hash check and restore) got
+0/16 tasks right. Not yet measured: a one-call JSON baseline with the same hash check (A7).
 
 **Limits:** one model family, one task family, 16 tasks per set. The 10× cost target was missed. 41 pre-registered
 predictions so far: 25 passed, 16 failed.

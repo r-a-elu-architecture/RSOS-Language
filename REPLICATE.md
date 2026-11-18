@@ -3,7 +3,7 @@
 **Claim (A5, pre-registered):** in a three-agent workflow that edits a shared 30-line state over 14 change requests
 with 3 injected drifts, the RSOS assembly line (X5: the model writes RSOS operations for the whole task in one call,
 the runtime executes them, one audit call) uses **2.2–2.4 model calls per task instead of 42–43**, costs
-**0.268× (S1) and 0.354× (S2)** of the best baseline built for the same agents (B1) at API prices, and is
+**0.268× (S1) and 0.354× (S2)** of B1 (the same agents with one model call per step: RSOS's own per-step protocol, H-dragon) at API prices, and is
 **16/16 exact on both sets**. Failure would be: X5/B1 cost ratio above 0.5 on either set, or X5 exact below 15/16.
 
 ## What you need

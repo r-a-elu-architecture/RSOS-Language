@@ -10,9 +10,10 @@
 
 **For multi-agent workflows that edit shared state.** The model decides; the language executes. On real LLM agents
 (pre-registered, every failure reported): a 14-step task in **2 model calls instead of 42**, **2.8–3.7× cheaper** than
-the best setup built for the same agents at API prices, **8× faster**, **32/32 correct**, every injected drift healed
-with **zero model calls**. When agents compute from their own copies, a Slipstream-style anchor protocol got **0 of
-16** tasks right; RSOS stayed right.
+the same agents run one model call per step (our per-step protocol, API prices), **8× faster**, **32/32 correct**, every injected drift healed
+with **zero model calls**. When agents compute from their own copies, a Slipstream-style anchor protocol (our
+re-implementation, without the hash check and restore) got **0 of 16** tasks right; RSOS stayed right. **Not yet
+measured:** a one-call JSON baseline given the same hash check and restore (A7, next).
 
 ```bash
 pip install rsoslang                             # or, from a clone: pip install -e .

@@ -38,19 +38,20 @@ pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7
 </div>
 
 <section id="a5"><div class="wrap">
-<h2>A5 · The model bill against the market's best setup</h2>
-<p class="intro">Target: 10× below the best setup the market could build for the same agents. Phase 0 built that
-baseline honestly first: it found that most of the earlier bill was the command-line tool's own context on every call,
+<h2>A5 · The model bill: one plan for the whole task against one call per step</h2>
+<p class="intro">Target: 10× below our own per-step protocol (H-dragon, the best arm of A3–A4) run by the same agents. A
+one-call JSON baseline given the same hash check is not yet measured (A7, next). Phase 0 built the baseline
+honestly first: it found that most of the earlier bill was the command-line tool's own context on every call,
 fixed it, and priced every call from the official price table. Then the planner writes RSOS operations and the runtime
 executes and checks them; in the assembly line (X5) all 14 requests of a task are translated in one call and audited in
 one call. 192 live tasks, 4,917 calls. <span class="muted">sha256 <code>9cd1eb92…</code></span></p>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">S1 market best</th><th scope="col" class="n">S1 assembly line</th><th scope="col" class="n">S2 market best</th><th scope="col" class="n">S2 assembly line</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">S1 per step (B1)</th><th scope="col" class="n">S1 assembly line</th><th scope="col" class="n">S2 per step (B1)</th><th scope="col" class="n">S2 assembly line</th></tr></thead>
 <tbody>
 <tr><th scope="row">Exact / every copy true</th><td class="n">16 / 16</td><td class="n"><b>16 / 16</b></td><td class="n">15 / 15</td><td class="n"><b>16 / 16</b></td></tr>
 <tr><th scope="row">Model calls per task</th><td class="n">43.1</td><td class="n"><b>2.4</b></td><td class="n">42.1</td><td class="n"><b>2.2</b></td></tr>
 <tr><th scope="row">Cost per task (API prices)</th><td class="n">$0.004598</td><td class="n"><b>$0.001233</b></td><td class="n">$0.003815</td><td class="n"><b>$0.001352</b></td></tr>
-<tr><th scope="row">Ratio to market best (95% CI)</th><td class="n">1</td><td class="n"><b>0.268</b> [0.240, 0.300]</td><td class="n">1</td><td class="n"><b>0.354</b> [0.336, 0.374]</td></tr>
+<tr><th scope="row">Ratio to B1 (95% CI)</th><td class="n">1</td><td class="n"><b>0.268</b> [0.240, 0.300]</td><td class="n">1</td><td class="n"><b>0.354</b> [0.336, 0.374]</td></tr>
 <tr><th scope="row">Ratio as billed</th><td class="n">1</td><td class="n">0.173</td><td class="n">1</td><td class="n">0.200</td></tr>
 <tr><th scope="row">Time per task</th><td class="n">106 s</td><td class="n"><b>12 s</b></td><td class="n">99 s</td><td class="n"><b>12 s</b></td></tr>
 <tr><th scope="row">Drift healed with 0 calls · wrong values from drift</th><td class="n">48/48 · —</td><td class="n">48/48 · —</td><td class="n">48/48 · 0</td><td class="n">48/48 · 0</td></tr>

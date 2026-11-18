@@ -9,7 +9,7 @@ redesigns the host it runs on. Consent and harm checks are part of the compiler.
 <div class="stats" aria-label="Headline results">
 <div class="stat"><div class="n">0.106×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol, with every copy of the shared state true</div><div class="s">BPE tokens; with a local predictor (labelled) · 0.141× with zero model calls · A3c</div></div>
 <div class="stat"><div class="n">0 / 16</div><div class="l">tasks right for the anchor protocol once agents compute from their copies; RSOS stays right</div><div class="s">93 of 96 wrong values traced to hidden drift; palace 16 / 16 · A4</div></div>
-<div class="stat"><div class="n">2 calls</div><div class="l">per task instead of 42: 2.8–3.7× cheaper than the market's best setup, 32 / 32 exact</div><div class="s">assembly line against an honest baseline, API prices · A5</div></div>
+<div class="stat"><div class="n">2 calls</div><div class="l">per task instead of 42: 2.8–3.7× cheaper than one call per step, 32 / 32 exact</div><div class="s">same agents, API prices · A5 · one-call JSON baseline: A7, next</div></div>
 </div>
 <p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 41 predictions on real
 hosts: 25 passed, 16 failed. The failures are on the results page, next to the passes.</p>
@@ -26,7 +26,7 @@ operations name keys and the runtime computes every value.</p>
 </div>
 <div>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">Best setup for the same agents</th><th scope="col" class="n">RSOS</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">One call per step</th><th scope="col" class="n">RSOS</th></tr></thead>
 <tbody>
 <tr><th scope="row">Model calls, 14-step task</th><td class="n">42–43</td><td class="n"><b>2.2–2.4</b></td></tr>
 <tr><th scope="row">Cost per task</th><td class="n">1×</td><td class="n"><b>0.27–0.35×</b></td></tr>

@@ -4,7 +4,7 @@
 read and write). The model decides what should change; the RSOS runtime executes it, checks every copy and heals
 drift. Measured on real LLM agents (A4, A5; pre-registered, every failure reported):
 
-| | Best setup built for the same agents | RSOS (assembly line) |
+| | Same agents, one call per step (our per-step protocol) | RSOS (assembly line) |
 |---|---|---|
 | Model calls for a 14-step task | 42–43 | **2.2–2.4** |
 | Cost per task (API prices) | 1× | **0.27–0.35× (2.8–3.7× cheaper)** |
