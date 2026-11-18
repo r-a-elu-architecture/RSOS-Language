@@ -3,8 +3,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24304403.svg)](https://doi.org/10.5281/zenodo.24304403) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE) [![tests](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml/badge.svg)](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml)
 
 *RSOS: an executable spatial-symbolic language for human–AI and AI–AI communication.* Whitepaper: R. A. Elu (2026),
-[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software release 0.2.0:
-[doi:10.5281/zenodo.24317658](https://doi.org/10.5281/zenodo.24317658).
+[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software 0.3.1:
+[doi:10.5281/zenodo.24339364](https://doi.org/10.5281/zenodo.24339364) (all versions: [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)).
 
 ## Blind planning: the model names keys, the runtime computes values
 
@@ -45,11 +45,12 @@ program runs in two places:
 **[Open the editor →](docs/editor.html)** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
-**Results (17 Nov 2026, pre-registered, real LLM agents; whitepaper v2: [doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392)):**
-a protocol designed by the RSOS White Dragon engine (A3b) used 0.55× the BPE channel tokens of a Slipstream-style
-anchor protocol while keeping every copy of the shared state true in 16/16 tasks (anchor protocol 0/16) and healing
-every injected drift without a model call. The White Dragon also redesigned a weak agent system, cutting errors by
-63% (A2). Of 27 predictions on real hosts, 18 passed and 9 failed; all are reported.
+**All results** (pre-registered, real LLM agents, every failure reported; 49 predictions so far, 29 passed, 20
+failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A7a**
+(blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
+wrong answers for an anchor protocol without a hash check: 0/16), **A3c** (0.141× the channel tokens of a
+Slipstream-style anchor protocol at zero model calls). Whitepaper v2 ([doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392),
+17 Nov) covers A1–A3b and HT1; A3c–A7a are in `experiments/` and will be in the next version.
 
 **First real-host test (A1, 17 Nov 2026, pre-registered):** three LLM agents (planner, worker, checker) on 8 tasks. The RSOS palace protocol used about 7× fewer channel tokens than JSON with full state (2,563 vs 17,311), finished 7/8 tasks exactly correct (JSON 5/8), and caught and healed 24/24 injected drifts with 0 model calls (38 tokens per repair). Summaries + retrieval: 0/8 correct, 24/24 drifts kept. One model family, 8 tasks. Report: [`experiments/A1_REPORT.md`](experiments/A1_REPORT.md).
 
