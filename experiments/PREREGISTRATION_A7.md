@@ -107,3 +107,15 @@ harness, prompts, audit rule and integrity layer are unchanged; the local model 
 for both arms. P11 unchanged: X5b ≥ 12/16 exact on S1 where B2 on the same model ≤ 4/16. Results label `local_qwen15`.
 Wiring checked against a stub server (calls, token counts and result files), 0 real model calls.
 
+**Amendment log (18 Nov 2026, 13:40 Kyiv, before any A7b long-task run).** Generator `experiments/a7_tasks.py`
+(A1/A4 request templates only; the harness, prompts, arms, audit rule and integrity layer unchanged). Cells, 16 seeds
+each: **L1** 56 steps, chains of 4 dependent requests, 30 keys (seeds 500–515); **L2** 224 steps, chains of 16, 30 keys
+(600–615); **L3** 56 steps, chains of 4, 300 keys / 50 services (700–715). Measured longest dependency chain per task
+(reported, not targeted): L1 5–13, L2 29–73, L3 4–7. Drift: 3 events at n/4, n/2, 3n/4 on keys untouched afterwards,
+skipped where none exists (L2: 47 of 48). Long plans: 15-minute timeout per call (A5: 3). Replay checks pass on L1–L3
+(every arm 16/16 with correct plans, every drift healed at 0 calls, identical audit selection, no value in X5b's
+prompt); the replay pass rule now compares healed drifts with the drifts generated instead of a fixed 48 (S1 and S2
+still 48/48, pass). Operational verdicts, fixed now: **P9** on L2: B2 ≤ 8/16 exact and X5b ≥ 15/16. **P10**: X5b
+input tokens per task on L3 ÷ L1 ≤ 1.5 while B2's ≥ 3. Analysis: `a7_analyse.py default L1,L2,L3` →
+`results/a7_long_default.json`.
+

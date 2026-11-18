@@ -2,13 +2,35 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 49 predictions, 29 passed and 20 failed.</p>
+recorded, and each results file carries a hash. On real hosts: 51 predictions, 29 passed and 22 failed.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
 <a href="{REPO}/tree/main/results"><code>results/</code></a>.</p>
 </div>
 </div>
+
+<section id="a7b"><div class="wrap">
+<h2>A7b · Long tasks and large states</h2>
+<p class="intro">The same arms (one-call JSON Patch, M*; RSOS blind) on 48 new tasks: 56 steps with dependency chains
+(L1), 224 steps with chains of 29–73 dependent changes (L2), and 56 steps on a 300-key state (L3). Generator and
+predictions logged before any run. <span class="muted">sha256 <code>b1287a37…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">L1 M*</th><th scope="col" class="n">L1 RSOS blind</th><th scope="col" class="n">L2 M*</th><th scope="col" class="n">L2 RSOS blind</th><th scope="col" class="n">L3 M*</th><th scope="col" class="n">L3 RSOS blind</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact</th><td class="n">16/16</td><td class="n"><b>16/16</b></td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td class="n">15/16</td><td class="n"><b>16/16</b></td></tr>
+<tr><th scope="row">Failed steps (state-dependent)</th><td class="n">2 (2)</td><td class="n">0</td><td class="n">3 (3)</td><td class="n">0</td><td class="n">2 (2)</td><td class="n">0</td></tr>
+<tr><th scope="row">Cost per correct task ($×10⁻³)</th><td class="n">5.356</td><td class="n"><b>3.655</b></td><td class="n">20.761</td><td class="n"><b>13.777</b></td><td class="n">8.710</td><td class="n"><b>4.360</b></td></tr>
+<tr><th scope="row">÷ M* (95% CI)</th><td class="n">1</td><td class="n"><b>0.68</b> [0.63, 0.74]</td><td class="n">1</td><td class="n"><b>0.66</b> [0.61, 0.83]</td><td class="n">1</td><td class="n"><b>0.50</b> [0.47, 0.60]</td></tr>
+<tr><th scope="row">Drifts healed at 0 calls</th><td class="n">48/48</td><td class="n">48/48</td><td class="n">47/47</td><td class="n">47/47</td><td class="n">48/48</td><td class="n">48/48</td></tr>
+</tbody></table></div>
+<p>Across A7a and A7b: RSOS blind 80/80 exact with 0 wrong steps in about 5,800; M* 77/80, and all 8 of its failed
+steps were values computed from changed state (5 owner transfers, 3 copies), each wrong through every retry although
+the auditor named it. Failed predictions: M* did not collapse on 224 steps (P9: 15/16, predicted ≤ 8); blind input grew
+1.53× at 10× the state (P10: limit 1.5). The errors scale with how much state the planner must scan, not with chain
+length, and the cost gap widens with the state: 0.79–0.91× at 30 keys, 0.50× at 300.</p>
+<a class="cta quiet" href="{REPO}/blob/main/experiments/A7_REPORT.md">Read the A7 report</a>
+</div></section>
 
 <section id="a7a"><div class="wrap">
 <h2>A7a · Against the market's most efficient pattern, and blind planning</h2>
@@ -207,7 +229,7 @@ operator. An automated check keyed 12 targets and decoded them blind from the co
 
 <section id="failures"><div class="wrap">
 <h2>The failure map</h2>
-<p class="intro">All 35 pre-registered failures to date are listed with their cause and the next test. Of the first
+<p class="intro">All 38 entries of the failure map are listed with their cause and the next test. Of the first
 20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3c answered two more
 (the prose floor and the engine's size prediction). Every remaining failure of the integrity protocols is a single
 model error on a true copy, never a codec or integrity failure; the cost failures of A5 point to thinking tokens; A7a's four show that M*'s margin is small at this scale.</p>

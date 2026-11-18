@@ -21,9 +21,10 @@ sys.path.insert(0, HERE)
 import a1_agents as A                      # noqa: E402
 import a5_run as R5                        # noqa: E402
 import a7_arms as S                        # noqa: E402
+import a7_tasks as T                       # noqa: E402
 
 R = os.path.join(A.ROOT, "results")
-SEEDS = R5.SEEDS
+SEEDS = {**R5.SEEDS, **T.SEEDS}                          # S1, S2 (A5 generator); L1-L3 (A7b long tasks)
 THINK = os.environ.get("A7_THINK", "default")
 BACKEND = os.environ.get("A7_BACKEND", "cli")           # cli (claude -p) or ollama (A7c, local model)
 LABEL = os.environ.get("A7_LABEL", THINK)                # results file label, e.g. local_qwen15
@@ -50,6 +51,12 @@ def setup(set_name):
     if set_name == "S2":
         import a4_latent as A4
         A4.patch()
+    if set_name in T.CELLS:
+        T.patch(set_name)
+        import a5_llm as L                               # long plans: allow 15 minutes per call (A5: 3)
+        raw = L.raw_call
+        L.raw_call = lambda system, prompt, model=None, legacy=False, timeout=900: raw(system, prompt, model,
+                                                                                         legacy, 900)
     S.thinking(THINK)
     if BACKEND == "ollama":
         import a7_local
@@ -106,21 +113,22 @@ def replaycheck(set_name):
             leak = arm == "X5b" and any(f"{k} = " in p or f"={v}" in p for k, v in task["init"].items())
             rows.append({"arm": arm, "seed": seed, "success": res["success"], "replica": res["replica_success"],
                          "healed0": sum(e["healed_zero_call"] for e in res["drift"]), "invalid": res["invalid_ops"],
-                         "calls": res["n_calls"], "blind_leak": leak,
+                         "drifts": len(res["drift"]), "calls": res["n_calls"], "blind_leak": leak,
                          "audited": sum(1 for s in res["steps"] if s["audited"])})
     diff = subprocess.run(["git", "-C", A.ROOT, "diff", "origin/main", "--"] + [f"experiments/{f}" for f in FROZEN],
                           capture_output=True, text=True).stdout
     per = {a: [r for r in rows if r["arm"] == a] for a in S.ARMS}
     out = {"set": set_name, "think": THINK, "frozen_files_diff_vs_main_empty": diff == "",
            "oracle": {a: {"tasks": len(v), "success": sum(r["success"] and r["replica"] for r in v),
-                          "healed_zero_call": sum(r["healed0"] for r in v), "invalid": sum(r["invalid"] for r in v),
+                          "healed_zero_call": sum(r["healed0"] for r in v), "drifts": sum(r["drifts"] for r in v),
+                          "invalid": sum(r["invalid"] for r in v),
                           "calls_per_task": sum(r["calls"] for r in v) / len(v),
                           "audited_steps": [r["audited"] for r in v]} for a, v in per.items()},
            "x5b_value_leaks": sum(r["blind_leak"] for r in rows),
            "same_audit_selection_all_arms": len({tuple(r["audited"] for r in v) for v in per.values()}) == 1}
     out["pass"] = (out["frozen_files_diff_vs_main_empty"] and out["x5b_value_leaks"] == 0
                    and out["same_audit_selection_all_arms"]
-                   and all(o["success"] == o["tasks"] == 16 and o["invalid"] == 0 and o["healed_zero_call"] == 48
+                   and all(o["success"] == o["tasks"] == 16 and o["invalid"] == 0 and o["healed_zero_call"] == o["drifts"] > 0
                            for o in out["oracle"].values()))
     json.dump(out, open(os.path.join(R, f"a7_replay_check_{set_name}_{LABEL}.json"), "w"), indent=1)
     print(json.dumps({k: v for k, v in out.items() if k != "oracle"} |

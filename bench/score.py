@@ -12,11 +12,12 @@ import os
 import statistics as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+SETS = ("S1", "S2", "L1", "L2", "L3")
 
 
 def tasks():
     out = {}
-    for s in ("S1", "S2"):
+    for s in SETS:
         for line in open(os.path.join(HERE, f"statebench_v1_{s}.jsonl")):
             t = json.loads(line)
             out[(t["set"], t["seed"])] = t
@@ -30,7 +31,7 @@ def score(path):
         r = json.loads(line)
         subs[(r["set"], int(r["seed"]))] = r
     rows = {}
-    for s in ("S1", "S2"):
+    for s in sorted({k[0] for k in subs}):
         keys = [k for k in T if k[0] == s]
         got = [subs.get(k) for k in keys]
         exact = sum(1 for k, g in zip(keys, got) if g and g["final_state"] == T[k]["final"])

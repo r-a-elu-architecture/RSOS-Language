@@ -2,6 +2,7 @@
 0 model calls.
 
     python experiments/a7_analyse.py [default|off]     # -> results/a7_<think>.json (hash of the numbers)
+    python experiments/a7_analyse.py default L1,L2,L3  # A7b long tasks -> results/a7_long_default.json
 """
 
 import json
@@ -97,6 +98,18 @@ def summary(set_name, think, P, runs, sc):
 def verdicts(T, label="default"):
     def g(s, a, k):
         return T.get(s, {}).get(a, {}).get(k)
+    if set(T) == {"L1", "L2", "L3"}:                     # A7b long tasks (amendment of 18 Nov 13:40)
+        if any(g(s, a, "tasks") != 16 for s in ("L1", "L2", "L3") for a in ("B2", "X5b")):
+            return {"status": "incomplete"}
+        x = g("L3", "X5b", "in_tok") / g("L1", "X5b", "in_tok")
+        b = g("L3", "B2", "in_tok") / g("L1", "B2", "in_tok")
+        return {"P9_long_tasks_M*_breaks": g("L2", "B2", "exact") <= 8 and g("L2", "X5b", "exact") >= 15,
+                "P10_blind_input_flat_in_state": x <= 1.5 and b >= 3,
+                "P10_input_growth_L3_over_L1": {"X5b": x, "B2": b},
+                "exact": {c: {a: g(c, a, "exact") for a in ARMS if g(c, a, "tasks")} for c in ("L1", "L2", "L3")},
+                "cost_per_correct_ratio_X5b_vs_B2": {c: g(c, "X5b", "cost_per_correct_ratio_vs_B2")
+                                                     for c in ("L1", "L2", "L3")},
+                "REACH_cost_tenfold_distance_x": {c: g(c, "X5b", "reach_distance_x") for c in ("L1", "L2", "L3")}}
     if label.startswith("local"):                         # A7c: P11 on S1 (pre-registration section 5)
         if g("S1", "X5b", "tasks") != 16 or g("S1", "B2", "tasks") != 16:
             return {"status": "incomplete"}
@@ -126,6 +139,8 @@ def verdicts(T, label="default"):
 
 if __name__ == "__main__":
     think = sys.argv[1] if len(sys.argv) > 1 else "default"
+    if len(sys.argv) > 2:
+        SETS = sys.argv[2].split(",")
     P = C.prices()["sheets"][C.prices()["run_time_sheet"]]
     T, SC = {}, {}
     for s in SETS:
@@ -134,6 +149,6 @@ if __name__ == "__main__":
         T[s] = summary(s, think, P, load(s, think), sc)
     payload = {"think": think, "price_sheet": C.prices()["run_time_sheet"], "scaffold": SC, "tables": T,
                "predictions": verdicts(T, think)}
-    path, dig = save(f"a7_{think}", payload)
+    path, dig = save(f"a7_long_{think}" if SETS == ["L1", "L2", "L3"] else f"a7_{think}", payload)
     print(json.dumps({"tables": T, "predictions": payload["predictions"]}, indent=1))
     print("saved", path, dig)

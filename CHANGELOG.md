@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **A7b long tasks** (56–224 steps, up to 300 keys): RSOS blind 48/48 exact, 0 wrong steps; one-call JSON Patch 46/48,
+  all 7 failed steps state-dependent; cost per correct task 0.50–0.68×. P9 and P10 failed (published). StateBench v1
+  now 80 tasks (L1–L3 added); the scorer scores every set present.
+
 ## 0.3.1 (18 Nov 2026)
 
 - **A7a results:** against one-call JSON Patch with the same model, seeds, hash check and audit rule (M\*), RSOS blind

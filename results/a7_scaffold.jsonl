@@ -4,3 +4,9 @@
 {"set": "S2", "phase": "end", "think": "default", "tokens": [571, 571, 571]}
 {"set": "S1", "phase": "start", "think": "off", "tokens": [571, 571, 571]}
 {"set": "S1", "phase": "end", "think": "off", "tokens": [571, 571, 571]}
+{"set": "L2", "phase": "start", "think": "default", "tokens": [571, 571, 571]}
+{"set": "L2", "phase": "end", "think": "default", "tokens": [571, 571, 571]}
+{"set": "L1", "phase": "start", "think": "default", "tokens": [571, 571, 571]}
+{"set": "L1", "phase": "end", "think": "default", "tokens": [571, 571, 571]}
+{"set": "L3", "phase": "start", "think": "default", "tokens": [571, 571, 571]}
+{"set": "L3", "phase": "end", "think": "default", "tokens": [571, 571, 571]}
