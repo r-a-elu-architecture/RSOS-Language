@@ -13,9 +13,11 @@
   pre-registrations, code, results with hashes, transcripts and reports.
 - `spec/REFERENCE.md` regenerated from the code (it was missing 26 statements and several diagnostic codes).
 - `CITATION.cff`: software DOI 0.2.1 and whitepaper DOIs.
-- Held back pending review: `results/a3c_transcripts_Hp.jsonl` and `results/a3c_replay_a3P_Hp_transcripts.jsonl`
-  (H-pred's coded messages; the word alphabet puts arbitrary words, including clinical terms, into coded text).
-  `a3c_analyse.py` needs them to recount A3c's per-edge channel tokens; every other A3c number reproduces without them.
+- A3c's two H-pred transcript files stay private: H-pred sends coded bits as words from a 47,424-word alphabet, so
+  coded messages can contain arbitrary words as code digits. Published in their place: text-free count files
+  (`results/a3c_counts_Hp.jsonl`, `results/a3c_replay_a3P_Hp_counts.jsonl`), the SHA-256 of the withheld files
+  (`results/a3c_withheld.json`) and `experiments/a3c_edges_check.py`, which reproduces A3c's per-edge channel numbers
+  and the offline replay from the counts alone (all match). Full transcripts available on request for verification.
 - Website (GitHub Pages, `docs/`): home, results with every failure, try it (editor, keyboard), paper and
   reproduction, research programme, family (cue framework). Built from `tools/site/` by `tools/build_site.py`.
 
