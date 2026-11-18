@@ -38,3 +38,37 @@ misses or need people. Each "Yes" is a hypothesis to pre-register, not a result.
 | 21 | A3b B2 | Hologram 1.57× smaller than the tent, not 5× | Hologram / Prose | **Yes** | A3c: shared predictor as reference beam for prose (owner decision on local model) |
 | 22 | A3b B6 | Dragon predicted 321 tok/task, measured 932 (−66%) | Dragon / Template | Partly | Dragon saw 2 example steps; give it coverage statistics, it flagged the risk itself |
 | 23 | A3b H-copy B3/B4 | 12/16 exact (LLM edit errors, approved by checker) | Copy / Error | No (LLM variance) | Keep as measured; codec cannot make an approved edit right |
+
+### Answered since A3b
+
+- **21 (A3b B2, 5× not reached): answered by A3c.** H-pred 0.141× D in BPE with 0 model calls; H-local 0.106× D in
+  BPE with full integrity (C3 pass). The prose floor fell to 0.60 / 0.41 bits per character.
+- **22 (dragon size prediction −66%): answered by A3c.** With coverage statistics, the dragon predicted H-pred within
+  +5.4% (C4 pass) and H-local within −3.7%.
+
+## New from A3c and A4 (17 Nov 2026)
+
+| # | Test | Failure | Objects | Dragon logic applies? | Next landing |
+|---|---|---|---|---|---|
+| 24 | A3c C1 | H-pred size and integrity pass (0.141× BPE, 48/48, 0/1,160), but 15/16 replica-consistent: checker rejected a correct `DEL` 3× (seed 300) | Checker / Error | No (LLM variance; codec byte-exact) | Error-source split: rerun H-pred on the same steps to measure the checker's model-error rate |
+| 25 | A3c C2 | H-pred 15/16 exact vs D 16/16 (same seed 300 step) | Checker / Error | No | Same as 24 |
+| 26 | A4 L2 | H-dragon 15/16 exact and replica-consistent: worker wrote a wrong value from a true, healed copy (seed 407, step 6); 0 drift-traced errors | Worker / Error | No (LLM variance) | A4 next action 2: 3× reruns of the 128 compute steps to separate protocol from model noise |
+
+**Pattern across 23–26:** every remaining failure of the integrity protocols is a single model error on a true copy,
+approved or rejected wrongly by an LLM, never a codec or integrity failure. The registered rule counts them, as it
+should. The open question they share is the base rate of model error per step, which none of the tests has
+measured yet; one error-source experiment answers 23–26 together.
+
+## New from A5 (18 Nov 2026)
+
+| # | Test | Failure | Objects | Dragon logic applies? | Next landing |
+|---|---|---|---|---|---|
+| 27 | A5 K1 | X3 0.581× / 0.828× of the honest market best (target ≤ 0.1); X5 (secondary) 0.268× / 0.354× | Cost / Thinking | **Yes** | A5b: thinking control applied equally to B1 and X5 (counterfactual ≈ 0.12, unmeasured) |
+| 28 | A5 K2 | X1s calls 0.51× / 0.63× (target ≤ 0.4): the audit rule selects 10–12 of 14 steps | Audit / Calls | Yes | Audit by equality (second planner translation, model audit only on disagreement) |
+| 29 | A5 K3 | X2 output 0.36× / 0.54× (target ≤ 0.25): X planners think more than B1's | Planner / Thinking | Yes | Worked examples and templates; thinking control |
+| 30 | A5 K4 (X3) | X3 replica 15/16 on both sets: auditor false rejects (palace notation read wrongly) | Palace notation / Auditor | Partly | Drop palace notation in prompts at this scale; audit by equality |
+| 31 | A5 X1s S2 seed 403 | The only audit miss in 192 tasks: a compute written as a literal `SET`, unsampled | Risk class | Yes | Risk class from the request's verbs as well as the operations |
+
+**Pattern:** the integrity layer held everywhere (48/48 heals, 0 drift-traced values, 0 wrong steps approved by the
+audit). The cost gap is now thinking tokens and audit calls, not calls per step; the assembly line removed the
+per-step dependency.

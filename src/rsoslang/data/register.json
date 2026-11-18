@@ -961,5 +961,14 @@
   "chatgpt_tables": "—",
   "in_102": "—",
   "build_status": "Specified (A2 in BRIEF_A1_AGENT_TEST.md)"
+ },
+ {
+  "id": "U108",
+  "family": "White Dragon",
+  "name": "Reach: a stretch target (10x, 1000x) used as an instrument, not a claim; it opens one planet per blocker for the White Dragon's landings and returns the verdict as the measured distance, the baseline and the named limit; the next target starts from that verdict",
+  "owner_source": "owner 18 Nov 2026 03:37-03:41",
+  "chatgpt_tables": "—",
+  "in_102": "—",
+  "build_status": "Formalised (REACH, rsoslang 0.2; example examples/reach_a5.rsl with A5's measured result)"
  }
 ]

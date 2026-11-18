@@ -2,13 +2,80 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 27 predictions, 18 passed and 9 failed.</p>
-<p class="muted small">Host for A1–A3b: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
+recorded, and each results file carries a hash. On real hosts: 41 predictions, 25 passed and 16 failed.</p>
+<p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
-pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2, §7–§9, and the files in
+pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
 <a href="{REPO}/tree/main/results"><code>results/</code></a>.</p>
 </div>
 </div>
+
+<section id="a5"><div class="wrap">
+<h2>A5 · The model bill against the market's best setup</h2>
+<p class="intro">Target: 10× below the best setup the market could build for the same agents. Phase 0 built that
+baseline honestly first: it found that most of the earlier bill was the command-line tool's own context on every call,
+fixed it, and priced every call from the official price table. Then the planner writes RSOS operations and the runtime
+executes and checks them; in the assembly line (X5) all 14 requests of a task are translated in one call and audited in
+one call. 192 live tasks, 4,917 calls. <span class="muted">sha256 <code>9cd1eb92…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">S1 market best</th><th scope="col" class="n">S1 assembly line</th><th scope="col" class="n">S2 market best</th><th scope="col" class="n">S2 assembly line</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact / every copy true</th><td class="n">16 / 16</td><td class="n"><b>16 / 16</b></td><td class="n">15 / 15</td><td class="n"><b>16 / 16</b></td></tr>
+<tr><th scope="row">Model calls per task</th><td class="n">43.1</td><td class="n"><b>2.4</b></td><td class="n">42.1</td><td class="n"><b>2.2</b></td></tr>
+<tr><th scope="row">Cost per task (API prices)</th><td class="n">$0.004598</td><td class="n"><b>$0.001233</b></td><td class="n">$0.003815</td><td class="n"><b>$0.001352</b></td></tr>
+<tr><th scope="row">Ratio to market best (95% CI)</th><td class="n">1</td><td class="n"><b>0.268</b> [0.240, 0.300]</td><td class="n">1</td><td class="n"><b>0.354</b> [0.336, 0.374]</td></tr>
+<tr><th scope="row">Ratio as billed</th><td class="n">1</td><td class="n">0.173</td><td class="n">1</td><td class="n">0.200</td></tr>
+<tr><th scope="row">Time per task</th><td class="n">106 s</td><td class="n"><b>12 s</b></td><td class="n">99 s</td><td class="n"><b>12 s</b></td></tr>
+<tr><th scope="row">Drift healed with 0 calls · wrong values from drift</th><td class="n">48/48 · —</td><td class="n">48/48 · —</td><td class="n">48/48 · 0</td><td class="n">48/48 · 0</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">2 of 6 pass</span> no drift-traced errors (K5), offline baseline estimate within 12% (K6).
+<span class="tag fail">K1 failed</span> the registered arm (X3) reached 0.58× / 0.83×, not 0.1×; the assembly line
+reached 0.27× / 0.35×. <span class="tag fail">K2, K3 failed</span> per-step arms kept 22–28 calls and thought more
+than the baseline. <span class="tag fail">K4 failed</span> X3 missed one task per set on auditor errors. The audit
+approved 0 wrong steps in 192 tasks; one wrong step went through unsampled.</p>
+<p class="note"><b>What changed and what limits it.</b> A normal agent pipeline needs one model round trip per request,
+because each request reads what the last one wrote. Once the model writes a program the runtime executes, that
+dependency moves to the runtime, and the cost stops growing with the number of steps. The remaining bill is the model's
+thinking: 78–79% of the assembly line's cost is output, 86–87% of it thinking. Against our own earlier runs the cost per
+task fell about 12×; about 2.4× of that is the harness fix anyone can make.</p>
+</div></section>
+
+<section id="a4"><div class="wrap">
+<h2>A4 · Does hidden drift become wrong answers?</h2>
+<p class="intro">A3 left 40 of 48 corruptions latent in the anchor protocol's copies. A4 makes the worker compute from
+its own copy (8 of 14 steps per task). 80 tasks, 4,000 calls. <span class="muted">sha256 <code>c2f41b80…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">P · palace</th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">E · deltas</th><th scope="col" class="n">A · JSON</th></tr></thead>
+<tbody>
+<tr><th scope="row">Exact success</th><td class="n"><b>15/16</b></td><td class="n"><b>16/16</b></td><td class="n">0/16</td><td class="n">1/16</td><td class="n">1/16</td></tr>
+<tr><th scope="row">Wrong values traced to drift</th><td class="n"><b>0</b></td><td class="n"><b>0</b></td><td class="n">93 of 96</td><td class="n">14</td><td class="n">7</td></tr>
+<tr><th scope="row">Drift healed with 0 model calls</th><td class="n"><b>48/48</b></td><td class="n"><b>48/48</b></td><td class="n">0/48</td><td class="n">0/48</td><td class="n">0/48</td></tr>
+<tr><th scope="row">Channel tokens (BPE)</th><td class="n"><b>575</b></td><td class="n">2,231</td><td class="n">1,038</td><td class="n">2,374</td><td class="n">13,736</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">3 of 4 pass</span> the anchor protocol collapses (L1), no drift-traced errors for the
+integrity protocols (L3), H-dragon stays smallest (L4). <span class="tag fail">L2 failed</span> one worker model error
+on a true, healed copy (seed 407). The test is a worst case by design: every corrupted line is read later.</p>
+</div></section>
+
+<section id="a3c"><div class="wrap">
+<h2>A3c · The prose floor</h2>
+<p class="intro">A3b missed 5× because the planner's free prose must be restored word for word. A3c codes it against a
+reference both sides hold: a deterministic predictor with no neural network (H-pred), and a labelled arm with a local
+language model (H-local). <span class="muted">sha256 <code>1d797624…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col"></th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">H-pred (0 model calls)</th><th scope="col" class="n">H-local (local model)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Channel tokens per task (BPE)</th><td class="n">1,860</td><td class="n">1,023</td><td class="n"><b>262</b></td><td class="n"><b>197</b></td></tr>
+<tr><th scope="row">× D</th><td class="n">1</td><td class="n">0.55</td><td class="n"><b>0.141</b></td><td class="n"><b>0.106</b></td></tr>
+<tr><th scope="row">Exact / every copy true</th><td class="n">16/16 / 0/16</td><td class="n">16/16 / 16/16</td><td class="n">15/16 / 15/16</td><td class="n"><b>16/16 / 16/16</b></td></tr>
+<tr><th scope="row">Drift healed with 0 model calls</th><td class="n">0/48</td><td class="n">48/48</td><td class="n">48/48</td><td class="n">48/48</td></tr>
+<tr><th scope="row">Prose bits per character</th><td class="n">—</td><td class="n">—</td><td class="n">0.60</td><td class="n">0.41</td></tr>
+</tbody></table></div>
+<p><span class="tag pass">2 of 4 pass</span> H-local reaches 0.106× with full integrity (C3); the White Dragon
+predicted the size within 5% (C4; in A3b it was 66% off). <span class="tag fail">C1, C2 failed</span> H-pred's one
+miss was a checker rejecting a correct deletion three times. H-local needs about 1 GB of weights on both sides and ran
+about 15× slower on CPU.</p>
+</div></section>
 
 <section id="a3b"><div class="wrap">
 <h2>A3b · The hologram palace</h2>
@@ -114,9 +181,10 @@ operator. An automated check keyed 12 targets and decoded them blind from the co
 
 <section id="failures"><div class="wrap">
 <h2>The failure map</h2>
-<p class="intro">All 23 pre-registered failures to date are listed with their cause and the next test. Of the first
-20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3b answered two of them
-(A3 R1 and R4) and added three: the prose floor, the engine's size prediction, and H-copy's edit errors.</p>
+<p class="intro">All 31 pre-registered failures to date are listed with their cause and the next test. Of the first
+20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3c answered two more
+(the prose floor and the engine's size prediction). Every remaining failure of the integrity protocols is a single
+model error on a true copy, never a codec or integrity failure; the cost failures of A5 point to thinking tokens.</p>
 <a class="cta quiet" href="{REPO}/blob/main/experiments/FAILURES_MAP.md">Read the full failure map</a>
 </div></section>
 

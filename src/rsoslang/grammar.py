@@ -304,6 +304,14 @@ st("PARTICLE", "contact", ["U102"], pos=[("name", "name")], clauses={"LAND": "pa
 st("DEFICIT", "state", ["U103"], pos=[("target", "path"), ("value", "num")],
    doc="DEFICIT RIF 1.0 (the lack; a particle's effect is bounded by it)")
 
+st("REACH", "test", ["U108"], pos=[("name", "name")],
+   clauses={"ON": "path", "TARGET": "num", "AGAINST": "word", "MEASURE": "word", "RESULT": "num", "LIMIT": "word",
+            "BLOCKERS": "list", "FROM": "word"},
+   required=["ON", "TARGET", "AGAINST", "MEASURE"], declares="reach",
+   doc="REACH cost10 ON cost.task TARGET 10 AGAINST market_best MEASURE cost_per_task RESULT 3.7 LIMIT thinking "
+       "BLOCKERS thinking, audit_calls (a stretch target as an instrument: each blocker opens a planet; the verdict "
+       "is what was reached, against what, and what stopped it; FROM starts the next target from an earlier REACH)")
+
 st("OPEN", "mental", ["U106"], pos=[("target", "path")], clauses={"FROM": "list", "SCOPE": "enum:whole|part|network"},
    required=["FROM"], doc="OPEN eagle_calculator FROM olfactory SCOPE whole (one VAKOG channel opens the anchored state)")
 

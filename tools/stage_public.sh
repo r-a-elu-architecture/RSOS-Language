@@ -14,6 +14,10 @@ for x in s1_stacked_maps i1_instruments i2_panel u1_universe u1b_standing; do rm
 for x in S1 I1 I2 U1 U1B; do rm -f experiments/PREREGISTRATION_$x.md results/${x}_REPORT.md; done
 rm -f results/S1_stack.png tools/tiers.py tools/render_stack.py tools/tables.py tests/test_universe.py
 rm -f experiments/PREREGISTRATION_S2B.md experiments/s2b_*.py experiments/ht1/owner_messages.md experiments/BRIEF_*.md STATUS_17NOV.md
+# Held back for the owner (18 Nov 2026): A3c H-pred transcripts. The arithmetic coder sends bits as words from a
+# 47,424-word alphabet, and five coded messages contain clinical words as code digits (no meaning, no person). The
+# sensitive-term guard below protects the owner's history, so these wait for the owner's decision.
+rm -f results/a3c_transcripts_Hp.jsonl results/a3c_replay_a3P_Hp_transcripts.jsonl
 find . -name __pycache__ -prune -exec rm -rf {} +
 if grep -rqiE --exclude=stage_public.sh "suicid|psychos|schizo|depress|PTSD|hospital" .; then echo "STOP: sensitive term found"; exit 1; fi
 grep -rlE --exclude=stage_public.sh "owner_turns|corpus/chat-" . | sed 's/^/owner to review (mentions the private chat corpus): /' || true

@@ -28,6 +28,7 @@
 | Statement | Register | Signature | Example |
 |---|---|---|---|
 | `OBJECT` | U16, U70 | name:name, KIND?:word, DOMAIN?:word, IN?:path, REPRESENTS?:value → object | `OBJECT couch KIND furniture IN eagle REPRESENTS langgraph` |
+| `PLACE` | U16, U23 | object:path, X?:num, Y?:num, ROT?:num, SIZE?:num, NEAR?:path → effect | `PLACE painting_b X 1.5 Y 0 ROT 0 / PLACE spell_corrector NEAR classify` |
 | `PART` | U45 | path:word, KIND?:word → part | `PART car.seat KIND module` |
 | `PROPERTY` | U17 | path:path, value:value → effect | `PROPERTY sol.frequency = 392` |
 | `RELATION` | U60 | a:path, verb:word, b:path → effect | `RELATION brain regulates heart` |
@@ -44,6 +45,20 @@
 | `MATERIAL` | U67 | object:path, level:value → effect | `MATERIAL couch = user_interface` |
 | `ANCHOR` | U14, U68 | symbol:path, TO:path, CHANNEL?:word → effect | `ANCHOR eagle_calculator TO robot.head CHANNEL kinesthetic` |
 | `FUTUREPACE` | U68 | symbol:path, SCENARIOS?:int → effect | `FUTUREPACE eagle_calculator SCENARIOS 3` |
+| `SCHEDULE` | U68, U83 | name:name, STATES:list, DURATIONS:nums, PULSE?:num, REPEAT?:int, CHANNEL?:word → schedule | `SCHEDULE eagle_drill STATES associated, eagle DURATIONS 300, 60 PULSE 60 REPEAT 3 CHANNEL kinesthetic` |
+| `IDENTITY` | U63 | host:path, level:enum:mission/identity/values/beliefs/skills/behaviour/environment, value:value → effect | `IDENTITY person mission = "healing and helping people grow" (the seven levels)` |
+| `ARCHETYPE` | U75 | name:name, TACTON?:string, LANGUAGE?:string, SHADOW?:list → archetype | `ARCHETYPE lion (profile from the cue framework: virtues, language, shadow, tacton)` |
+
+### declare
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `PERSONA` | U20 | name:name, AGE?:int, ORGANS?:list, GOAL?:word, SOURCE?:enum:synthetic/consented → host | `PERSONA anna AGE 70 ORGANS heart_attack GOAL calm SOURCE synthetic (a built person, no real human)` |
+
+### mental
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
 | `SELECTMODEL` | U69 | part:path, BY?:enum:trigger/choice → effect | `SELECTMODEL robot.head BY choice (the control panel)` |
 
 ### scene
@@ -103,7 +118,7 @@
 
 | Statement | Register | Signature | Example |
 |---|---|---|---|
-| `TRANSPLANT` | U17, U84 | bundle:path, TO:path → descendant | `TRANSPLANT rocket TO body.heart AS rocket_heart (the whole property bundle travels)` |
+| `TRANSPLANT` | U107, U17, U84 | bundle:path, TO:path, FROM?:word, DEPTH?:enum:surface/inside/structure, ORDER?:int, GAIN?:word → descendant | `TRANSPLANT rocket TO body.heart AS rocket_heart (the whole property bundle travels); knowing form (D84): TRANSPLANT turbopump TO engine.heart FROM rocketry DEPTH structure ORDER 1 GAIN efficiency` |
 | `REHOST` | U18 | bundle:path, IN:path → descendant | `REHOST rocket_heart IN planet AS planet_core` |
 | `EXTERNALISE` | U19 | bundle:path, TO?:path → effect | `EXTERNALISE rocket_heart TO society` |
 | `TRANSFER` | U84, U85 | source:path, TO:path → descendant | `TRANSFER bacterium.mobility TO guardian.mobility` |
@@ -172,6 +187,9 @@
 | `WATCHDOG` | U74 | host:path, SWITCH:word, WHEN?:word → effect | `WATCHDOG person SWITCH bear WHEN overload` |
 | `ARCHITECT` | U75 | action:enum:strategy/lock/hybrid/retire/reset, TARGET?:list → descendant | `ARCHITECT hybrid TARGET lion, eagle AS lion_eagle` |
 | `OVERRIDE` | U77 | host:path, TYPE:enum:drive/calmness/regulation → effect | `OVERRIDE person TYPE calmness` |
+| `CONSENT` | U73, U78, U105 | host:path, FOR?:list, BY?:word, SCOPE?:enum:per_action/standing, IN?:word → effect | `CONSENT others FOR practice, cues BY others SCOPE standing IN circle (Rei; standing consent, D82)` |
+| `NETWORK` | U105 | name:name, MEMBERS:list, LAWS:list → object | `NETWORK circle MEMBERS practitioner, others LAWS gi, jin, rei (visible participants and the Spine laws, D82)` |
+| `SAFETY` | U73 | host:path, MODE:enum:normal/stabilise/practical_crisis/crisis → effect | `SAFETY person MODE stabilise (the cue framework's safety modes)` |
 | `GATE` | U78 | operator:word, REQUIRES:list → effect | `GATE autonomous_cue REQUIRES evidence, consent` |
 
 ### meta
@@ -180,6 +198,89 @@
 |---|---|---|---|
 | `INDUCE` | U81, U62 | name:name, FROM:path → operator | `INDUCE aperture_rule FROM gate_trials` |
 | `REENTER` | U86 | node:path, WITH:word → effect | `REENTER ai_room WITH aperture_rule` |
+| `BOOK` | U88 | name:name, SYMBOL:word, AT?:path → object | `BOOK robot_head SYMBOL eagle_calculator AT eagle (a node's palace holds the book)` |
+| `SIGNAL` | U89 | target:path, CHECK?:enum:hash/none, COLOR?:word → effect | `SIGNAL robot_head CHECK hash COLOR green (the green dot travels with the symbol)` |
+
+### state
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `LIGHT` | U90, U104 | source:word, OVER?:list, ACTS:list, STYLE?:word → effect | `LIGHT white_dragon OVER all ACTS find, show, heal, hear STYLE tiger (archetype style of healing)` |
+| `SENSE` | U91 | seed:path, RADIUS:int, CHANNELS?:list → effect | `SENSE engine RADIUS 5 CHANNELS smell, visual, memory (the seed grows and senses more)` |
+
+### host
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `FOUNDATION` | U92 | name:name, DOMAINS:list → object | `FOUNDATION figure DOMAINS economy, aerodynamics, physics, chemistry, biology, neuroscience` |
+
+### meta
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `LEVEL` | U93 | name:name, ABOVE:word → effect | `LEVEL symbolic ABOVE text (language levels: today's language is the C level)` |
+
+### compile
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `CARRIER` | U94 | name:name, MAIN:word, LAYERS?:list → effect | `CARRIER universe MAIN structure LAYERS accent_a, accent_b` |
+| `GLYPHS` | U95 | target:path, CHANNEL:word, RATE?:num → effect | `GLYPHS robot_head CHANNEL haptic RATE 10 (Morse per glyph; rate in words per minute)` |
+| `ENVELOPE` | U96 | name:name, FIELDS:list → effect | `ENVELOPE msg FIELDS version, sender, recipient, preconditions, effects, invariants, lineage` |
+
+### test
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `CONTRACT` | U97 | target:path, KEEP:list → effect | `CONTRACT robot_head KEEP behaviour, safety (compression must keep these)` |
+
+### paint
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `STANDARD` | U98 | name:name, CODEBOOK:word → effect | `STANDARD rsos_visual CODEBOOK default (image quality = language quality)` |
+
+### context
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `OBSERVE` | U99 | target:path, BY:list, CHANNELS?:list → effect | `OBSERVE rocket_heart BY others CHANNELS visual, smell, kinesthetic` |
+
+### state
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `ASSOCIATE` | U100 | target:path, IN:word, LEADS:word → effect | `ASSOCIATE tv IN shoulders_dropped LEADS worry (the chain depends on the state)` |
+
+### meta
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `PATH` | U101 | source:path, TO:list, BEST?:int, BY?:word → effect | `PATH RIF TO neuroscience, economics BEST 3 BY shared_relations (golden light)` |
+
+### contact
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `PARTICLE` | U102 | name:name, LAND:path, ON?:word, OPENS?:word → object | `PARTICLE g1 LAND RIF ON anticipation OPENS prediction_error (green particle)` |
+
+### state
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `DEFICIT` | U103 | target:path, value:num → effect | `DEFICIT RIF 1.0 (the lack; a particle's effect is bounded by it)` |
+
+### test
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `REACH` | U108 | name:name, ON:path, TARGET:num, AGAINST:word, MEASURE:word, RESULT?:num, LIMIT?:word, BLOCKERS?:list, FROM?:word → reach | `REACH cost10 ON cost.task TARGET 10 AGAINST market_best MEASURE cost_per_task RESULT 3.7 LIMIT thinking BLOCKERS thinking, audit_calls (a stretch target as an instrument: each blocker opens a planet; the verdict is what was reached, against what, and what stopped it; FROM starts the next target from an earlier REACH)` |
+
+### mental
+
+| Statement | Register | Signature | Example |
+|---|---|---|---|
+| `OPEN` | U106 | target:path, FROM:list, SCOPE?:enum:whole/part/network → effect | `OPEN eagle_calculator FROM olfactory SCOPE whole (one VAKOG channel opens the anchored state)` |
 
 ## Core meanings (tier 1, fixed; D80)
 
@@ -230,6 +331,14 @@ Keys with no core meaning (for example `contact.bottom`, `contact.centre`, `cont
 | `E010_AMBIGUITY` | Two bindings give different meanings in the same scope |
 | `E016_HOST` | Operator not defined for this host (kind or channel) |
 | `E017_MEANING` | Meaning key unknown to the core and not bound or searched |
+| `E018_CONSENT` | Person-facing operation without consent for that host (Spine: Rei) |
+| `E019_SPINE` | Wording the Spine forbids (Jin: extreme cold/heat, pain, breath-holding, sleep loss; Makoto: ranks) |
+| `E020_GOVERNANCE` | Blocked by the Spine or by the active safety mode |
+| `E021_STANDING` | Standing consent needs a declared NETWORK listing the host as a member and the Spine laws (D82) |
+| `E022_REACH` | REACH target or chain malformed (TARGET is an improvement factor above 1; FROM names an earlier REACH) |
+| `W007_REACH_LIMIT` | A measured REACH below its target does not name what stopped it (LIMIT) |
+| `W005_NO_GOVERNANCE` | Cue framework not found: governance could not run |
+| `W006_BASELINE_ADDED` | Return to baseline added for a person host (D71) |
 | `W001_OPEN_MEANING` | Meaning left open: resolved by search, not by the core |
 | `W002_IMPLICIT_PART` | Sub-part used without a PART declaration (accepted, created implicitly) |
 | `W003_NO_HOST` | Operator runs without a declared host; the core meaning is used |

@@ -69,6 +69,9 @@
     <select id="task" aria-label="Task"></select>
     <button id="start">Start</button> <button id="export">Export results</button> <button id="copy">Copy results</button>
     <p class="hint" id="taskinfo">Pick a task, press Start, then reach the target with gestures.</p>
+    <h2 style="font-size:16px;margin:14px 0 6px">REACH</h2>
+    <pre id="reach" aria-live="polite"></pre>
+    <p class="hint" id="reachinfo"></p>
     <textarea id="results" readonly rows="4" style="width:100%;font-size:11px;display:none" aria-label="Speed test results"></textarea>
   </aside>
 </main>
@@ -263,6 +266,26 @@ update = function () {
     active = null;
   }
 };
+// ---- REACH: the selected task as a stretch target, with the measured distance (owner's operator, 18 Nov 2026) ----
+const REACHDEF = {typos:{k:"accuracy",t:0.66,dir:1}, phrasing:{k:"accuracy",t:0.57,dir:1},
+  cost:{k:"cost_per_ticket",t:11.40,dir:-1}, crashes:{k:"crashed",t:0,dir:-1,stretch:1000}, all:{k:"score",t:0.65,dir:1}};
+const fx = v => (Math.round(v * 1000) / 1000).toString();
+function renderReach() {
+  const d = REACHDEF[sel.value]; if (!d) return;
+  const b = DATA.table[key({spell_corrector:null,synonym_expander:null,cache:null,fast_retry:null,grey:null,heal:null})];
+  const m = DATA.table[key(state)];
+  const factor = v => d.dir > 0 ? v / b[d.k] : (v === 0 ? Infinity : b[d.k] / v);
+  const T = d.stretch || factor(d.t), R = Math.min(factor(m[d.k]), T);
+  document.getElementById("reach").textContent =
+    `REACH ${sel.value} ON agent.${d.k} TARGET ${fx(T)} AGAINST baseline MEASURE ${d.k} RESULT ${fx(R)}`;
+  document.getElementById("reachinfo").textContent = R >= T
+    ? `Reached ${fx(R)}x of ${fx(T)}x against the baseline on ${d.k}: target met.`
+    : `Reached ${fx(R)}x of ${fx(T)}x against the baseline on ${d.k}. Before the next gesture, name what stops you (LIMIT).`
+      + (d.stretch ? " The target is zero crashes, written as a 1000x stretch." : "");
+}
+sel.addEventListener("change", renderReach);
+const _update2 = update;
+update = function () { _update2(); renderReach(); };
 function showResults() {
   const t = document.getElementById("results"); t.style.display = "block"; t.value = JSON.stringify(runs, null, 1); return t;
 }

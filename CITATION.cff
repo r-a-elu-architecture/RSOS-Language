@@ -7,9 +7,20 @@ authors:
     alias: "r-a-elu-architecture"
     orcid: "https://orcid.org/0009-0000-1456-2467"
 version: "0.2.1"
+doi: "10.5281/zenodo.24321030"
 date-released: "2026-11-17"
 license: Apache-2.0
 repository-code: "https://github.com/r-a-elu-architecture/RSOS-Language"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24321030"
+    description: "Software, version 0.2.1"
+  - type: doi
+    value: "10.5281/zenodo.24320392"
+    description: "Whitepaper v2"
+  - type: doi
+    value: "10.5281/zenodo.24304403"
+    description: "Whitepaper, all versions (concept DOI)"
 keywords: [visual programming, human-AI interaction, mental models, agent systems, spatial language]
 references:
   - type: report

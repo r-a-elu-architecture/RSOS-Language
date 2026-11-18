@@ -6,13 +6,13 @@ operators acts on any host, from AI agents to teams and organisations. A cross-d
 redesigns the host it runs on. Consent and harm checks are part of the compiler.</p>
 <a class="cta" href="results.html">See the measured results</a><a class="cta quiet" href="try.html">Try the editor</a>
 
-<div class="stats" aria-label="Headline results from whitepaper v2">
-<div class="stat"><div class="n">0.55×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol</div><div class="s">BPE tokens (o200k); 0.64× by regex count · A3b</div></div>
-<div class="stat"><div class="n">16 / 16</div><div class="l">tasks with every copy of the shared state true</div><div class="s">anchor protocol: 0 / 16 · A3b</div></div>
-<div class="stat"><div class="n">48 / 48</div><div class="l">injected drifts healed with zero model calls</div><div class="s">and zero channel tokens per heal · A3b</div></div>
+<div class="stats" aria-label="Headline results">
+<div class="stat"><div class="n">0.106×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol, with every copy of the shared state true</div><div class="s">BPE tokens; with a local predictor (labelled) · 0.141× with zero model calls · A3c</div></div>
+<div class="stat"><div class="n">0 / 16</div><div class="l">tasks right for the anchor protocol once agents compute from their copies; RSOS stays right</div><div class="s">93 of 96 wrong values traced to hidden drift; palace 16 / 16 · A4</div></div>
+<div class="stat"><div class="n">2 calls</div><div class="l">per task instead of 42: 2.8–3.7× cheaper than the market's best setup, 32 / 32 exact</div><div class="s">assembly line against an honest baseline, API prices · A5</div></div>
 </div>
-<p class="muted small">Pre-registered tests on real LLM agents (about 11,800 model calls). 27 predictions on real hosts:
-18 passed, 9 failed. The failures are on the results page, next to the passes.</p>
+<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 41 predictions on real
+hosts: 25 passed, 16 failed. The failures are on the results page, next to the passes.</p>
 </div>
 </div>
 
@@ -64,15 +64,18 @@ time.</p><a class="more" href="{REPO}/blob/main/RESPONSIBLE_USE.md">Responsible 
 <section><div class="wrap split">
 <div>
 <h2>The claim, worded to its evidence</h2>
-<p class="intro">In pre-registered tests on real LLM agents, a protocol designed by the White Dragon used 0.55× the
-BPE channel tokens of a Slipstream-style anchor protocol. It kept every copy of the shared state true in 16 of 16
-tasks, against 0 of 16, and repaired every injected drift without a model call.</p>
+<p class="intro">In pre-registered tests on real LLM agents, RSOS carried every message losslessly in 0.141× the BPE
+channel tokens of a Slipstream-style anchor protocol with zero model calls (0.106× with a local predictor), kept every
+copy of the shared state true, and repaired every injected drift without a model call. When agents computed from their
+copies, the anchor protocol got 0 of 16 tasks right; RSOS got 15–16. Written as programs the runtime executes, a
+14-step task took 2 model calls instead of 42.</p>
 </div>
 <div>
 <p class="note">Check values and restore-from-journal are old ideas in databases and file systems. To our knowledge,
 RSOS is the first agent communication language in which detection and in-place healing are part of the protocol, and
 the first whose protocol was designed by a cross-domain engine tested against blind alternatives.</p>
-<p class="muted small">Missed: the 5× target. 87% of what remains is the planner's free prose, which must be restored
-word for word. The next test, A3c, is pre-registered.</p>
+<p class="muted small">Missed: 10× on the model bill (A5 reached 2.8–3.7× at API prices; the limit is now the
+model's thinking tokens). The 5× channel target missed in A3b was reached in A3c. Next: A5b, thinking control applied
+equally to RSOS and the baseline.</p>
 </div>
 </div></section>

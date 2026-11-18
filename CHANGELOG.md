@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- **`REACH` operator (U108):** a stretch target used as an instrument, not a claim. `REACH name ON target TARGET n
+  AGAINST baseline MEASURE m [RESULT r] [LIMIT l] [BLOCKERS …] [FROM earlier]`: each blocker opens a part (a planet)
+  the White Dragon can land on; the verdict is the measured distance, the baseline and the named limit; `FROM` starts
+  the next target from an earlier verdict. New codes `E022_REACH`, `W007_REACH_LIMIT`; tests `tests/test_reach.py`;
+  example `examples/reach_a5.rsl` (A5's measured result).
+- Painting editor: a live **REACH** panel turns the selected speed-test task into a REACH line with the measured
+  distance after every gesture.
+- Experiments **A3c** (prose floor), **A4** (latent drift) and **A5** (model bill against the market's best setup):
+  pre-registrations, code, results with hashes, transcripts and reports.
+- `spec/REFERENCE.md` regenerated from the code (it was missing 26 statements and several diagnostic codes).
+- `CITATION.cff`: software DOI 0.2.1 and whitepaper DOIs.
+- Held back pending review: `results/a3c_transcripts_Hp.jsonl` and `results/a3c_replay_a3P_Hp_transcripts.jsonl`
+  (H-pred's coded messages; the word alphabet puts arbitrary words, including clinical terms, into coded text).
+  `a3c_analyse.py` needs them to recount A3c's per-edge channel tokens; every other A3c number reproduces without them.
 - Website (GitHub Pages, `docs/`): home, results with every failure, try it (editor, keyboard), paper and
   reproduction, research programme, family (cue framework). Built from `tools/site/` by `tools/build_site.py`.
 

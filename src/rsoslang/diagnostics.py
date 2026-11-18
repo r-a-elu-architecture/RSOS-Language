@@ -23,6 +23,8 @@ CODES = {
     "E019_SPINE": "Wording the Spine forbids (Jin: extreme cold/heat, pain, breath-holding, sleep loss; Makoto: ranks)",
     "E020_GOVERNANCE": "Blocked by the Spine or by the active safety mode",
     "E021_STANDING": "Standing consent needs a declared NETWORK listing the host as a member and the Spine laws (D82)",
+    "E022_REACH": "REACH target or chain malformed (TARGET is an improvement factor above 1; FROM names an earlier REACH)",
+    "W007_REACH_LIMIT": "A measured REACH below its target does not name what stopped it (LIMIT)",
     "W005_NO_GOVERNANCE": "Cue framework not found: governance could not run",
     "W006_BASELINE_ADDED": "Return to baseline added for a person host (D71)",
     "W001_OPEN_MEANING": "Meaning left open: resolved by search, not by the core",

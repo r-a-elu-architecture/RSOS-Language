@@ -167,6 +167,10 @@ class Analyzer:
             if nm:
                 self.declare(nm, spec.declares, line, **{k.lower(): v for k, v in s.clauses.items() if k != "AS"})
 
+        reach = None
+        if kw == "REACH":
+            reach = self.reach(s, line)
+
         # descendants (AS) create new objects with lineage
         if "AS" in s.clauses and not spec.declares:
             child = s.clauses["AS"]
@@ -250,6 +254,40 @@ class Analyzer:
                 "context": {k: v for k, v in self.context.items() if v is not None},
                 "meanings": meanings,
             })
+            if reach is not None:
+                self.ops[-1]["verdict"] = reach
+
+    def reach(self, s, line):
+        """REACH: a stretch target used as an instrument (owner, 18 Nov 2026). The target forces the search past small
+        gains; the result is the measured distance and the named limit, never a bare pass or fail."""
+        name, on, target = s.args["name"], s.clauses["ON"], s.clauses["TARGET"]
+        if target <= 1:
+            self.err("E022_REACH", line, f"TARGET is an improvement factor above 1, found {target:g}")
+        for b in s.clauses.get("BLOCKERS", []):          # each blocker opens a planet: a part of the target
+            bits = f"{on}.{b}".split(".")
+            for i in range(2, len(bits) + 1):
+                self.parts.add(".".join(bits[:i]))
+        prev = None
+        if "FROM" in s.clauses:
+            ent = self.entities.get(s.clauses["FROM"])
+            if ent is None or ent.get("class") != "reach" or s.clauses["FROM"] == name:
+                self.err("E022_REACH", line, f"FROM names an earlier REACH, found {s.clauses['FROM']!r}")
+            else:
+                prev = {"name": s.clauses["FROM"], "result": ent.get("result"), "limit": ent.get("limit")}
+        verdict = {"name": name, "on": on, "target": target, "against": s.clauses["AGAINST"],
+                   "measure": s.clauses["MEASURE"], "blockers": [f"{on}.{b}" for b in s.clauses.get("BLOCKERS", [])],
+                   "from": prev}
+        if "RESULT" in s.clauses:
+            res = s.clauses["RESULT"]
+            verdict.update(result=res, reached_share=round(res / target, 3), limit=s.clauses.get("LIMIT"),
+                           text=(f"reached {res:g}x of {target:g}x against {s.clauses['AGAINST']} on "
+                                 f"{s.clauses['MEASURE']}" + (f"; limit: {s.clauses['LIMIT']}" if "LIMIT" in s.clauses else "")))
+            if res < target and "LIMIT" not in s.clauses:
+                self.diags.append(Diagnostic("W007_REACH_LIMIT", line,
+                                             f"{name}: reached {res:g}x of {target:g}x; name what stopped it (LIMIT)"))
+        else:
+            verdict["text"] = f"open: {target:g}x against {s.clauses['AGAINST']} on {s.clauses['MEASURE']}, not yet measured"
+        return verdict
 
     def unit(self, s, spec, meanings):
         """The language-core unit (corpus/BUILD_INPUTS.md §1, A6): one visual phrase as explicit fields."""
