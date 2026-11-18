@@ -21,7 +21,13 @@ the error. RSOS's cost per correct task: **0.79× and 0.91×** of JSON Patch at 
 56–224 steps, **0.50× at 300 keys** (95% CI below 1 in every cell). Against one model call per step (A5): 2.2–2.4 calls
 instead of 42–43, 0.27–0.35× the cost.
 
-**Limits:** one task family, one model family (Claude Haiku 5.5), 16 tasks per cell; JSON Patch lost only 3 of 80
+**Across Claude models** (A8): blind planning was exact on **16/16 in all six cells** (Haiku, Sonnet and Opus 5.5 ×
+14 steps and 300 keys). JSON Patch's failures were **one reproducible class**: "everything owned by X is now owned by Y"
+on a 300-key state failed **on the same request** for Haiku, for Haiku **told to track the state**, and for Sonnet;
+Opus tied at 16/16. Telling JSON Patch to track state made it worse (29/32 vs 30/32). Cost per correct task at 300
+keys: **0.50× (Haiku), 0.54× (Sonnet)**; Opus used 0.78× the input and 0.39× the thinking.
+
+**Limits:** one task family, one model family (Claude: Haiku, Sonnet, Opus 5.5), 16 tasks per cell; JSON Patch lost only 3 of 80
 tasks, so the exactness gap is small; the predictions that JSON Patch would collapse on long tasks (P9) and that
 blind input would stay under 1.5× at 10× the state (P10, 1.53×) failed. The next tests, with predictions fixed in advance, are in **[NEXT_TESTS.md](NEXT_TESTS.md)**.
 
@@ -51,12 +57,12 @@ program runs in two places:
 **[Open the editor →](docs/editor.html)** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
-**All results** (pre-registered, real LLM agents, every failure reported; 51 predictions so far, 29 passed, 22
-failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A7b** (long tasks and
-large states), **A7a** (blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
+**All results** (pre-registered, real LLM agents, every failure reported; 56 predictions so far, 34 passed, 22
+failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A8** (Haiku, Sonnet and Opus;
+a stronger JSON Patch), **A7b** (long tasks and large states), **A7a** (blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
 wrong answers for an anchor protocol without a hash check: 0/16), **A3c** (0.141× the channel tokens of a
 Slipstream-style anchor protocol at zero model calls). Whitepaper v2 ([doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392),
-17 Nov) covers A1–A3b and HT1; A3c–A7b are in `experiments/` and will be in the next version.
+17 Nov) covers A1–A3b and HT1; A3c–A8 are in `experiments/` and will be in the next version.
 
 **First real-host test (A1, 17 Nov 2026, pre-registered):** three LLM agents (planner, worker, checker) on 8 tasks. The RSOS palace protocol used about 7× fewer channel tokens than JSON with full state (2,563 vs 17,311), finished 7/8 tasks exactly correct (JSON 5/8), and caught and healed 24/24 injected drifts with 0 model calls (38 tokens per repair). Summaries + retrieval: 0/8 correct, 24/24 drifts kept. One model family, 8 tasks. Report: [`experiments/A1_REPORT.md`](experiments/A1_REPORT.md).
 

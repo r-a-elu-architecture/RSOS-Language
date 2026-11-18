@@ -34,7 +34,7 @@ FROZEN = ["a1_agents.py", "a3_run.py", "a3b_hologram.py", "a3b_hdragon.py", "a4_
 
 
 def scaffold(set_name, phase):
-    if BACKEND == "ollama":                              # no CLI, no scaffold: every token is the agent's own
+    if BACKEND in ("ollama", "openai"):                  # no CLI, no scaffold: every token is the agent's own
         return
     """Null calls: the CLI scaffold of this machine, removed in the api basis (as A5). Own file, A5's untouched."""
     import a5_llm as L
@@ -61,6 +61,9 @@ def setup(set_name):
     if BACKEND == "ollama":
         import a7_local
         a7_local.install()
+    if BACKEND == "openai":
+        import a7_openai
+        a7_openai.install()
 
 
 def run_one(arm, set_name, seed, tag=None):
@@ -95,7 +98,7 @@ def replaycheck(set_name):
                     m = re.match(r"^#(\d+) (.*)$", line)
                     if m:
                         k = int(m.group(1)) - 1
-                        body = oracle_patch(task, k) if arm == "B2" else R5.oracle_ops(m.group(2))
+                        body = oracle_patch(task, k) if arm in ("B2", "B2s") else R5.oracle_ops(m.group(2))
                         out.append(f"#{k + 1}\n{body}")
                 return "\n".join(out)
 
@@ -169,7 +172,7 @@ def main_run(set_name, arms):
     if not todo:
         return
     scaffold(set_name, "start")
-    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "4"))) as ex:
+    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "2" if BACKEND == "openai" else "4"))) as ex:
         futs = [ex.submit(run_one, a, set_name, s) for a, s in todo]
         for fu in as_completed(futs):
             r = fu.result()

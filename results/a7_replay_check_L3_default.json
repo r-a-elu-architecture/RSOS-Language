@@ -80,6 +80,32 @@
     46,
     53
    ]
+  },
+  "B2s": {
+   "tasks": 16,
+   "success": 16,
+   "healed_zero_call": 48,
+   "drifts": 48,
+   "invalid": 0,
+   "calls_per_task": 2.0,
+   "audited_steps": [
+    50,
+    51,
+    52,
+    49,
+    50,
+    47,
+    51,
+    51,
+    46,
+    51,
+    52,
+    48,
+    49,
+    47,
+    46,
+    53
+   ]
   }
  },
  "x5b_value_leaks": 0,

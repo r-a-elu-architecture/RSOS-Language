@@ -19,7 +19,7 @@ from common import save                  # noqa: E402
 
 ROOT = os.path.dirname(HERE)
 R = os.path.join(ROOT, "results")
-ARMS = ["B2", "X5r", "X5b"]
+ARMS = ["B2", "X5r", "X5b", "B2s"]
 SETS = ["S1", "S2"]
 DEPENDENT = {"INHERIT", "FUSE", "SCALE", "ROUTE", "REHOST"}      # value depends on the current state
 
@@ -118,7 +118,7 @@ def verdicts(T, label="default"):
                 "S1_steps_wrong_or_failed": {a: g("S1", a, "steps_wrong") + g("S1", a, "steps_failed")
                                              for a in ARMS if g("S1", a, "tasks")},
                 "S1_invalid": {a: g("S1", a, "invalid") for a in ARMS if g("S1", a, "tasks")}}
-    have = all(g(s, a, "tasks") == 16 for s in SETS for a in ARMS)
+    have = all(g(s, a, "tasks") == 16 for s in SETS for a in ("B2", "X5r", "X5b"))
     if not have:
         return {"status": "incomplete"}
     V = {}
@@ -131,8 +131,9 @@ def verdicts(T, label="default"):
     b2w = sum(g(s, "B2", "steps_wrong") + g(s, "B2", "steps_failed") for s in SETS)
     b2d = sum(g(s, "B2", "wrong_dependent") for s in SETS)
     V["P6_M*_errors_on_dependent_steps"] = (b2d >= 0.7 * b2w) if b2w else None
-    V["P7_calls_le_3"] = all(g(s, a, "calls") <= 3 for s in SETS for a in ARMS)
-    V["P8_drift_healed_all_arms"] = all(g(s, a, "healed_zero_call") == g(s, a, "drifts") for s in SETS for a in ARMS)
+    A7A = ("B2", "X5r", "X5b")
+    V["P7_calls_le_3"] = all(g(s, a, "calls") <= 3 for s in SETS for a in A7A)
+    V["P8_drift_healed_all_arms"] = all(g(s, a, "healed_zero_call") == g(s, a, "drifts") for s in SETS for a in A7A)
     V["REACH_cost_tenfold_distance_x"] = {s: g(s, "X5b", "reach_distance_x") for s in SETS}
     return V
 

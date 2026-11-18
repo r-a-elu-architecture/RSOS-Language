@@ -87,3 +87,8 @@ seen once. The tests that can show a large gap are the scale cells in A7b.
 | 36 | A7b think-off | Thinking control failed: `MAX_THINKING_TOKENS=0`, `alwaysThinkingEnabled:false` and `--effort low` all ignored by the CLI for Haiku 5.5 (S1: 0/48 tasks at 0 thinking); P1b, P3b no verdict | Switch / Model | No (instrument failure) | Amendment: a thinking control the API honours (direct API call with thinking disabled, or a model without adaptive thinking), replay-checked before rerun |
 | 37 | A7b P9 | On L2 (224 steps) B2 15/16, not ≤ 8/16; long chains do not break one-plan M\*. All 7 B2 failed steps in 96 long tasks are REHOST (4) or INHERIT (3), X5b 0 | Chain / Scan | **Yes** | A cell that targets set-scan requests (REHOST/INHERIT density, owners over 300 keys), not chain length |
 | 38 | A7b P10 | X5b input L3 ÷ L1 = 1.528 (≤ 1.5 missed by 0.028); B2 2.154 (not ≥ 3): request text dominates both prompts | Names / Values | Yes | Name services by reference (a hologram index) so input does not grow with key names |
+
+## A8 (18 Nov 2026)
+
+No A8 prediction failed on the Claude ladder (G1–G5 pass). Instrument note, not a prediction failure:
+| 39 | A8 Groq smoke | HTTP 403 / Cloudflare 1010 on the free-tier backend (default Python user agent); 0 tasks ran | Agent / Edge | No (transport) | Fixed by amendment (`User-Agent` header); rerun the free-tier cells |

@@ -29,13 +29,34 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 51 predictions, 29 passed and 22 failed.</p>
+recorded, and each results file carries a hash. On real hosts: 56 predictions, 34 passed and 22 failed.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
 <a href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/results"><code>results/</code></a>.</p>
 </div>
 </div>
+
+<section id="a8"><div class="wrap">
+<h2>A8 · Across Claude models, and a stronger JSON Patch</h2>
+<p class="intro">The same arms on Claude Haiku, Sonnet and Opus 5.5, on S1 (14 steps) and L3 (300 keys), plus JSON
+Patch told to work out the current value of every line before each patch (B2s). Five predictions fixed before the
+runs; all five passed. <span class="muted">sha256 <code>bbf7f31a…</code></span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Model</th><th scope="col">Cell</th><th scope="col" class="n">JSON Patch</th><th scope="col" class="n">+ track state</th><th scope="col" class="n">RSOS blind</th><th scope="col" class="n">Blind ÷ JSON Patch, cost per correct</th></tr></thead>
+<tbody>
+<tr><td>Haiku 5.5</td><td>S1</td><td class="n">15/16</td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td class="n">0.79</td></tr>
+<tr><td>Haiku 5.5</td><td>L3</td><td class="n">15/16</td><td class="n">14/16</td><td class="n"><b>16/16</b></td><td class="n"><b>0.50</b></td></tr>
+<tr><td>Sonnet 5.5</td><td>S1</td><td class="n">16/16</td><td class="n">—</td><td class="n"><b>16/16</b></td><td class="n">0.84</td></tr>
+<tr><td>Sonnet 5.5</td><td>L3</td><td class="n">15/16</td><td class="n">—</td><td class="n"><b>16/16</b></td><td class="n"><b>0.54</b></td></tr>
+<tr><td>Opus 5.5</td><td>S1</td><td class="n">16/16</td><td class="n">—</td><td class="n"><b>16/16</b></td><td class="n">not priced</td></tr>
+<tr><td>Opus 5.5</td><td>L3</td><td class="n">16/16</td><td class="n">—</td><td class="n"><b>16/16</b></td><td class="n">input 0.78×, thinking 0.39×</td></tr>
+</tbody></table></div>
+<p>Every JSON Patch failure in A8 (8 of 8) was an owner transfer on a changed state, and the same request failed for
+Haiku, for Haiku told to track state and for Sonnet, with the same wrong keys. Only the largest model avoided it.
+Limit: one model family; other families (free tiers, local models) are next.</p>
+<a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/A8_REPORT.md">Read the A8 report</a>
+</div></section>
 
 <section id="a7b"><div class="wrap">
 <h2>A7b · Long tasks and large states</h2>
@@ -256,7 +277,7 @@ operator. An automated check keyed 12 targets and decoded them blind from the co
 
 <section id="failures"><div class="wrap">
 <h2>The failure map</h2>
-<p class="intro">All 38 entries of the failure map are listed with their cause and the next test. Of the first
+<p class="intro">All 39 entries of the failure map are listed with their cause and the next test. Of the first
 20, 14 are failures of blind choice: fixed rules, random growth, resending, or typing by hand. A3c answered two more
 (the prose floor and the engine's size prediction). Every remaining failure of the integrity protocols is a single
 model error on a true copy, never a codec or integrity failure; the cost failures of A5 point to thinking tokens; A7a's four show that M*'s margin is small at this scale.</p>

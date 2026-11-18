@@ -26,7 +26,7 @@ import a3b_hologram as H                   # noqa: E402
 import a5_arms as X                        # noqa: E402
 import a5_llm as L                         # noqa: E402
 
-ARMS = ("B2", "X5r", "X5b")
+ARMS = ("B2", "X5r", "X5b", "B2s")      # B2s (A8): M* told to track the state explicitly
 _wlock = threading.Lock()
 
 # ---------------------------------------------------------------- audit selection: one harness rule for all arms
@@ -77,6 +77,8 @@ B2_AUDIT = ("You are the AUDITOR in a pipeline that edits a configuration state 
             "planner wrote a JSON Patch for each change request and a deterministic runtime applied it. Check that "
             "the result implements the request exactly: every line the request changes, with the right value, and "
             "no other line. " + X.PALACE)
+B2S_NOTE = (" Before each patch, work out the current value of every line the request reads or matches, applying "
+            "all earlier patches of this task in order; only then write the patch.")
 X5B_NOTE = (" You see no state values, only the requests: name keys and relations; the runtime reads and computes "
             "every value.")
 
@@ -126,8 +128,8 @@ def run_plan(arm, set_name, seed, tag=None, planner=None, auditor=None, think="d
     truths = task["truths"]
     plan = A.drift_plan(task, truths)
     n = len(task["requests"])
-    if arm == "B2":
-        psys = B2_SYS + (B2_SYS_S2 if set_name == "S2" else "")
+    if arm in ("B2", "B2s"):
+        psys = B2_SYS + (B2S_NOTE if arm == "B2s" else "") + (B2_SYS_S2 if set_name == "S2" else "")
         asys = B2_AUDIT + X.X5_AUDIT
     else:
         psys = X.planner_system("X3", set_name) + X.X5_PLAN + (X5B_NOTE if arm == "X5b" else "")
@@ -151,7 +153,7 @@ def run_plan(arm, set_name, seed, tag=None, planner=None, auditor=None, think="d
         return text
 
     init = dict(task["init"])
-    render = patch_text if arm == "B2" else X.ops_text
+    render = patch_text if arm in ("B2", "B2s") else X.ops_text
     ops_by, ops_txt, approved, feedback = {}, {}, set(), {}
     invalid_ops = 0
     attempts = {k: 0 for k in range(n)}
@@ -171,7 +173,7 @@ def run_plan(arm, set_name, seed, tag=None, planner=None, auditor=None, think="d
             if k in feedback:
                 block += f"\nRejected before: {feedback[k]}\nPrevious operations: {ops_txt.get(k, '(invalid)')}"
             lines.append(block)
-        head = ("State:\n" + A.text_of(init) + "\n\n") if arm == "B2" else ""
+        head = ("State:\n" + A.text_of(init) + "\n\n") if arm in ("B2", "B2s") else ""
         ptext = call("planner", psys, head + "Change requests:\n" + "\n\n".join(lines))
         parts = X.split_steps(ptext, n)
         for k in todo:
@@ -180,7 +182,7 @@ def run_plan(arm, set_name, seed, tag=None, planner=None, auditor=None, think="d
             try:
                 if body is None:
                     raise X.OpError("no operations for this step")
-                ops_by[k] = parse_patch(body, init) if arm == "B2" else X.parse_ops(body)
+                ops_by[k] = parse_patch(body, init) if arm in ("B2", "B2s") else X.parse_ops(body)
                 ops_txt[k] = render(ops_by[k])
                 send(k, "planner", "runtime", f"#{k + 1}\n" + ops_txt[k])
             except X.OpError as e:

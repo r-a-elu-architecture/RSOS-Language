@@ -28,6 +28,14 @@ are optional: inject them into one agent's copy before the given step if your sy
 | RSOS blind (X5b) | Haiku 5.5 | **48/48** | **0** | **$0.0037 / $0.0138 / $0.0044** | **no** | A7b |
 | One-call JSON Patch + audit (M\*), same hash check | Haiku 5.5 | 46/48 | 7 (all state-dependent) | $0.0054 / $0.0208 / $0.0087 | all | A7b |
 
+## Leaderboard, across Claude models (S1 + L3, 32 tasks each)
+
+| System | Haiku 5.5 | Sonnet 5.5 | Opus 5.5 | Source |
+|---|---|---|---|---|
+| RSOS blind (X5b) | **32/32** | **32/32** | **32/32** | A7, A8 |
+| One-call JSON Patch (M\*) | 30/32 | 31/32 | 32/32 | A7, A8 |
+| JSON Patch told to track state (B2s) | 29/32 | — | — | A8 |
+
 ## Leaderboard, S1 + S2 (32 tasks)
 
 Exact tasks of 32 (S1 + S2). Cost per correct task at Claude Haiku 5.5 API prices (A5's api basis). Add yours with a
