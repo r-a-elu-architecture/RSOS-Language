@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.0 (19 Nov 2026)
 
 - **RSOS Core 1.0** (`rsoslang.core`): the technical layer. Neutral operation names (`set`, `copy`, `delete`, `derive`,
   `sum_into`, `multiply`, `select_if`, `reassign_where`; `state_digest`, `reconcile`), one compiled form (a JSON IR with
@@ -10,7 +10,7 @@
   Publication rule: an operator is in Core only once tested and backed by an experiment (`copy` is tested, not yet
   executed, so it is listed outside Core). Corpus findings enter as candidates (`registry/candidates.schema.json`,
   `tools/import_candidates.py`), hashes only. `rsoslang.state` still works (alias of `rsoslang.core.state`).
-- **0.4.0 (unreleased): State Runtime fixes** (`rsoslang.state`). `SET k other.key` with a key that does not exist
+- **State Runtime fixes** (`rsoslang.state`). `SET k other.key` with a key that does not exist
   is now an error, not the literal text `other.key`; to set text that contains a dot, quote it (`SET k "a.b"`), and the
   planner grammar says so. `SCALE` to a fraction is now an error instead of storing a value later operations reject.
   The green dot is computed from sorted JSON, so a value with a line break can no longer produce another state's dot.
