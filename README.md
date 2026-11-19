@@ -23,6 +23,7 @@ arithmetic, applies caps and conditions, and executes each step atomically.
 | A7: 80 tasks, 14–224 steps, up to 300 keys (Claude Haiku) | **80/80 exact**, 0 wrong steps in about 5,800 | 77/80; all 8 failed steps were values computed from changed state |
 | A8: six models from Anthropic, Google, Mistral and OpenAI | **256/256 exact** | failures on one request type: "everything owned by X is now owned by Y" |
 | SC1: a robot scene shared by six robots (Mistral Large 4, Gemini 3.8 Flash) | **32/32 exact** | 29/32; failed at **two of five hand-overs named before the run** |
+| SC2: FLOW, an operation predicted before it existed; tasks from a public randomness beacon (Mistral Large 4) | **16/16 exact**; 14/16 on the control | failed **14.8%** of FLOW requests (predicted ≥ 5%) |
 | Cost per correct task at 300 keys | **0.45–0.61×** (USD on Mistral; tokens on Gemini, GPT) and 0.50–0.54× (Claude) | 1× |
 | Against one model call per step (A5) | 2.2–2.4 calls instead of 42–43 | |
 
@@ -38,7 +39,7 @@ Report: [`experiments/SC1_REPORT.md`](experiments/SC1_REPORT.md).
 
 **Limits.** One task family (configuration-style key–value state), 16 tasks per cell; JSON Patch is strong, so the
 exactness gap is small and concentrated in one request type; the tool-calling and code-writing rivals are not yet run;
-22 of 65 predictions failed and are published. Next tests, with predictions fixed in advance:
+26 of 76 predictions failed and are published, including the first two RSOS blind task failures (SC2 control). Next tests, with predictions fixed in advance:
 **[NEXT_TESTS.md](NEXT_TESTS.md)**.
 
 **Try to break it.** Score any framework on the same tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a
@@ -79,7 +80,7 @@ tokens of a JSON Patch delta, and 0.0054× a full scene-graph sync; it is larger
 **[Open the editor](docs/editor.html).** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
-**All results** (pre-registered, real LLM agents, every failure reported; 65 predictions so far, 43 passed, 22
+**All results** (pre-registered, real LLM agents, every failure reported; 76 predictions so far, 50 passed, 26
 failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A8** (six models from four companies;
 a stronger JSON Patch; G9 and G10 hit), **A7b** (long tasks and large states), **A7a** (blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
 wrong answers for an anchor protocol without a hash check: 0/16), **A3c** (0.141× the channel tokens of a

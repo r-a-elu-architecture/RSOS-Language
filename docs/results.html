@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://r-a-elu-architecture.github.io/RSOS-Language/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 288 of 288 tasks exact across six models.">
+<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 318 of 320 tasks exact across six models.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Results: every pre-registered test, failures included | RSOS">
 <meta name="twitter:description" content="Pre-registered tests on real LLM agents across four model families, every prediction and the failure map.">
@@ -44,7 +44,7 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 65 predictions, 43 passed and 22 failed. Results from four model families are archived at <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</p>
+recorded, and each results file carries a hash. On real hosts: 76 predictions, 50 passed and 26 failed. Results from four model families are archived at <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
@@ -116,7 +116,7 @@ a robot's copy takes the 12-digit digest instead of the full scene (0.0015×). s
 <tr><td><b>P4</b></td><td><b>JSON Patch fails at least one of five named hand-overs:</b> task 913 step 53, 908/53, 913/49, 909/54, 913/39</td><td><span class="tag pass">hit on Mistral: 913/53, 913/49</span> <span class="tag fail">missed on Gemini</span></td></tr>
 <tr><td>P5</td><td>RSOS costs at most 0.7× per correct task</td><td><span class="tag pass">hit: 0.52×, 0.61×</span></td></tr>
 <tr><td>P6</td><td>Every injected drift repaired with zero model calls</td><td><span class="tag pass">hit: 192/192</span></td></tr>
-<tr><td>P7</td><td>The channel saving holds in model tokens, and so does the loss on conditional steps</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P7</td><td>The channel saving holds in model tokens, and so does the loss on conditional steps</td><td><span class="tag pass">hit: 0.55×</span></td></tr>
 </tbody></table></div>
 <p class="muted small">Limits stated in advance: a simulated scene without perception or motion; the request types of
 A7; the painting syntax is not measured here. <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/PREREGISTRATION_SC1.md">Full
@@ -151,7 +151,21 @@ rates give a law that predicts what belongs in them, published before the first 
 <p class="muted small">Every step of A7 and A8, all models, by what the operation reads.</p>
 <p><b>Prediction for gap D, before it exists:</b> an operation that scans the state and computes a value for every match
 ("move every object of rover one cell right"). One-call JSON Patch will fail at least 5% of these requests, more than
-twice the scan rate, while RSOS blind planning stays exact. <span class="tag pred">pending: SC2</span></p>
+twice the scan rate, while RSOS blind planning stays exact. <span class="tag pass">hit on Mistral</span></p>
+<div class="tw"><table>
+<thead><tr><th scope="col">SC2 on Mistral Large 4</th><th scope="col">Predicted</th><th scope="col">Measured</th><th scope="col">Verdict</th></tr></thead>
+<tbody>
+<tr><td>JSON Patch, FLOW requests failed</td><td class="n">≥ 5%</td><td class="n"><b>14.8%</b> (19 of 128)</td><td><span class="tag pass">hit</span></td></tr>
+<tr><td>RSOS blind with FLOW, learnt from one line</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td><span class="tag pass">hit</span></td></tr>
+<tr><td>Ordering FLOW &gt; hand-over &gt; one key</td><td class="n">yes</td><td class="n">14.8% &gt; 3.1% &gt; 0.4%</td><td><span class="tag pass">hit</span></td></tr>
+<tr><td>Frozen predictor: where it breaks</td><td class="n">AUC ≥ 0.8, a top-10 hit</td><td class="n">AUC 0.95; ranks 1, 5, 6, 10 failed</td><td><span class="tag pass">hit</span></td></tr>
+<tr><td>Frozen predictor: how often</td><td class="n">2–14 failed steps</td><td class="n">22</td><td><span class="tag fail">miss</span></td></tr>
+<tr><td>Cause: finding the objects (control with objects named)</td><td class="n">≥ 2× more failures</td><td class="n">1.27× (14.8% vs 11.7%)</td><td><span class="tag fail">miss</span></td></tr>
+<tr><td>RSOS blind on the control (objects named, one line each)</td><td class="n">16/16</td><td class="n">14/16, steps refused, none silent</td><td><span class="tag fail">miss</span></td></tr>
+<tr><td>Channel on FLOW steps</td><td class="n">≤ 0.1×</td><td class="n">0.104×</td><td><span class="tag fail">miss</span></td></tr>
+</tbody></table></div>
+<p class="muted small">Tasks drawn from drand round 6654866 after the predictor was frozen. RSOS 0.26× the tokens per
+correct task. Gemini incomplete (prepaid credit ran out). <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/SC2_REPORT.md">SC2 report</a>.</p>
 <p class="small"><b>The law as frozen code.</b> A predictor of where JSON Patch fails, fitted on 14,560 earlier steps, is
 frozen by hash (<code>0c976ed0…</code>) before any FLOW task exists. The tasks are drawn from the public drand
 randomness beacon, round 6654866 (08:30 UTC, 19 Nov 2026), so nobody chooses them. The frozen predictor expects only

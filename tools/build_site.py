@@ -64,7 +64,7 @@ HEAD = """<!DOCTYPE html>
 <meta property="og:image" content="{site}og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 288 of 288 tasks exact across six models.">
+<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 318 of 320 tasks exact across six models.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">

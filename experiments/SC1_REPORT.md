@@ -34,7 +34,7 @@ Drift: 3 injected per task; 192 of 192 repaired with 0 model calls, every arm, b
 | P4 | JSON Patch fails at least one of five named hand-overs | **pass on Mistral** (913/53, 913/49); **missed on Gemini** (it failed 906/45 instead) |
 | P5 | RSOS ≤ 0.7× per correct task | **pass** (tokens 0.61× and 0.52×; USD 0.50×) |
 | P6 | every drift repaired with 0 model calls | **pass** (192/192) |
-| P7 | channel ≤ 0.6× in BPE tokens, and RSOS larger on conditional steps | pending: o200k counts on the run machine |
+| P7 | channel ≤ 0.6× in BPE tokens, and RSOS larger on conditional steps | **pass** (o200k 0.548×; conditional steps 1,003 vs 984 tokens; `results/sc1_channel.json`, run on the owner's machine) |
 
 ## What did not go as predicted, and what it shows
 

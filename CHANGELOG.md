@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- **SC2 run (19 Nov): the predicted property of FLOW held; the stated cause did not.** Tasks from drand round 6654866,
+  predictions and frozen predictor public before the draw. Mistral Large 4: RSOS blind exact on 16/16 with FLOW, learnt
+  from one line; one-call JSON Patch failed 14.8% of FLOW requests (predicted ≥ 5%), 3.1% of hand-overs, 0.4% of
+  one-key operations; the frozen predictor's AUC 0.95, 4 of its top-10 steps failed; RSOS 0.26× the tokens per correct
+  task. Misses, published: the predictor's count (7.6 expected, 22 observed), the channel (0.104×), the cause (control
+  with named objects: 11.7%, not half), and **the first RSOS blind task failures (14/16 on the control: long object
+  lists refused by the runtime, none silent)**. Gemini incomplete (credit exhausted). SC1 P7 pass. RSOS blind 318/320
+  across complete cells. `experiments/SC2_REPORT.md`.
 - **SC1 run (19 Nov): the named step broke.** Robot scene, predictions public at 05:43 UTC before any model call.
   Mistral Large 4's one-call JSON Patch failed at two of the five named hand-overs (task 913, steps 53 and 49); Gemini
   3.8 Flash's failed elsewhere (906/45; P4 missed on Gemini, published). RSOS blind 32/32 exact; JSON Patch 15/16 and
