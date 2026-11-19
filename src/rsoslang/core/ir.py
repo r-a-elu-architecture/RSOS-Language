@@ -30,10 +30,11 @@ CORE_OPS = {
     "multiply": ("SCALE", ("key", "factor", "max")),
     "select_if": ("ROUTE", ("cond_key", "equals", "dst", "then", "else")),
     "reassign_where": ("REHOST", ("field", "from", "to")),
+    "derive_where": ("FLOW", ("field", "cond_field", "equals", "add", "max")),
 }
 KEY_FIELDS = {"set": {"key"}, "copy": {"key", "from"}, "delete": {"key"}, "derive": {"dst", "src"},
               "sum_into": {"dst", "a", "b"}, "multiply": {"key"}, "select_if": {"cond_key", "dst"},
-              "reassign_where": set()}
+              "reassign_where": set(), "derive_where": set()}
 INT_FIELDS = {"add", "max"}
 
 
@@ -61,6 +62,9 @@ def to_ir(ops: list) -> list:
             out.append({"op": "select_if", "cond_key": op[1], "equals": op[2], "dst": op[3], "then": op[4], "else": op[5]})
         elif kw == "REHOST":
             out.append({"op": "reassign_where", "field": op[1], "from": op[2], "to": op[3]})
+        elif kw == "FLOW":
+            out.append({"op": "derive_where", "field": op[1], "cond_field": op[2], "equals": op[3], "add": op[4],
+                        "max": op[5]})
         else:
             raise OpError(f"unknown operation {kw!r}", "E_PARSE")
     return out
@@ -105,6 +109,8 @@ def from_ir(ir: list) -> list:
             ops.append(("ROUTE", g["cond_key"], str(g["equals"]), g["dst"], str(g["then"]), str(g["else"])))
         elif name == "reassign_where":
             ops.append(("REHOST", str(g["field"]), str(g["from"]), str(g["to"])))
+        elif name == "derive_where":
+            ops.append(("FLOW", str(g["field"]), str(g["cond_field"]), str(g["equals"]), g["add"] or 0, g["max"]))
     if not ops:
         raise OpError("no operations", "E_EMPTY")
     return ops

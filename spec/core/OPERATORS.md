@@ -167,6 +167,6 @@ Each entry: the Core (technical) name, its RSOS (symbolic) name, what it does, i
 - **Postconditions:** every matched object's field is increased and capped
 - **Errors:** `E_PARSE`, `E_NOT_INTEGER`
 - **Deterministic:** yes · **Safety class:** machine
-- **Status:** specified (not in the Core layer yet: no experiment evidence)
-- **Tests:** 
+- **Status:** tested (not in the Core layer yet: no experiment evidence)
+- **Tests:** `tests/core/test_conformance.py::test_derive_where`
 - **Origin:** U3, U22 (spec/LANGUAGE.md (FLOW … DIRECTION … TO))

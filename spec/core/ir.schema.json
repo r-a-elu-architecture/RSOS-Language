@@ -217,6 +217,39 @@
       "type": "string"
      }
     }
+   },
+   {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "op",
+     "field",
+     "cond_field",
+     "equals"
+    ],
+    "properties": {
+     "op": {
+      "const": "derive_where"
+     },
+     "field": {
+      "type": "string"
+     },
+     "cond_field": {
+      "type": "string"
+     },
+     "equals": {
+      "type": "string"
+     },
+     "add": {
+      "type": "integer"
+     },
+     "max": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     }
+    }
    }
   ]
  }

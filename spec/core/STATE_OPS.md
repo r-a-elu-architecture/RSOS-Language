@@ -84,6 +84,13 @@ in the experiments (the model must find every matching key itself); in Core the 
 
 4.3. An implementation MUST NOT read state values in the planner's place, guess missing keys or coerce non-integers.
 
+4.4. **Proposed for Core 1.1: `derive_where` (RSOS `FLOW field OVER cond_field x [+n] [CAP m]`).** For every object
+whose `cond_field` equals `x`: `field := min(int(field) + n, max)`; objects without `field` are skipped; no match is not
+an error; `E_NOT_INTEGER` if a matched value is not an integer. Implemented and tested (registry C-009, status
+`tested`); it enters the Core layer under §9 only after its pre-registered experiment
+([`PREREGISTRATION_SC2.md`](../../experiments/PREREGISTRATION_SC2.md)), whose predictions were published before it was
+built.
+
 ## 5. Surface syntaxes
 
 5.1. **Core syntax.** One call per line: `name(field=value, ...)`. Values are bare words without commas or

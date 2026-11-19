@@ -31,7 +31,7 @@ import json
 import re
 import shlex
 
-OPS = ("SET", "DEL", "INHERIT", "FUSE", "SCALE", "ROUTE", "REHOST")
+OPS = ("SET", "DEL", "INHERIT", "FUSE", "SCALE", "ROUTE", "REHOST", "FLOW")
 KEY_RX = re.compile(r"^[A-Za-z_][\w-]*(\.[A-Za-z_][\w-]*)+$")
 ROUTE_RX = re.compile(r"^ROUTE\s+(\S+)\s*=\s*(\S+)\s*:\s*(\S+)\s+(\S+)\s*\|\s*(\S+)$")
 STEP_RX = re.compile(r"^#\s*(\d+)\s*$")
@@ -40,7 +40,7 @@ SET_QUOTED_RX = re.compile(r"""^SET\s+(\S+)\s*=?\s*(["'])(.*)\2$""", re.IGNORECA
 GRAMMAR = ("RSOS operations, one per line (keys are dotted names): SET k v | DEL k | INHERIT d s [+n] [CAP m] "
            "(d = s+n, max m) | FUSE d a b [CAP m] (d = a+b) | SCALE k f [CAP m] (k = k*f) | "
            "ROUTE s = x : d v1 | v2 (d = v1 if s is x, else v2) | REHOST field a b (every key ending in .field equal "
-           "to a becomes b). SET k other.key copies a value; to set text that contains a dot, quote it: SET k \"a.b\". Never compute or look up a value yourself: name the keys, "
+           "to a becomes b) | FLOW field OVER c x [+n] [CAP m] (for every object whose c equals x, its field = field+n, max m). SET k other.key copies a value; to set text that contains a dot, quote it: SET k \"a.b\". Never compute or look up a value yourself: name the keys, "
            "the runtime reads and computes every value.")
 
 
@@ -125,6 +125,9 @@ def parse_ops(text: str) -> list:
             ops.append(("SCALE", _key(w[1]), float(w[2]), _opt(w, 3)[1]))
         elif kw == "REHOST" and len(w) == 4:
             ops.append(("REHOST", w[1], w[2], w[3]))
+        elif kw == "FLOW" and len(w) >= 6 and w[2].upper() == "OVER":
+            n, cap = _opt(w, 5)
+            ops.append(("FLOW", w[1], w[3], w[4], n, cap))
         else:
             raise OpError(f"malformed operation {line!r}", "E_PARSE")
     if not ops:
@@ -175,6 +178,13 @@ def execute(state: dict, ops: list) -> dict:
             _, field, a, b = op
             for k in [k for k, v in st.items() if k.rsplit(".", 1)[-1] == field and str(v) == a]:
                 st[k] = b
+        elif kw == "FLOW":
+            _, field, cond, x, n, cap = op
+            objs = [k.rsplit(".", 1)[0] for k, v in st.items() if k.rsplit(".", 1)[-1] == cond and str(v) == x]
+            for o in objs:
+                k = f"{o}.{field}"
+                if k in st:
+                    st[k] = str(_cap(_int(st, k) + n, cap))
     return st
 
 

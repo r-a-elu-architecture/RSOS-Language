@@ -100,3 +100,10 @@ No A8 prediction failed on the Claude ladder (G1–G5 pass). Instrument note, no
 | 40 | A8 G7 part 2 | Invalid operations proposed per blind task: non-Claude 0.16 vs Claude 0.09 (1.7×, not ≥ 3×); Gemini proposed none. All rejected before execution (part 1 holds) | Grammar / Family | Partly | Measure per family as more run (Codex, Qwen, small models); grammar examples only if a family needs them |
 | 41 | A8 G8 (**closed 19 Nov: met** — 712#35 failed on Gemini and GPT-6.2 Sol) | No single failing step shared by two non-Claude families yet: 712#35 fails on Gemini and Claude, 702#35 on Mistral and Claude | Request / Family | Yes | More families on L3 (OpenAI via Codex) |
 | 42 | A8 gpt-oss cell | Groq free tier: X5b S1 3 of 16 tasks (daily quota); L3 not runnable (8,000 tokens a minute). `a8_analyse.py` reports G1 and G5 false from this incomplete cell | Quota / Analysis | No (instrument) | Finish on Groq or via Codex; the analysis should mark incomplete cells (amend before the next scoring) |
+
+## SC1, robot scene (19 Nov 2026)
+
+| # | Test | Failure | Objects | Dragon logic applies? | Next landing |
+|---|---|---|---|---|---|
+| 43 | SC1 P4 on Gemini | Gemini's JSON Patch failed 906 step 45 (5 objects), not one of the five named hand-overs; P4 passed only on Mistral (913/53, 913/49). Selection by object count was too coarse: 906/45 is the only SC1 hand-over where every matched object arrived during the task | Scan / Start state | **Yes** | SC2: a frozen predictor of out-of-date matches, tasks from a public beacon |
+| 44 | SC1 X5b invalid operations | Mistral's RSOS planner proposed 3.3 invalid operations per task (53 in 16; Gemini 0); all rejected before running, all tasks exact | Grammar / Vocabulary | Partly | grammar examples in the scene vocabulary (later amendment, not in SC2) |

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- **SC1 run (19 Nov): the named step broke.** Robot scene, predictions public at 05:43 UTC before any model call.
+  Mistral Large 4's one-call JSON Patch failed at two of the five named hand-overs (task 913, steps 53 and 49); Gemini
+  3.8 Flash's failed elsewhere (906/45; P4 missed on Gemini, published). RSOS blind 32/32 exact; JSON Patch 15/16 and
+  14/16; tokens per correct task 0.61× and 0.52×, USD 0.50× on Mistral; 192/192 drifts repaired at 0 calls. P1–P6 pass,
+  P7 pending. RSOS blind now 288/288 across six models and two worlds. `experiments/SC1_REPORT.md`.
+- **FLOW (derive_where) built and tested** after its properties were published (SC2); not in the Core layer until its
+  run. Harness support at runtime (`experiments/sc2_tasks.py`); predictor of JSON Patch failures (`experiments/sc2_predictor.py`).
 - **The operation table and SC2 (19 Nov, before the build):** Core operations ordered by what they read and write; four gaps named; the law from every A7/A8 step (JSON Patch fails 0.00% when it reads nothing, 0.14–0.17% for one or two keys, 2.31% for a whole-state scan; RSOS blind 0 on every row) predicts gap D, `derive_where`, at ≥ 5% for JSON Patch and exact for RSOS. `experiments/OPERATION_TABLE.md`, `experiments/PREREGISTRATION_SC2.md`; registry entry C-009, status specified.
 - **SC1 pre-registered (19 Nov): a grounded robot scene.** 50 objects shared by six robots (grid x, y, height, owner robot, room, surface; 300 keys), 56 requests, 16 seeds; published mapping from symbols to state; StateBench `statebench_v1_SC1.jsonl`. Channel measured with 0 model calls: RSOS program + digest 0.49× the bytes (0.22× the tokens) of JSON Patch + digest, 0.0054× a full scene-graph sync, hand-overs 0.059×, conditional steps 1.20× (RSOS larger). Seven predictions fixed before the model runs, including five named hand-over steps (P4). `experiments/PREREGISTRATION_SC1.md`.
 

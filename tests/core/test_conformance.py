@@ -73,6 +73,16 @@ def test_reassign_where():
     assert run("reassign_where(field=owner, from=nobody, to=bruno)") == S  # no match is not an error
 
 
+def test_derive_where():
+    """FLOW (C-009, specified 19 Nov in experiments/PREREGISTRATION_SC2.md before it was built)."""
+    st = {"cup.x": "3", "cup.owner": "rover", "box.x": "8", "box.owner": "rover", "pan.x": "1", "pan.owner": "drone",
+          "tag.owner": "rover"}
+    out = run("derive_where(field=x, cond_field=owner, equals=rover, add=2, max=9)", st)
+    assert out == {**st, "cup.x": "5", "box.x": "9"}       # every match moves, capped; pan untouched; tag has no x
+    assert run("derive_where(field=x, cond_field=owner, equals=nobody, add=1)", st) == st  # no match is not an error
+    assert code_of("derive_where(field=owner, cond_field=owner, equals=rover, add=1)", st) == "E_NOT_INTEGER"
+
+
 def test_parse_errors():
     assert code_of("rename(key=a.b)") == "E_PARSE"
     assert code_of("set(key=a.b)") == "E_PARSE"

@@ -437,11 +437,13 @@
    "target": [
     "state_runtime"
    ],
-   "status": "specified",
+   "status": "tested",
    "evidence": [],
-   "evidence_note": "Gap D of experiments/OPERATION_TABLE.md; properties predicted before it is built (experiments/PREREGISTRATION_SC2.md).",
+   "evidence_note": "Gap D of experiments/OPERATION_TABLE.md; specified with its predicted properties before it was built (experiments/PREREGISTRATION_SC2.md, 19 Nov 2026 06:33 UTC); implemented and tested 19 Nov. Enters the Core layer only after the SC2 run (publication rule).",
    "measured_uses_a7_a8": 0,
-   "tests": [],
+   "tests": [
+    "tests/core/test_conformance.py::test_derive_where"
+   ],
    "safety_class": "machine",
    "origin": {
     "register": [

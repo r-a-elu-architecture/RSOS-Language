@@ -21,6 +21,7 @@ PAIRS = [
     ('SCALE search.retries 2 CAP 9', 'multiply(key=search.retries, factor=2, max=9)'),
     ('ROUTE auth.region = eu-west : auth.log debug | info', 'select_if(cond_key=auth.region, equals=eu-west, dst=auth.log, then=debug, else=info)'),
     ('REHOST owner chen bruno', 'reassign_where(field=owner, from=chen, to=bruno)'),
+    ('FLOW retries OVER owner chen +1 CAP 9', 'derive_where(field=retries, cond_field=owner, equals=chen, add=1, max=9)'),
 ]
 
 

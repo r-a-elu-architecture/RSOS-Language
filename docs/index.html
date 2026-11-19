@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://r-a-elu-architecture.github.io/RSOS-Language/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 256 of 256 tasks exact across six models.">
+<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 288 of 288 tasks exact across six models.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="RSOS: exact shared state for AI agents, and the language it grew from">
 <meta name="twitter:description" content="RSOS Core keeps every AI agent's copy of shared state exact: the model names the change, a deterministic runtime computes it and repairs drift with no model call. Predicted in public, measured on six models.">
@@ -56,8 +56,8 @@
 agent's copy and repairs drift without a model call. The model never needs to see the data.</p>
 <a class="cta" href="core.html">Read the Core specification</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/bench">Score your agents on StateBench</a>
 <div class="measured" aria-label="What was measured">
-<div><b>256 / 256</b><span>tasks exact across six models from Anthropic, Google, Mistral and OpenAI</span></div>
-<div><b>2 / 2</b><span>failure points predicted in public before the run, then confirmed</span></div>
+<div><b>288 / 288</b><span>tasks exact across six models from Anthropic, Google, Mistral and OpenAI, in two worlds</span></div>
+<div><b>3 / 3</b><span>named failure points predicted in public before the run, then hit</span></div>
 <div><b>0.45–0.61×</b><span>cost per correct task relative to one-call JSON Patch at 300 keys (USD on Mistral, tokens on Gemini and GPT)</span></div>
 </div>
 </div>
@@ -108,13 +108,18 @@ tasks. Mistral Large 4 failed task 702 at step 35. RSOS exact on both.</li>
 <li class="hit"><time datetime="2026-11-19T03:27Z">19 Nov 2026, 03:27 UTC</time><span class="k">Confirmed</span>
 (<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/e876f65">e876f65</a>): GPT-6.2 Sol failed task 712 at step 35, its only error on the large
 set. Archived: <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</li>
+<li class="pred"><time datetime="2026-11-19T05:43Z">19 Nov 2026, 05:43 UTC</time><span class="k">Prediction SC1 published</span>
+(<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/b9c8fc8">b9c8fc8</a>): in a robot scene no model had seen, JSON Patch fails at one of five named
+hand-overs.</li>
+<li class="hit"><time datetime="2026-11-19T07:15Z">19 Nov 2026, 07:15 UTC</time><span class="k">Confirmed on Mistral</span>:
+Mistral Large 4 failed task 913 at steps 53 and 49, the first and third names on the list. Gemini 3.8 Flash failed
+elsewhere, published as a miss. RSOS exact on all 32 tasks. <a href="results.html#sc1">Details</a>.</li>
 </ol>
-<p class="muted small">Also published: 22 of 59 predictions failed, including two from this round. It is one task
+<p class="muted small">Also published: 22 of 65 predictions failed. It is one task
 family with 16 tasks per cell, and the strongest rivals (a tool-calling agent, a code-writing agent) are the next
 tests. <a href="results.html">All results and failures</a>.</p>
-<p class="small"><b>Next, predicted this morning:</b> a robot scene shared by six robots (SC1). Five named
-hand-over steps where JSON Patch should break, published before any model run.
-<a href="results.html#sc1">The scene, the numbers and the predictions</a>.</p>
+<p class="small"><b>Next, predicted before it is built:</b> FLOW, an operation the operation table says must exist
+("move every object of rover one cell right"). <a href="results.html#table">The table and the prediction</a>.</p>
 </div></section>
 
 <section id="start"><div class="wrap">

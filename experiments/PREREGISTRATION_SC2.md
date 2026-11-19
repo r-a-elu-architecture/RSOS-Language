@@ -70,3 +70,43 @@ syntax with an OVER clause:
     FLOW x OVER owner rover +1 CAP 9      ≡  derive_where(field=x, cond_field=owner, equals=rover, add=1, max=9)
 
 "Everything of rover flows one cell on, at most to the edge." Nothing else changes.
+
+## Amendment 2 (19 Nov 2026, 09:35 Vilnius / 07:35 UTC; FLOW built and tested, no SC2 task drawn, no SC2 model call)
+
+**The law as frozen code.** `experiments/sc2_predictor.py` computes, for every step of any task, the probability that
+one-call JSON Patch fails there, from the task alone: does the step scan the state; how many of the keys it matches
+are out of date relative to the start state (arrived or left during the task, or changed since); how many keys it
+changes; its position. Logistic weights fitted on every JSON Patch step of A7, A8 and SC1 (14,560 steps, 36 failed),
+`experiments/sc2_predictor_weights.json`. Out of sample by model (fit on the others): AUC 0.91–0.99 for five models,
+0.82 for Mistral Large 4. Frozen now:
+
+    predictor (code + weights)   0c976ed0dba98c20f43a92eeeeba25ebf001519175811826843af204999068f3
+    sc2_predictor.py             f211740c0a2c398add287fef7ad8241e948e86b8b40f93fc9f60c886c0b9e4de
+    sc2_predictor_weights.json   7091a630c17dd341c7b55d367d8f0d5ac2fc3bfa48e00b6649d43fded7ae49f0
+    sc2_tasks.py (generator)     9b851d123cd0796ea97dd8f275bc2248d46fe82c2a58b59b589f659376d1ca40
+
+`sc2_analyse.py` refuses to score if the predictor's hash differs.
+
+**Nobody chooses the tasks.** The 16 task seeds come from the public drand randomness beacon (League of Entropy mainnet,
+default chain, 30-second rounds, genesis 1595431050), **round 6654866, emitted at 08:30:00 UTC on 19 Nov 2026**, after
+this amendment is public: seed_i = first 8 bytes of sha256("<randomness>:SC2:<i>"), i = 0..15 (`sc2_tasks.seeds_from`).
+Anyone can fetch the round (`https://api.drand.sh/public/6654866`) and check its signature. The round's randomness is
+written to `experiments/sc2_beacon.json`; the tasks are exported to `bench/statebench_v1_SC2.jsonl` with their sha256;
+the predictor's top-10 steps, its expected count and the channel ratio (Q4) are computed and published before any
+model call.
+
+**Two laws, one run.** The sentence-law (Q2, fixed 06:33 UTC) says scanning and computing compound: JSON Patch fails
+≥ 5% of FLOW requests. The frozen predictor has never seen an operation that computes per match and treats FLOW like a
+hand-over: on dry-run tasks it expects 3.9% (about 5 of 128 per model). The run decides between them; neither is
+changed.
+
+**Added predictions:**
+
+| ID | Prediction | Pass when |
+|---|---|---|
+| **Q6** | The frozen predictor's count | pooled JSON Patch failed steps (all kinds, complete models) inside the 95% Poisson interval of (models × the predictor's expected failures per model on the drawn tasks) |
+| **Q7** | **Its places** | the predictor's AUC on the drawn tasks ≥ 0.8, pooled, and at least one JSON Patch failure falls on its top-10 steps (published at the draw, before the run) |
+| **Q8** | The form of the error | ≥ 50% of the keys JSON Patch gets wrong on failed scan steps (FLOW and hand-overs) are out-of-date keys: objects that arrived, left, or changed during the task |
+| **Q9** | Families never tested on StateBench | RSOS blind exact 16/16 on DeepSeek V4.1 Flash (`deepseek-v4-1-flash-1017`) and GLM 5.3 (`zai-glm-5-3`), through the owner's Mistral API, if run; a cell that does not complete is reported as such |
+
+Q1–Q5 unchanged. Scoring: `experiments/sc2_analyse.py` (written now, before the draw); Q4 at export.
