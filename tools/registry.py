@@ -51,7 +51,9 @@ def check(reg):
                 errs.append(f"{e['id']}: evidence report not found: {ev['report']}")
     sys.path.insert(0, os.path.join(ROOT, "src"))
     from rsoslang.core.ir import CORE_OPS
-    reg_ops = {e["tech_name"]: e["symbolic_name"] for e in reg["entries"] if e["kind"] == "operation"}
+    # proposed/specified operations are not built yet; implemented or higher must exist in code, and code nothing else
+    reg_ops = {e["tech_name"]: e["symbolic_name"] for e in reg["entries"] if e["kind"] == "operation"
+               and e["status"] not in ("proposed", "specified")}
     if set(reg_ops) != set(CORE_OPS):
         errs.append(f"registry operations {sorted(reg_ops)} != code {sorted(CORE_OPS)}")
     for n, sym in reg_ops.items():

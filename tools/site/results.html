@@ -72,6 +72,37 @@ A7; the painting syntax is not measured here. <a href="{REPO}/blob/main/experime
 pre-registration</a>, <a href="{REPO}/blob/main/bench/statebench_v1_SC1.jsonl">the 16 tasks</a>.</p>
 </div></section>
 
+<section id="table"><div class="wrap">
+<h2>The operation table and its first predicted gap</h2>
+<p class="intro">Ordered by what they read and what they write, the Core operations leave gaps. The measured failure
+rates give a law that predicts what belongs in them, published before the first gap is built
+(<a href="{REPO}/blob/main/experiments/OPERATION_TABLE.md">table</a>,
+<a href="{REPO}/blob/main/experiments/PREREGISTRATION_SC2.md">SC2 pre-registration</a>).</p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Reads ↓ / writes →</th><th scope="col">one key, literal</th><th scope="col">one key, computed</th><th scope="col">many keys</th></tr></thead>
+<tbody>
+<tr><th scope="row">nothing</th><td><code>set</code>, <code>delete</code></td><td></td><td><span class="tag pred">gap A</span></td></tr>
+<tr><th scope="row">one key</th><td></td><td><code>derive</code>, <code>multiply</code></td><td></td></tr>
+<tr><th scope="row">two keys</th><td></td><td><code>sum_into</code></td><td></td></tr>
+<tr><th scope="row">a condition</th><td><code>select_if</code></td><td></td><td><span class="tag pred">gap B</span></td></tr>
+<tr><th scope="row">the whole state</th><td></td><td><span class="tag pred">gap C</span></td><td><code>reassign_where</code><br><span class="tag pred">gap D</span> <code>derive_where</code></td></tr>
+</tbody></table></div>
+<h3>The law behind it</h3>
+<div class="tw"><table>
+<thead><tr><th scope="col">Reads</th><th scope="col" class="n">JSON Patch failed</th><th scope="col" class="n">RSOS blind failed</th></tr></thead>
+<tbody>
+<tr><td>nothing</td><td class="n">0 / 3,063</td><td class="n">0 / 2,703</td></tr>
+<tr><td>a condition</td><td class="n">0 / 788</td><td class="n">0 / 696</td></tr>
+<tr><td>one key</td><td class="n">10 / 7,125 (0.14%)</td><td class="n">0 / 6,477</td></tr>
+<tr><td>two keys</td><td class="n">2 / 1,193 (0.17%)</td><td class="n">0 / 1,096</td></tr>
+<tr class="us"><td><b>the whole state</b></td><td class="n"><b>19 / 823 (2.31%)</b></td><td class="n"><b>0 / 718</b></td></tr>
+</tbody></table>
+<p class="muted small">Every step of A7 and A8, all models, by what the operation reads.</p>
+<p><b>Prediction for gap D, before it exists:</b> an operation that scans the state and computes a value for every match
+("move every object of rover one cell right"). One-call JSON Patch will fail at least 5% of these requests, more than
+twice the scan rate, while RSOS blind planning stays exact. <span class="tag pred">pending: SC2</span></p>
+</div></section>
+
 <section id="g9"><div class="wrap">
 <h2>A8: A prediction published before the run, then the run</h2>
 <p class="intro">On Claude, every JSON Patch failure was one request type ("everything owned by X is now owned by Y")

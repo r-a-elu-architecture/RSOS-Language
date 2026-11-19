@@ -413,6 +413,41 @@
    "since": "core-1.0.0"
   },
   {
+   "id": "C-009",
+   "tech_name": "derive_where",
+   "symbolic_name": "(to be named by the author)",
+   "aliases": [],
+   "kind": "operation",
+   "signature": "derive_where(field: Name, cond_field: Name, equals: Text, add: Int, max: Int | null = null)",
+   "semantics": "For every object whose cond_field equals the given text: field := min(int(field) + add, max). No match is not an error.",
+   "preconditions": [
+    "every matched value of field is an integer"
+   ],
+   "postconditions": [
+    "every matched object's field is increased and capped"
+   ],
+   "errors": [
+    "E_PARSE",
+    "E_NOT_INTEGER"
+   ],
+   "deterministic": true,
+   "familiar_equivalent": "UPDATE … SET field = field + n WHERE cond_field = x",
+   "target": [
+    "state_runtime"
+   ],
+   "status": "specified",
+   "evidence": [],
+   "evidence_note": "Gap D of experiments/OPERATION_TABLE.md; properties predicted before it is built (experiments/PREREGISTRATION_SC2.md).",
+   "measured_uses_a7_a8": 0,
+   "tests": [],
+   "safety_class": "machine",
+   "origin": {
+    "register": [],
+    "language": "operation table, gap D"
+   },
+   "since": "proposed after core-1.0.0"
+  },
+  {
    "id": "C-101",
    "tech_name": "state_digest",
    "symbolic_name": "green dot",
