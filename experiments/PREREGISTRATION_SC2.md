@@ -59,3 +59,14 @@ does not extend to a new operation learnt from its description, and is reported 
 This pre-registration published now, before the SC1 results → RSOS name chosen → operation built in Core (registry status
 `specified` → `implemented` → `tested`) and in the harness → SC2 tasks exported with sha256 → replay check → runs →
 `experiments/sc2_analyse.py` (written before the runs) → report, confirming or not.
+
+## Amendment 1 (19 Nov 2026, 08:39 Vilnius; before the build, before any run)
+
+RSOS name chosen by the language's author: **FLOW** (owner, 08:39, after weighing FLOW, SHIFT, BEAM, MOVE and LIGHT;
+LIGHT, proposed first at 08:34, stays the White Dragon's light and the origin of `reconcile`). FLOW is the language's
+existing statement `FLOW <source> DIRECTION … TO …` (register U3, U22: a flow with a direction), used in the state
+syntax with an OVER clause:
+
+    FLOW x OVER owner rover +1 CAP 9      ≡  derive_where(field=x, cond_field=owner, equals=rover, add=1, max=9)
+
+"Everything of rover flows one cell on, at most to the edge." Nothing else changes.

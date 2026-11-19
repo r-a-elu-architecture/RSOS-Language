@@ -160,7 +160,7 @@ Each entry: the Core (technical) name, its RSOS (symbolic) name, what it does, i
 
 ## `derive_where` (C-009)
 
-- **RSOS name:** `(to be named by the author)`
+- **RSOS name:** `FLOW` (also: FLOW field OVER cond_field value +n CAP m)
 - **Signature:** `derive_where(field: Name, cond_field: Name, equals: Text, add: Int, max: Int | null = null)`
 - **Semantics:** For every object whose cond_field equals the given text: field := min(int(field) + add, max). No match is not an error.
 - **Preconditions:** every matched value of field is an integer
@@ -169,4 +169,4 @@ Each entry: the Core (technical) name, its RSOS (symbolic) name, what it does, i
 - **Deterministic:** yes · **Safety class:** machine
 - **Status:** specified (not in the Core layer yet: no experiment evidence)
 - **Tests:** 
-- **Origin:** — (operation table, gap D)
+- **Origin:** U3, U22 (spec/LANGUAGE.md (FLOW … DIRECTION … TO))

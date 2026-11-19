@@ -415,8 +415,10 @@
   {
    "id": "C-009",
    "tech_name": "derive_where",
-   "symbolic_name": "(to be named by the author)",
-   "aliases": [],
+   "symbolic_name": "FLOW",
+   "aliases": [
+    "FLOW field OVER cond_field value +n CAP m"
+   ],
    "kind": "operation",
    "signature": "derive_where(field: Name, cond_field: Name, equals: Text, add: Int, max: Int | null = null)",
    "semantics": "For every object whose cond_field equals the given text: field := min(int(field) + add, max). No match is not an error.",
@@ -442,8 +444,11 @@
    "tests": [],
    "safety_class": "machine",
    "origin": {
-    "register": [],
-    "language": "operation table, gap D"
+    "register": [
+     "U3",
+     "U22"
+    ],
+    "language": "spec/LANGUAGE.md (FLOW … DIRECTION … TO)"
    },
    "since": "proposed after core-1.0.0"
   },
