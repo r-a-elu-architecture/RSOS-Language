@@ -3,142 +3,176 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RSOS Language: an executable language for human–AI and AI–AI communication</title>
-<meta name="description" content="An executable spatial-symbolic language for human–AI and AI–AI communication, with a cross-domain engine. On real AI agents it kept every copy of the shared state true and healed every drift without a model call.">
+<title>RSOS: exact shared state for AI agents, and the language it grew from</title>
+<meta name="description" content="RSOS Core keeps every AI agent's copy of shared state exact: the model names the change, a deterministic runtime computes it and repairs drift with no model call. Predicted in public, measured on six models.">
 <link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/">
-<meta property="og:title" content="RSOS Language: an executable language for human–AI and AI–AI communication">
-<meta property="og:description" content="An executable spatial-symbolic language for human–AI and AI–AI communication, with a cross-domain engine. On real AI agents it kept every copy of the shared state true and healed every drift without a model call.">
+<meta property="og:title" content="RSOS: exact shared state for AI agents, and the language it grew from">
+<meta property="og:description" content="RSOS Core keeps every AI agent's copy of shared state exact: the model names the change, a deterministic runtime computes it and repairs drift with no model call. Predicted in public, measured on six models.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
 <b>RSOS</b>
-<a class="here" href="index.html" aria-current="page">Language</a>
-<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+<a class="here" href="index.html">Core and Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework</a>
 </div></div>
 <div class="wrap">
 <header class="top">
-<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
-<nav class="main" aria-label="Site"><a href="index.html" aria-current="page">Home</a><a href="results.html">Results</a><a href="try.html">Try it</a><a href="paper.html">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS</a>
+<nav class="main" aria-label="Site"><a href="core.html">Core</a><a href="adopt.html">For organisations</a><a href="results.html">Results</a><a href="try.html">Language</a><a href="paper.html">Research</a><a href="origins.html">Origins</a><a class="gh" href="https://github.com/r-a-elu-architecture/RSOS-Language">GitHub</a></nav>
 </header>
 </div>
 <main id="main">
 <div class="wrap">
 <div class="hero">
-<h1>An executable language for human–AI and AI–AI communication.</h1>
-<p class="lead">Programs are spatial-symbolic compositions: objects, rooms, flows, colours and their order. One set of
-operators acts on any host, from AI agents to teams and organisations. A cross-domain engine, the White Dragon,
-redesigns the host it runs on. Consent and harm checks are part of the compiler.</p>
-<a class="cta" href="results.html">See the measured results</a><a class="cta quiet" href="try.html">Try the editor</a>
-
-<div class="stats" aria-label="Headline results">
-<div class="stat"><div class="n">0.106×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol, with every copy of the shared state true</div><div class="s">BPE tokens; with a local predictor (labelled) · 0.141× with zero model calls · A3c</div></div>
-<div class="stat"><div class="n">0 / 16</div><div class="l">tasks right for the anchor protocol once agents compute from their copies; RSOS stays right</div><div class="s">93 of 96 wrong values traced to hidden drift; palace 16 / 16 · A4</div></div>
-<div class="stat"><div class="n">256 / 256</div><div class="l">tasks exact with the planner shown no state value, on Claude, Mistral, Gemini and GPT; we published which step one-call JSON Patch would break on before testing new families, and it broke there on Gemini, Mistral and GPT</div><div class="s">0 wrong steps · 0.45–0.61× JSON Patch's cost per correct task at 300 keys · A7, A8</div></div>
-</div>
-<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 59 predictions on real
-hosts: 37 passed, 22 failed. The failures are on the results page, next to the passes.</p>
-</div>
-</div>
-
-<section id="state-runtime"><div class="wrap split">
+<div class="hero-grid">
 <div>
-<h2>Blind planning: the model names keys, the runtime computes values</h2>
-<p class="intro">For multi-agent workflows that edit shared state. The model decides what should change; the RSOS
-runtime executes it, checks every agent's copy and heals drift. A whole task fits in one model call, because the
-operations name keys and the runtime computes every value.</p>
-<a class="cta" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/STATE.md">Drop it in: Python or MCP</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/bench">Score your framework: StateBench</a>
+<h1>Shared state for AI agents, exact by construction.</h1>
+<p class="lead">The model names what should change. A deterministic runtime computes every value, checks every
+agent's copy and repairs drift without a model call. The model never needs to see the data.</p>
+<a class="cta" href="core.html">Read the Core specification</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/tree/main/bench">Score your agents on StateBench</a>
+<div class="measured" aria-label="What was measured">
+<div><b>256 / 256</b><span>tasks exact across six models from Anthropic, Google, Mistral and OpenAI</span></div>
+<div><b>2 / 2</b><span>failure points predicted in public before the run, then confirmed</span></div>
+<div><b>0.45–0.61×</b><span>cost per correct task relative to one-call JSON Patch at 300 keys (USD on Mistral, tokens on Gemini and GPT)</span></div>
 </div>
-<div>
-<div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">One call per step</th><th scope="col" class="n">One-call JSON Patch</th><th scope="col" class="n">RSOS blind</th></tr></thead>
+</div>
+<figure class="proof" aria-label="One program in two syntaxes">
+<div role="tablist" aria-label="Syntax">
+<button role="tab" id="t-core" aria-selected="true" aria-controls="p-core">Core syntax</button>
+<button role="tab" id="t-rsos" aria-selected="false" aria-controls="p-rsos" tabindex="-1">RSOS syntax</button>
+</div>
+<pre id="p-core" role="tabpanel" aria-labelledby="t-core"><code><span class="k">reassign_where</span>(field=owner, from=bruno, to=chen)
+<span class="k">derive</span>(dst=auth.timeout_ms, src=auth.timeout_ms,
+       add=100, max=900)
+<span class="k">select_if</span>(cond_key=auth.region, equals=eu-west,
+          dst=auth.log_level, then=debug, else=info)</code></pre>
+<pre id="p-rsos" role="tabpanel" aria-labelledby="t-rsos" hidden><code><span class="k">REHOST</span> owner bruno chen
+<span class="k">INHERIT</span> auth.timeout_ms auth.timeout_ms +100 CAP 900
+<span class="k">ROUTE</span> auth.region = eu-west : auth.log_level debug | info</code></pre>
+<div class="digest"><span class="dot" aria-hidden="true"></span><code>5b0360a677fb</code><span>IR digest: identical in either syntax</span></div>
+<div class="state"><div class="tw"><table>
+<thead><tr><th scope="col">Key</th><th scope="col">Before</th><th scope="col">After</th></tr></thead>
 <tbody>
-<tr><th scope="row">Model calls, 14-step task</th><td class="n">42–43</td><td class="n">2.0–2.3</td><td class="n"><b>2.3–2.4</b></td></tr>
-<tr><th scope="row">Cost per correct task</th><td class="n">2.8–3.0×</td><td class="n">1×</td><td class="n"><b>0.50–0.91×</b></td></tr>
-<tr><th scope="row">Tasks exact, 14–224 steps</th><td class="n">31/32 (14 steps)</td><td class="n">77/80</td><td class="n"><b>80/80</b></td></tr>
-<tr><th scope="row">State values the planner sees</th><td class="n">all</td><td class="n">all</td><td class="n"><b>none</b></td></tr>
-</tbody></table></div>
-<pre aria-label="Install as an MCP tool"><code><span class="c"># Claude Code, or any MCP client</span>
-pip install rsoslang
+<tr class="chg"><td>auth.owner</td><td>bruno</td><td>chen</td></tr>
+<tr class="chg"><td>search.owner</td><td>bruno</td><td>chen</td></tr>
+<tr><td>cache.owner</td><td>dara</td><td>dara</td></tr>
+<tr class="chg"><td>auth.timeout_ms</td><td>850</td><td>900</td></tr>
+<tr class="chg"><td>auth.log_level</td><td>warn</td><td>debug</td></tr>
+</tbody></table></div></div>
+<figcaption>State digest <code>0bebeaf4539c</code> becomes <code>4838e0617916</code>. The planner wrote only key names;
+the runtime found both keys owned by bruno, capped the timeout and chose the log level.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+<section id="evidence"><div class="wrap">
+<h2>Predicted in public, then measured</h2>
+<p class="intro">Every test is pre-registered. Across Claude models, the strongest one-call JSON Patch agent we could
+build failed on one kind of request: "everything owned by X is now owned by Y", at the same named steps. Before
+running three model families we had never tested, we published where it would break.</p>
+<ol class="timeline">
+<li class="pred"><time datetime="2026-11-18T22:26Z">18 Nov 2026, 22:26 UTC</time><span class="k">Prediction G9 published</span>
+(<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/00e5121">00e5121</a>): on Mistral or Gemini, JSON Patch fails task 712 or 702 at step 35;
+RSOS blind planning stays exact on both.</li>
+<li class="hit"><time datetime="2026-11-19T02:36Z">19 Nov 2026, 02:36 UTC</time><span class="k">Confirmed</span>
+(<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/d5f2f43">d5f2f43</a>): Gemini 3.8 Flash failed task 712 at step 35, its only error in 32
+tasks. Mistral Large 4 failed task 702 at step 35. RSOS exact on both.</li>
+<li class="pred"><time datetime="2026-11-19T02:50Z">19 Nov 2026, 02:50 UTC</time><span class="k">Prediction G10 published</span>
+(<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/edcd42e">edcd42e</a>): the same step on GPT-6.2 Sol.</li>
+<li class="hit"><time datetime="2026-11-19T03:27Z">19 Nov 2026, 03:27 UTC</time><span class="k">Confirmed</span>
+(<a href="https://github.com/r-a-elu-architecture/RSOS-Language/commit/e876f65">e876f65</a>): GPT-6.2 Sol failed task 712 at step 35, its only error on the large
+set. Archived: <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</li>
+</ol>
+<p class="muted small">Also published: 22 of 59 predictions failed, including two from this round. It is one task
+family with 16 tasks per cell, and the strongest rivals (a tool-calling agent, a code-writing agent) are the next
+tests. <a href="results.html">All results and failures</a>.</p>
+</div></section>
+
+<section id="start"><div class="wrap">
+<h2>Where to start</h2>
+<dl class="doors">
+<dt>Engineering teams</dt><dd>The specification, eight operations, a JSON IR with a schema, error codes, conformance
+tests, a Python runtime and an MCP server.</dd><dd class="go"><a href="core.html">RSOS Core</a></dd>
+<dt>Organisations and platform owners</dt><dd>What it guarantees, where it fits, how to run a pilot on your own
+workflow, and its limits stated plainly.</dd><dd class="go"><a href="adopt.html">For organisations</a></dd>
+<dt>Researchers and evaluators</dt><dd>Pre-registrations, raw transcripts, analyses that re-run with zero model
+calls, StateBench and the archived releases.</dd><dd class="go"><a href="results.html">Results</a><a href="paper.html">Research</a></dd>
+<dt>Individuals and practitioners</dt><dd>The RSOS language: compose programs as paintings, key them in with the
+RSOS keyboard, or write them as text.</dd><dd class="go"><a href="try.html">The language</a></dd>
+<dt>Socio-technical and public-interest work</dt><dd>How the symbolic layer, the cue framework and the governance
+checks fit together, with consent built into the compiler.</dd><dd class="go"><a href="origins.html">Origins and governance</a></dd>
+</dl>
+</div></section>
+
+<section id="layers"><div class="wrap split">
+<div>
+<h2>One system, three layers</h2>
+<p class="intro">RSOS began as a symbolic language for healing, transforming, signalling and evolving. Core is the
+technical layer that grew from it. The symbolic language compiles to Core, so both describe the same programs, and
+every Core operation links back to its origin.</p>
+<p class="muted small">An operation enters Core only after it is implemented, tested and backed by an experiment.
+Today that is seven operations and two state functions.</p>
+</div>
+<div class="layers">
+<div class="layer"><b>Origins</b><span>The seed, the research programme and the lineage of every symbol.</span></div>
+<div class="layer"><b>Language</b><span>Spatial and symbolic syntax: paintings, rooms, operators.</span><span class="arrow">compiles to the same IR as</span></div>
+<div class="layer core"><b>Core</b><span>Neutral operation names, a specification, tests, a deterministic runtime.</span></div>
+</div>
+</div></section>
+
+<section id="install"><div class="wrap split">
+<div>
+<h2>Run it</h2>
+<p class="intro">Python 3.10 or later. Core itself uses only the standard library; the package adds the MCP server.
+Use it as a library, or add it to any MCP client (Claude Code, Cursor and others) with one command.</p>
+<p class="muted small">Core v1 ships in release 0.4.0. Until that release is on PyPI, install from the repository
+as shown.</p>
+<a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/STATE.md">State Runtime guide</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/REPLICATE.md">Reproduce the results</a>
+</div>
+<pre aria-label="Install and use"><code><span class="c"># install</span>
+pip install "git+https://github.com/r-a-elu-architecture/RSOS-Language"
 claude mcp add rsos -- rsoslang mcp
 
-<span class="c"># or with no install</span>
-claude mcp add rsos -- uvx rsoslang mcp</code></pre>
-<p class="muted small">In the <a href="https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos">official MCP Registry</a> as <code>io.github.r-a-elu-architecture/rsos</code> (0.3.1). Any MCP client over stdio: Claude Code, Claude Desktop, Cursor and others. Verified on Windows 11, 18 Nov 2026: <code>claude mcp add</code> → Connected. On PyPI as <a href="https://pypi.org/project/rsoslang/">rsoslang</a>.</p>
-</div>
+<span class="c"># use</span>
+from rsoslang.core import Ledger
+led = Ledger({"auth.owner": "bruno", "search.owner": "bruno"})
+led.apply("REHOST owner bruno chen")   <span class="c"># or Core syntax via parse_core</span>
+led.dot                                <span class="c"># the state digest</span>
+led.sync(agent_copy)                   <span class="c"># repairs drift, 0 model calls</span></code></pre>
 </div></section>
 
-<section><div class="wrap split">
-<div>
-<h2>What a program looks like</h2>
-<p class="intro">A mental model placed on a real object. The work table is a robot; each part carries one composed
-model; a symbol anchors it and opens it on demand. The same lines compile for a person's practice or for an AI
-agent's workflow.</p>
-<p class="muted small">This is <code>examples/robot_head.rsl</code> from the repository. It compiles with
-<code>python -m rsoslang check</code> to 23 operations and 0 errors.</p>
-<a class="more" href="try.html">Write your own →</a>
-</div>
-<pre aria-label="RSOS example program"><code><span class="k">HOUSE</span> mind <span class="k">FOR</span> person
-<span class="k">ROOM</span> eagle <span class="k">PERSPECTIVE</span> above <span class="k">IN</span> mind
-<span class="k">OBJECT</span> robot <span class="k">KIND</span> work_table <span class="k">IN</span> eagle
-<span class="k">PART</span> robot.head <span class="k">KIND</span> decision_model
-<span class="k">MODEL</span> robot.head = associated + confidence
-    + analogical_reasoning <span class="k">IN</span> eagle <span class="k">FOR</span> decision
-<span class="k">MODEL</span> robot.hand = top_view + dissociated
-    + future_pacing + action <span class="k">IN</span> eagle <span class="k">FOR</span> action
-<span class="k">OBJECT</span> couch <span class="k">KIND</span> furniture <span class="k">IN</span> eagle <span class="k">REPRESENTS</span> langgraph
-<span class="k">DEDICATE</span> couch <span class="k">TO</span> hypothesis_testing
-<span class="k">FORM</span> couch <span class="k">DIRECTIONS</span> forward -> hypothesis
-    ; backward -> contradiction ; up -> framing
-<span class="k">ANCHOR</span> eagle_calculator <span class="k">TO</span> robot.head
-<span class="k">FUTUREPACE</span> eagle_calculator <span class="k">SCENARIOS</span> 3
-<span class="k">OPEN</span> eagle_calculator <span class="k">FROM</span> kinesthetic <span class="k">SCOPE</span> whole</code></pre>
-</div></section>
-
-<section><div class="wrap">
-<h2>Four parts, one language</h2>
-<div class="grid">
-<div class="card"><h3>Self-healing communication</h3><p>Agents share a book of meanings. Each message carries a
-green dot, a check of the state it refers to, so drift is caught and the changed part is healed from the book, with
-no model call.</p><a class="more" href="results.html#a3b">A1, A3, A3b →</a></div>
-<div class="card"><h3>The White Dragon engine</h3><p>It breaks a host into parts, picks a mechanism from another
-domain for each, and sets the depth, the order and the predicted gain. Tested against blind and weighted
-choice.</p><a class="more" href="results.html#a2">A2 →</a></div>
-<div class="card"><h3>Mental-model construction</h3><p>Reasoning and decisions are built as a house: rooms are
-states, objects are models, each part of an object carries one model. People run and edit them; they do not just
-recall them.</p><a class="more" href="programme.html">Programme →</a></div>
-<div class="card"><h3>Governance in the compiler</h3><p>Operations on people need their consent (E018), standing
-consent needs a declared network with laws (E021), and the Spine blocks predicted harm (E019), all at compile
-time.</p><a class="more" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use →</a></div>
-</div>
-</div></section>
-
-<section><div class="wrap split">
-<div>
-<h2>The claim, worded to its evidence</h2>
-<p class="intro">In pre-registered tests on real LLM agents, RSOS carried every message losslessly in 0.141× the BPE
-channel tokens of a Slipstream-style anchor protocol with zero model calls (0.106× with a local predictor), kept every
-copy of the shared state true, and repaired every injected drift without a model call. When agents computed from their
-copies, the anchor protocol got 0 of 16 tasks right; RSOS got 15–16. Written as programs the runtime executes, a
-14-step task took 2 model calls instead of 42.</p>
-</div>
-<div>
-<p class="note">Check values and restore-from-journal are old ideas in databases and file systems. To our knowledge,
-RSOS is the first agent communication language in which detection and in-place healing are part of the protocol, and
-the first whose protocol was designed by a cross-domain engine tested against blind alternatives.</p>
-<p class="muted small">Missed: 10× on the model bill (A5 reached 2.8–3.7× at API prices; the limit is now the
-model's thinking tokens). The 5× channel target missed in A3b was reached in A3c. Next: A5b, thinking control applied
-equally to RSOS and the baseline.</p>
-</div>
-</div></section>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.proof [role=tab]'));
+  function show(t){
+    tabs.forEach(function(x){
+      var on=x===t; x.setAttribute('aria-selected',on); x.tabIndex=on?0:-1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden=!on;
+    });
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t);});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];show(n);n.focus();}
+    });
+  });
+})();
+</script>
 </main>
 <footer><div class="wrap">
-<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
-Text CC BY 4.0<br>Research and development software, not a medical device.</div>
-<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
-<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+<div><p>RSOS by R. A. Elu, <a href="https://orcid.org/0009-0000-1456-2467">ORCID 0009-0000-1456-2467</a>.
+Code under Apache 2.0, text under CC BY 4.0.</p>
+<p>Research and development software. Not a medical device.</p></div>
+<div><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a></p><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/spec/core/STATE_OPS.md">Core specification</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.24358277">Software DOI</a></p><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
+<p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/SECURITY.md">Security</a></p></div>
 </div></footer>
 </body>
 </html>

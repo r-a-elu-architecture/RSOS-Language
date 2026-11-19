@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- **RSOS Core 1.0** (`rsoslang.core`): the technical layer. Neutral operation names (`set`, `copy`, `delete`, `derive`,
+  `sum_into`, `multiply`, `select_if`, `reassign_where`; `state_digest`, `reconcile`), one compiled form (a JSON IR with
+  a schema and a digest), a Core syntax beside the RSOS syntax (both compile to identical IR, tested), stable error
+  codes, and an RFC-style specification (`spec/core/STATE_OPS.md`). `registry/operators.json` is the single source of
+  truth (status, evidence, tests, origins); `spec/core/OPERATORS.md` is generated from it and CI fails if they differ.
+  Publication rule: an operator is in Core only once tested and backed by an experiment (`copy` is tested, not yet
+  executed, so it is listed outside Core). Corpus findings enter as candidates (`registry/candidates.schema.json`,
+  `tools/import_candidates.py`), hashes only. `rsoslang.state` still works (alias of `rsoslang.core.state`).
+- **0.4.0 (unreleased): State Runtime fixes** (`rsoslang.state`). `SET k other.key` with a key that does not exist
+  is now an error, not the literal text `other.key`; to set text that contains a dot, quote it (`SET k "a.b"`), and the
+  planner grammar says so. `SCALE` to a fraction is now an error instead of storing a value later operations reject.
+  The green dot is computed from sorted JSON, so a value with a line break can no longer produce another state's dot.
+  **Breaking:** green dots from 0.3.x do not match 0.4.0. Published results are unaffected: the A7/A8 harness does not
+  import this module, StateBench scores final states, the A5 equivalence still matches 32/32, all replay checks pass
+  and the A8 results hash is unchanged (`8cb9a1fd…`). Fixes first proposed in RSOS-Language PR #1.
 - **A8, OpenAI (19 Nov):** GPT-6.2 Sol through Codex: RSOS blind 32/32 exact; one-call JSON Patch 30/32. **G10, published before the run, hit:** GPT failed seed 712 at step 35, the same step that broke Gemini and Claude models; G8 now met. RSOS blind 256/256 across six models from four companies.
 - **A8, other families (19 Nov):** RSOS blind exact on Mistral Large 4 and Gemini 3.8 Flash, 64/64 (S1 and L3); one-call JSON Patch 59/64, all failures state-dependent. **The named-step prediction published before the runs (G9) hit:** Gemini failed seed 712 at step 35, Mistral failed seed 702 at step 35, RSOS blind exact on both. G7 (invalid operations proposed ≥ 3× Claude) and G8 (same step on two new families) not met; published. Report: `experiments/A8_FAMILIES_REPORT.md`.
 - **Predictions fixed before the next runs** (`experiments/PREREGISTRATION_A8.md`, amendments 2 and 3): G6 decoupling, G7 immunity, G8 same request across families, and **G9 named step**: on L3, one-call JSON Patch fails seed 712 or 702 at step 35 on Mistral or Gemini while RSOS blind stays exact. Basis: across Claude models, all 8 JSON Patch failures were one request type ("Everything owned by X is now owned by Y"; 8 of 553 vs 0 of 472 for RSOS blind). Amendment 2 also corrects amendment 1's header text against the code and keeps the first-run gpt-oss-120b failure (S1 X5b seed 302).

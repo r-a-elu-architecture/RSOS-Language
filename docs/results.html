@@ -3,25 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Results: every pre-registered test, failures included | RSOS Language</title>
-<meta name="description" content="A1, A2, A3 and A3b on real LLM agents, HT1 on a person, and the full failure map.">
+<title>Results: every pre-registered test, failures included | RSOS</title>
+<meta name="description" content="Pre-registered tests on real LLM agents across four model families, every prediction and the failure map.">
 <link rel="canonical" href="https://r-a-elu-architecture.github.io/RSOS-Language/results.html">
-<meta property="og:title" content="Results: every pre-registered test, failures included | RSOS Language">
-<meta property="og:description" content="A1, A2, A3 and A3b on real LLM agents, HT1 on a person, and the full failure map.">
+<meta property="og:title" content="Results: every pre-registered test, failures included | RSOS">
+<meta property="og:description" content="Pre-registered tests on real LLM agents across four model families, every prediction and the failure map.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="family" role="navigation" aria-label="RSOS family"><div class="wrap">
 <b>RSOS</b>
-<a class="here" href="index.html" aria-current="page">Language</a>
-<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework ↗</a>
+<a class="here" href="index.html">Core and Language</a>
+<a href="https://r-a-elu-architecture.github.io/RSOS-Multimodal-Cue-Framework/">Multimodal Cue Framework</a>
 </div></div>
 <div class="wrap">
 <header class="top">
-<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS Language</a>
-<nav class="main" aria-label="Site"><a href="index.html">Home</a><a href="results.html" aria-current="page">Results</a><a href="try.html">Try it</a><a href="paper.html">Paper</a><a href="programme.html">Programme</a><a href="family.html">Family</a></nav>
+<a class="mark" href="index.html"><span class="dot" aria-hidden="true"></span>RSOS</a>
+<nav class="main" aria-label="Site"><a href="core.html">Core</a><a href="adopt.html">For organisations</a><a href="results.html" aria-current="page">Results</a><a href="try.html">Language</a><a href="paper.html">Research</a><a href="origins.html">Origins</a><a class="gh" href="https://github.com/r-a-elu-architecture/RSOS-Language">GitHub</a></nav>
 </header>
 </div>
 <main id="main">
@@ -29,7 +32,7 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 59 predictions, 37 passed and 22 failed (G6 and G7 still open while more families run).</p>
+recorded, and each results file carries a hash. On real hosts: 59 predictions, 37 passed and 22 failed. Results from four model families are archived at <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
@@ -38,7 +41,7 @@ pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7
 </div>
 
 <section id="g9"><div class="wrap">
-<h2>A8 · A prediction published before the run, then the run</h2>
+<h2>A8: A prediction published before the run, then the run</h2>
 <p class="intro">On Claude, every JSON Patch failure was one request type ("everything owned by X is now owned by Y")
 and fell on the same named steps. Before running two model families never tested, we published which step would break:
 <b>on L3, one-call JSON Patch fails task 712 or 702 at step 35 on Mistral or Gemini, while RSOS blind stays exact on
@@ -64,7 +67,7 @@ a free tier is incomplete (daily quota).</p>
 </div></section>
 
 <section id="a8"><div class="wrap">
-<h2>A8 · Across Claude models, and a stronger JSON Patch</h2>
+<h2>A8: Across Claude models, and a stronger JSON Patch</h2>
 <p class="intro">The same arms on Claude Haiku, Sonnet and Opus 5.5, on S1 (14 steps) and L3 (300 keys), plus JSON
 Patch told to work out the current value of every line before each patch (B2s). Five predictions fixed before the
 runs; all five passed. <span class="muted">sha256 <code>bbf7f31a…</code></span></p>
@@ -85,7 +88,7 @@ Other families: see the section above.</p>
 </div></section>
 
 <section id="a7b"><div class="wrap">
-<h2>A7b · Long tasks and large states</h2>
+<h2>A7b: Long tasks and large states</h2>
 <p class="intro">The same arms (one-call JSON Patch, M*; RSOS blind) on 48 new tasks: 56 steps with dependency chains
 (L1), 224 steps with chains of 29–73 dependent changes (L2), and 56 steps on a 300-key state (L3). Generator and
 predictions logged before any run. <span class="muted">sha256 <code>b1287a37…</code></span></p>
@@ -107,7 +110,7 @@ length, and the cost gap widens with the state: 0.79–0.91× at 30 keys, 0.50×
 </div></section>
 
 <section id="a7a"><div class="wrap">
-<h2>A7a · Against the market's most efficient pattern, and blind planning</h2>
+<h2>A7a: Against the market's most efficient pattern, and blind planning</h2>
 <p class="intro">M* is the most efficient market pattern we could build for the same agents: one call writes the whole
 task as JSON Patch with values the model computes from the full state, then one audit call. RSOS writes operations
 for the whole task; the blind arm's planner is shown no state value at all. Same model (Haiku 5.5), seeds, retries,
@@ -132,7 +135,7 @@ this scale; the next cells (thinking off, depth 16, 224 steps, a local 0.5B mode
 </div></section>
 
 <section id="a5"><div class="wrap">
-<h2>A5 · The model bill: one plan for the whole task against one call per step</h2>
+<h2>A5: The model bill: one plan for the whole task against one call per step</h2>
 <p class="intro">Target: 10× below our own per-step protocol (H-dragon, the best arm of A3–A4) run by the same agents. A
 one-call JSON baseline given the same hash check is not yet measured (A7, next). Phase 0 built the baseline
 honestly first: it found that most of the earlier bill was the command-line tool's own context on every call,
@@ -148,7 +151,7 @@ one call. 192 live tasks, 4,917 calls. <span class="muted">sha256 <code>9cd1eb92
 <tr><th scope="row">Ratio to B1 (95% CI)</th><td class="n">1</td><td class="n"><b>0.268</b> [0.240, 0.300]</td><td class="n">1</td><td class="n"><b>0.354</b> [0.336, 0.374]</td></tr>
 <tr><th scope="row">Ratio as billed</th><td class="n">1</td><td class="n">0.173</td><td class="n">1</td><td class="n">0.200</td></tr>
 <tr><th scope="row">Time per task</th><td class="n">106 s</td><td class="n"><b>12 s</b></td><td class="n">99 s</td><td class="n"><b>12 s</b></td></tr>
-<tr><th scope="row">Drift healed with 0 calls · wrong values from drift</th><td class="n">48/48 · —</td><td class="n">48/48 · —</td><td class="n">48/48 · 0</td><td class="n">48/48 · 0</td></tr>
+<tr><th scope="row">Drift healed with 0 calls, wrong values from drift</th><td class="n">48/48, none</td><td class="n">48/48, none</td><td class="n">48/48, 0</td><td class="n">48/48, 0</td></tr>
 </tbody></table></div>
 <p><span class="tag pass">2 of 6 pass</span> no drift-traced errors (K5), offline baseline estimate within 12% (K6).
 <span class="tag fail">K1 failed</span> the registered arm (X3) reached 0.58× / 0.83×, not 0.1×; the assembly line
@@ -163,11 +166,11 @@ task fell about 12×; about 2.4× of that is the harness fix anyone can make.</p
 </div></section>
 
 <section id="a4"><div class="wrap">
-<h2>A4 · Does hidden drift become wrong answers?</h2>
+<h2>A4: Does hidden drift become wrong answers?</h2>
 <p class="intro">A3 left 40 of 48 corruptions latent in the anchor protocol's copies. A4 makes the worker compute from
 its own copy (8 of 14 steps per task). 80 tasks, 4,000 calls. <span class="muted">sha256 <code>c2f41b80…</code></span></p>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">P · palace</th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">E · deltas</th><th scope="col" class="n">A · JSON</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">P (palace)</th><th scope="col" class="n">D (anchors)</th><th scope="col" class="n">E (deltas)</th><th scope="col" class="n">A (JSON)</th></tr></thead>
 <tbody>
 <tr><th scope="row">Exact success</th><td class="n"><b>15/16</b></td><td class="n"><b>16/16</b></td><td class="n">0/16</td><td class="n">1/16</td><td class="n">1/16</td></tr>
 <tr><th scope="row">Wrong values traced to drift</th><td class="n"><b>0</b></td><td class="n"><b>0</b></td><td class="n">93 of 96</td><td class="n">14</td><td class="n">7</td></tr>
@@ -180,12 +183,12 @@ on a true, healed copy (seed 407). The test is a worst case by design: every cor
 </div></section>
 
 <section id="a3c"><div class="wrap">
-<h2>A3c · The prose floor</h2>
+<h2>A3c: The prose floor</h2>
 <p class="intro">A3b missed 5× because the planner's free prose must be restored word for word. A3c codes it against a
 reference both sides hold: a deterministic predictor with no neural network (H-pred), and a labelled arm with a local
 language model (H-local). <span class="muted">sha256 <code>1d797624…</code></span></p>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">H-pred (0 model calls)</th><th scope="col" class="n">H-local (local model)</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">D (anchors)</th><th scope="col" class="n">H-dragon</th><th scope="col" class="n">H-pred (0 model calls)</th><th scope="col" class="n">H-local (local model)</th></tr></thead>
 <tbody>
 <tr><th scope="row">Channel tokens per task (BPE)</th><td class="n">1,860</td><td class="n">1,023</td><td class="n"><b>262</b></td><td class="n"><b>197</b></td></tr>
 <tr><th scope="row">× D</th><td class="n">1</td><td class="n">0.55</td><td class="n"><b>0.141</b></td><td class="n"><b>0.106</b></td></tr>
@@ -200,13 +203,13 @@ about 15× slower on CPU.</p>
 </div></section>
 
 <section id="a3b"><div class="wrap">
-<h2>A3b · The hologram palace</h2>
+<h2>A3b: The hologram palace</h2>
 <p class="intro">The White Dragon designed a compact protocol in one call, with its own predicted size (H-dragon).
 A hand-built control used the anchor protocol's formats plus the green dot (H-copy). 16 tasks per arm, 1,374 new
 calls; palace, D and E were reused from A3 after all 48 of their runs replayed with 0 mismatches.
 <span class="muted">sha256 <code>0ae0d031…</code></span></p>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">Palace</th><th scope="col" class="n">D · anchors</th><th scope="col" class="n">H-copy</th><th scope="col" class="n">H-dragon</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">Palace</th><th scope="col" class="n">D (anchors)</th><th scope="col" class="n">H-copy</th><th scope="col" class="n">H-dragon</th></tr></thead>
 <tbody>
 <tr><th scope="row">Channel tokens per task (BPE)</th><td class="n">2,699 (3,131)</td><td class="n">1,468 (1,860)</td><td class="n">1,290 (1,695)</td><td class="n"><b>932 (1,023)</b></td></tr>
 <tr><th scope="row">× D, regex / BPE</th><td class="n">1.84 / 1.68</td><td class="n">1 / 1</td><td class="n">0.88 / 0.91</td><td class="n"><b>0.64 / 0.55</b></td></tr>
@@ -227,12 +230,12 @@ about where, wrong about how much.</p>
 </div></section>
 
 <section id="a3"><div class="wrap">
-<h2>A3 · Head to head with compact protocols</h2>
+<h2>A3: Head to head with compact protocols</h2>
 <p class="intro">D and E are re-implementations from the published descriptions of Slipstream (shared concept
 anchors) and ACCP (deltas with sequence numbers), not the original systems. 16 tasks × 4 arms, 3,200 calls.
 <span class="muted">sha256 <code>ff058345…</code></span></p>
 <div class="tw"><table>
-<thead><tr><th scope="col"></th><th scope="col" class="n">Palace (A1)</th><th scope="col" class="n">JSON</th><th scope="col" class="n">D · Slipstream-style</th><th scope="col" class="n">E · ACCP-style</th></tr></thead>
+<thead><tr><th scope="col"></th><th scope="col" class="n">Palace (A1)</th><th scope="col" class="n">JSON</th><th scope="col" class="n">D (Slipstream-style)</th><th scope="col" class="n">E (ACCP-style)</th></tr></thead>
 <tbody>
 <tr><th scope="row">Exact success</th><td class="n"><b>16/16</b></td><td class="n">4/16</td><td class="n"><b>16/16</b></td><td class="n">1/16</td></tr>
 <tr><th scope="row">Every copy true at the end</th><td class="n"><b>16/16</b></td><td class="n">4/16</td><td class="n">0/16</td><td class="n">1/16</td></tr>
@@ -249,7 +252,7 @@ palace's repair costs 0.9% of E's. The anchor protocol stays right only because 
 </div></section>
 
 <section id="a2"><div class="wrap">
-<h2>A2 · The knowing White Dragon redesigns a weak host</h2>
+<h2>A2: The knowing White Dragon redesigns a weak host</h2>
 <p class="intro">Host: A1's summaries-plus-retrieval workflow, 5.83 wrong lines per task. Given only its parts,
 weaknesses and a cross-domain library, the engine landed four changes in order. The first was a memory journal with
 per-line check and restore, drawn from DNA mismatch repair and ledger reconciliation. 6 tasks per stage, 5,687 calls.
@@ -267,7 +270,7 @@ heal on its own, from other domains, and placed it first.</p>
 </div></section>
 
 <section id="a1"><div class="wrap">
-<h2>A1 · Palace against three strong baselines</h2>
+<h2>A1: Palace against three strong baselines</h2>
 <p class="intro">8 tasks per arm, 1,522 calls. <span class="muted">sha256 <code>d224abbf…</code></span></p>
 <div class="tw"><table>
 <thead><tr><th scope="col"></th><th scope="col" class="n">Palace</th><th scope="col" class="n">JSON full state</th><th scope="col" class="n">Structured output</th><th scope="col" class="n">Summaries + retrieval</th></tr></thead>
@@ -285,7 +288,7 @@ repair, not the detection rate; against the memory pattern common in production,
 
 <section id="ht1"><div class="wrap split">
 <div>
-<h2>HT1 · Human input</h2>
+<h2>HT1: Human input</h2>
 <p class="intro">The author entered six of his own models as typed symbols and as text. Symbols were faster on 0 of 5
 timed tasks while also at least as accurate, so <span class="fail">K1 failed</span>. Mean accuracy was 0.88 for
 symbols and 0.96 for text; where symbols were faster, an element had been dropped.</p>
@@ -297,7 +300,7 @@ sha256 <code>e1f8266b…</code></p>
 <p>Typing was the bottleneck, so an RSOS keyboard layer was built: one key or chord emits a whole component or
 operator. An automated check keyed 12 targets and decoded them blind from the code alone: 12/12 after one bug fix,
 88 of 89 fields recovered (0.989). HT2 runs after a learning phase with a pre-registered plateau gate.</p>
-<a class="more" href="try.html#keyboard">Open the keyboard →</a>
+<a class="more" href="try.html#keyboard">Open the keyboard</a>
 </div>
 </div></section>
 
@@ -347,10 +350,12 @@ established.</li>
 </div></section>
 </main>
 <footer><div class="wrap">
-<div>R. A. Elu · ORCID <a href="https://orcid.org/0009-0000-1456-2467">0009-0000-1456-2467</a> · Code Apache 2.0 ·
-Text CC BY 4.0<br>Research and development software, not a medical device.</div>
-<div><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a> · <a href="https://doi.org/10.5281/zenodo.24304403">Whitepaper DOI</a> ·
-<a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></div>
+<div><p>RSOS by R. A. Elu, <a href="https://orcid.org/0009-0000-1456-2467">ORCID 0009-0000-1456-2467</a>.
+Code under Apache 2.0, text under CC BY 4.0.</p>
+<p>Research and development software. Not a medical device.</p></div>
+<div><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language">Source on GitHub</a></p><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/spec/core/STATE_OPS.md">Core specification</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.24358277">Software DOI</a></p><p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
+<p><a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/SECURITY.md">Security</a></p></div>
 </div></footer>
 </body>
 </html>

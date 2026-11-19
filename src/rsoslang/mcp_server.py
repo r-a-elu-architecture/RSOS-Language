@@ -127,7 +127,7 @@ def _ledger(state_id):
 
 @server.tool(description="Start a shared state (JSON object of dotted keys to values). Returns its id and green dot.")
 def rsos_state_new(state_json: str) -> str:
-    from .state import Ledger
+    from .core.state import Ledger
     led = Ledger(json.loads(state_json))
     sid = f"s{len(_LEDGERS) + 1}"
     _LEDGERS[sid] = led
@@ -137,14 +137,14 @@ def rsos_state_new(state_json: str) -> str:
 @server.tool(description="One prompt for a whole task: give a JSON list of change requests; send the returned system and "
                          "user text to any model; pass its reply to rsos_state_apply. One call instead of one per step.")
 def rsos_state_prompt(state_id: str, requests_json: str) -> str:
-    from .state import plan_prompt
+    from .core.state import plan_prompt
     return json.dumps(plan_prompt(json.loads(requests_json), _ledger(state_id).state), ensure_ascii=False)
 
 
 @server.tool(description="Execute RSOS operations, or a whole plan with '#n' step headers, on the shared state. The "
                          "runtime reads and computes every value; failed steps come back with a reason and change nothing.")
 def rsos_state_apply(state_id: str, operations: str) -> str:
-    from .state import parse_plan
+    from .core.state import parse_plan
     led = _ledger(state_id)
     plan = parse_plan(operations)
     out = led.apply_plan(plan) if plan else led.apply(operations)

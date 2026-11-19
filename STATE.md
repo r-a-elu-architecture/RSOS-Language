@@ -65,11 +65,13 @@ calls. The nodes are plain functions, so the example also runs without LangGraph
 
 `SET k v` · `DEL k` · `INHERIT d s [+n] [CAP m]` · `FUSE d a b [CAP m]` · `SCALE k f [CAP m]` ·
 `ROUTE s = x : d v1 | v2` · `REHOST field a b`. Keys are dotted names; the model names keys, the runtime reads and
-computes every value. That is why a whole task fits in one call: the operations do not depend on the state, so steps
+computes every value. `SET k other.key` copies the value of `other.key`, and is an error if that key does not exist;
+to set text that contains a dot, quote it: `SET k "a.b"`. `SCALE` must produce a whole number. That is why a whole task fits in one call: the operations do not depend on the state, so steps
 no longer wait for each other's model round trips.
 
 ## Limits (stated, not hidden)
 
-One model family (Claude Haiku 5.5), one task family (structured state editing), 16 tasks per set. 10× was the
-target and was not reached; after batching, the model's thinking tokens are most of the bill. Cross-model and
-real-workflow results are what we want next: run it on yours and tell us.
+Six models from four companies so far (Claude Haiku, Sonnet, Opus; Mistral Large 4; Gemini 3.8 Flash; GPT-6.2 Sol;
+A7, A8), one task family (structured state editing), 16 tasks per cell. 10× was the target and was not reached; the
+measured cost per correct task at 300 keys is 0.45–0.61× of one-call JSON Patch. A tool-calling baseline and real
+workflows are what we test next: run it on yours and tell us.
