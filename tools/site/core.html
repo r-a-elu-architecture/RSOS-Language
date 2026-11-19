@@ -97,6 +97,33 @@ full-length hash or a signature where tampering is a threat.</p>
 </tbody></table></div>
 </div></section>
 
+<section id="lineage"><div class="wrap split">
+<div>
+<h2>Lineage and status</h2>
+<p class="intro">Every operation carries one status. Only tested or executed operations backed by an experiment are
+part of Core; the registry records the evidence and the RSOS notation each operation came from.</p>
+<ol class="steps">
+<li><b>Proposed.</b> Named and described.</li>
+<li><b>Specified.</b> Precise meaning, inputs, outputs and errors.</li>
+<li><b>Implemented.</b> Code exists.</li>
+<li><b>Tested.</b> Conformance tests pass.</li>
+<li><b>Executed.</b> Used by real agents in a pre-registered experiment, with published results.</li>
+</ol>
+</div>
+<div class="tw"><table>
+<thead><tr><th scope="col">RSOS notation</th><th scope="col">Core</th><th scope="col">What it does</th></tr></thead>
+<tbody>
+<tr><td>REHOST</td><td><code>reassign_where</code></td><td>Move everything held by one owner to another</td></tr>
+<tr><td>INHERIT</td><td><code>derive</code></td><td>Take a value from a source, with an increment and a cap</td></tr>
+<tr><td>FUSE</td><td><code>sum_into</code></td><td>Combine two values into one</td></tr>
+<tr><td>ROUTE</td><td><code>select_if</code></td><td>Choose a value according to a condition</td></tr>
+<tr><td>SCALE</td><td><code>multiply</code></td><td>Change a quantity by a factor, with a cap</td></tr>
+<tr><td>FLOW</td><td><code>derive_where</code></td><td>Change a value on every matching object (tested; awaiting its run)</td></tr>
+<tr><td>green dot</td><td><code>state_digest</code></td><td>One short mark that says two copies agree</td></tr>
+<tr><td>heal</td><td><code>reconcile</code></td><td>Restore a drifted copy from the agreed state</td></tr>
+</tbody></table></div>
+</div></section>
+
 <section id="versioning"><div class="wrap split">
 <div>
 <h2>Versioning and conformance</h2>

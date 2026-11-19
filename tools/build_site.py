@@ -26,11 +26,11 @@ PAGES = [  # file, nav label (None = not in the main nav), <title>, description
      "What RSOS Core guarantees, where it fits in an agent platform, how to run a pilot and what is not yet shown."),
     ("results", "Results", "Results: every pre-registered test, failures included | RSOS",
      "Pre-registered tests on real LLM agents across four model families, every prediction and the failure map."),
-    ("try", "Language", "The RSOS language: editor and keyboard | RSOS",
+    ("try", None, "The RSOS language: editor and keyboard | RSOS",
      "Compose RSOS programs as paintings in the editor, or key them in with the RSOS keyboard layer."),
     ("paper", "Research", "Research: whitepaper, citation and reproduction | RSOS",
      "Whitepaper, software DOIs, how to cite and how to reproduce every result with zero model calls."),
-    ("origins", "Origins", "Origins: the seed, three layers and responsible use | RSOS",
+    ("origins", None, "Origins: the seed, three layers and responsible use | RSOS",
      "How RSOS grew from a symbolic language into Core, how symbols become operations, and the safeguards."),
     ("programme", None, "Research programme and responsible use | RSOS",
      "Twenty-four domains, each with a first measurable test and its safeguards."),
@@ -100,6 +100,8 @@ Code under Apache 2.0, text under CC BY 4.0.</p>
 <div><p><a href="{repo}">Source on GitHub</a></p><p><a href="{repo}/blob/main/spec/core/STATE_OPS.md">Core specification</a></p>
 <p><a href="https://doi.org/10.5281/zenodo.24359268">Software DOI</a></p><p><a href="{repo}/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
 <p><a href="{repo}/blob/main/SECURITY.md">Security</a></p></div>
+<div><p><a href="try.html">The RSOS language: editor and keyboard</a></p><p><a href="origins.html">Origins of the operations</a></p>
+<p><a href="programme.html">Research programme</a></p><p><a href="family.html">The RSOS family</a></p></div>
 </div></footer>
 </body>
 </html>
