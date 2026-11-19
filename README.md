@@ -3,8 +3,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24304403.svg)](https://doi.org/10.5281/zenodo.24304403) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE) [![tests](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml/badge.svg)](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml)
 
 *RSOS: an executable spatial-symbolic language for human–AI and AI–AI communication.* Whitepaper: R. A. Elu (2026),
-[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software 0.3.1:
-[doi:10.5281/zenodo.24339364](https://doi.org/10.5281/zenodo.24339364) (all versions: [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)).
+[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software:
+[doi:10.5281/zenodo.24358277](https://doi.org/10.5281/zenodo.24358277) (v0.3.2; all versions: [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)).
 
 ## Blind planning: the model names keys, the runtime computes values
 

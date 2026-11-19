@@ -100,3 +100,4 @@ tasks), as before. G6 holds (X5b range 0 across the three new families; B2 range
     cb7c22da64b6ad5bff4f5f2eeb42ed62ea6cdb05bf638fbd81f1856cf75a1c52  results/a7_results_S1_codex_gpt62sol.jsonl
 
 `a8.json` results hash `8cb9a1fd…`.
+- Archived: GitHub release v0.3.2 (commit 6cbe651) → Zenodo doi:10.5281/zenodo.24358277 (19 Nov 2026).
