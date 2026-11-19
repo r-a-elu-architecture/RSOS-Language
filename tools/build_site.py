@@ -34,9 +34,19 @@ PAGES = [  # file, nav label (None = not in the main nav), <title>, description
      "How RSOS grew from a symbolic language into Core, how symbols become operations, and the safeguards."),
     ("programme", None, "Research programme and responsible use | RSOS",
      "Twenty-four domains, each with a first measurable test and its safeguards."),
+    ("404", None, "Page not found | RSOS", "This page does not exist."),
     ("family", None, "The RSOS family: language and cue framework | RSOS",
      "How the RSOS Language and the RSOS Multimodal Cue Framework relate."),
 ]
+
+JSONLD = """
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"RSOS Core and RSOS Language",
+"description":"Exact shared state for AI agents: a specification, JSON IR, deterministic runtime and MCP server.",
+"codeRepository":"https://github.com/r-a-elu-architecture/RSOS-Language","programmingLanguage":"Python",
+"license":"https://www.apache.org/licenses/LICENSE-2.0","version":"0.4.0","identifier":"https://doi.org/10.5281/zenodo.24359268",
+"author":{"@type":"Person","name":"R. A. Elu","identifier":"https://orcid.org/0009-0000-1456-2467"}}
+</script>"""
 
 HEAD = """<!DOCTYPE html>
 <html lang="en">
@@ -49,6 +59,18 @@ HEAD = """<!DOCTYPE html>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{url}">
+<meta property="og:site_name" content="RSOS">
+<meta property="og:image" content="{site}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RSOS Core: shared state for AI agents, exact by construction. 256 of 256 tasks exact across six models.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{site}og.png">
+<meta name="theme-color" content="#0e2233">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">{jsonld}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
@@ -121,10 +143,15 @@ def main() -> None:
         body = (SRC / f"{f}.html").read_text(encoding="utf-8")
         body = body.replace("{REPO}", REPO).replace("{CUE}", CUE).replace("{OPS}", ops_table() if "{OPS}" in body else "")
         url = SITE + ("" if f == "index" else f + ".html")
-        html = HEAD.format(title=title, desc=desc, url=url, cue=CUE, nav=nav_for(f)) + body + FOOT.format(repo=REPO)
+        html = HEAD.format(title=title, desc=desc, url=url, cue=CUE, nav=nav_for(f), site=SITE, jsonld=JSONLD if f == "index" else "") + body + FOOT.format(repo=REPO)
         assert not re.search(r"\{[A-Z]+\}", html), f"unfilled placeholder in {f}"
         (OUT / f"{f}.html").write_text(html, encoding="utf-8")
         print(f"docs/{f}.html  {len(html):>6} bytes")
+    urls = "".join(f"<url><loc>{SITE}{'' if f == 'index' else f + '.html'}</loc></url>"
+                   for f, *_ in PAGES if f != "404") + f"<url><loc>{SITE}editor.html</loc></url><url><loc>{SITE}keyboard.html</loc></url>"
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+                                     + urls + "</urlset>\n", encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
