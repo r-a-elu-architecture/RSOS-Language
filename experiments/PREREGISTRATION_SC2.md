@@ -110,3 +110,22 @@ changed.
 | **Q9** | Families never tested on StateBench | RSOS blind exact 16/16 on DeepSeek V4.1 Flash (`deepseek-v4-1-flash-1017`) and GLM 5.3 (`zai-glm-5-3`), through the owner's Mistral API, if run; a cell that does not complete is reported as such |
 
 Q1–Q5 unchanged. Scoring: `experiments/sc2_analyse.py` (written now, before the draw); Q4 at export.
+
+## Amendment 3 (19 Nov 2026, 09:45 Vilnius / 07:45 UTC; before the beacon round, before any SC2 model call)
+
+**A control condition, SC2-C** (owner, 09:33: run the normal and the new test so the difference can be shown).
+`experiments/sc2c_tasks.py` (sha256 `98f88c39d6029dcf759d7701ce3e9475463c5611ceb39fa4af773e57f37abe59`) takes the SC2 tasks from the same beacon seeds and
+changes only the wording of the 8 FLOW requests per task: the request names the objects ("Move box, lamp and bottle 1
+cell up (y plus 1 each, capped at 9)") instead of describing them ("Move every object owned by arm 1 cell up"). The
+objects named are exactly those the FLOW request moves at that step. States, truths, drift and every other request are
+identical (checked: equal truths and final states; zero-call replay check passes on every arm). A planner needs to find
+nothing in SC2-C; it still computes every value.
+
+| ID | Prediction | Pass when |
+|---|---|---|
+| **Q10** | **Finding the objects in a changed state is the cause** | pooled over models complete in both cells: JSON Patch fails ≥ 2 FLOW-worded steps and its failure rate on them is ≥ 2× its rate on the same steps worded with named objects |
+| **Q11** | RSOS blind is exact either way | X5b exact 16/16 on SC2-C on every model run |
+
+Models: SC2-C runs on Mistral Large 4 and Gemini 3.8 Flash (SC2 runs on these and, if possible, on DeepSeek V4.1 Flash,
+GLM 5.3 and Claude Haiku 5.5 through the owner's Claude plan, label `haiku55`). Scoring: `experiments/sc2c_analyse.py`,
+written now. Nothing else changes.

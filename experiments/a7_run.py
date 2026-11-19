@@ -24,9 +24,10 @@ import a7_arms as S                        # noqa: E402
 import a7_tasks as T                       # noqa: E402
 import sc1_tasks as SC                     # noqa: E402
 import sc2_tasks as SC2                    # noqa: E402
+import sc2c_tasks as SC2C                  # noqa: E402
 
 R = os.path.join(A.ROOT, "results")
-SEEDS = {**R5.SEEDS, **T.SEEDS, **SC.SEEDS, **SC2.SEEDS}                          # S1, S2 (A5 generator); L1-L3 (A7b long tasks)
+SEEDS = {**R5.SEEDS, **T.SEEDS, **SC.SEEDS, **SC2.SEEDS, **SC2C.SEEDS}                          # S1, S2 (A5 generator); L1-L3 (A7b long tasks)
 THINK = os.environ.get("A7_THINK", "default")
 BACKEND = os.environ.get("A7_BACKEND", "cli")           # cli (claude -p) or ollama (A7c, local model)
 LABEL = os.environ.get("A7_LABEL", THINK)                # results file label, e.g. local_qwen15
@@ -53,8 +54,9 @@ def setup(set_name):
     if set_name == "S2":
         import a4_latent as A4
         A4.patch()
-    if set_name in T.CELLS or set_name in SC.CELLS or set_name in SC2.CELLS:
-        (SC2.patch if set_name in SC2.CELLS else SC.patch if set_name in SC.CELLS else T.patch)(set_name)
+    if set_name in T.CELLS or set_name in SC.CELLS or set_name in SC2.CELLS or set_name in SC2C.CELLS:
+        (SC2C.patch if set_name in SC2C.CELLS else SC2.patch if set_name in SC2.CELLS else
+         SC.patch if set_name in SC.CELLS else T.patch)(set_name)
         import a5_llm as L                               # long plans: allow 15 minutes per call (A5: 3)
         raw = L.raw_call
         L.raw_call = lambda system, prompt, model=None, legacy=False, timeout=900: raw(system, prompt, model,
