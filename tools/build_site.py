@@ -76,7 +76,7 @@ FOOT = """</main>
 Code under Apache 2.0, text under CC BY 4.0.</p>
 <p>Research and development software. Not a medical device.</p></div>
 <div><p><a href="{repo}">Source on GitHub</a></p><p><a href="{repo}/blob/main/spec/core/STATE_OPS.md">Core specification</a></p>
-<p><a href="https://doi.org/10.5281/zenodo.24358277">Software DOI</a></p><p><a href="{repo}/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.24359268">Software DOI</a></p><p><a href="{repo}/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
 <p><a href="{repo}/blob/main/SECURITY.md">Security</a></p></div>
 </div></footer>
 </body>

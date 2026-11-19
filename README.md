@@ -4,7 +4,7 @@
 
 **Exact shared state for AI agents.** The model names what should change; a deterministic runtime computes every
 value, checks every agent's copy against a 12-digit state digest and repairs drift with zero model calls. The planner
-never sees a state value. Software: [doi:10.5281/zenodo.24358277](https://doi.org/10.5281/zenodo.24358277) (v0.3.2;
+never sees a state value. Software: [doi:10.5281/zenodo.24359268](https://doi.org/10.5281/zenodo.24359268) (v0.4.0, Core 1.0;
 all versions [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)). Whitepaper:
 [doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403). Code: Apache 2.0.
 
