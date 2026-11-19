@@ -14,12 +14,15 @@ def export(set_name):
     import a1_agents as A
     import a5_run as R5
     import a7_tasks as T
-    seeds = {**R5.SEEDS, **T.SEEDS}
+    import sc1_tasks as SC
+    seeds = {**R5.SEEDS, **T.SEEDS, **SC.SEEDS}
     if set_name == "S2":
         import a4_latent as A4
         A4.patch()
     if set_name in T.CELLS:
         T.patch(set_name)
+    if set_name in SC.CELLS:
+        SC.patch(set_name)
     out = []
     for seed in seeds[set_name]:
         t = A.make_task(seed)
@@ -40,6 +43,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         print(export(sys.argv[1]))
     else:
-        for s in ("S1", "S2", "L1", "L2", "L3"):
+        for s in ("S1", "S2", "L1", "L2", "L3", "SC1"):
             subprocess.run([sys.executable, __file__, s], check=True,
                            env={**os.environ, "PYTHONPATH": os.path.join(ROOT, "src")})

@@ -1,0 +1,859 @@
+{
+ "set": "SC1",
+ "tasks": 16,
+ "units": [
+  "bytes",
+  "regex_tokens"
+ ],
+ "total": {
+  "G_full_scene_graph": {
+   "bytes": 7089308,
+   "regex_tokens": 4750518
+  },
+  "P_json_patch_plus_digest": {
+   "bytes": 78197,
+   "regex_tokens": 38310
+  },
+  "R_rsos_plus_digest": {
+   "bytes": 38439,
+   "regex_tokens": 8337
+  },
+  "C_core_plus_digest": {
+   "bytes": 50998,
+   "regex_tokens": 16388
+  },
+  "digest_only_replica_check": {
+   "bytes": 192,
+   "regex_tokens": 16
+  },
+  "full_state_replica_check": {
+   "bytes": 126731,
+   "regex_tokens": 84822
+  },
+  "planner_input_B2": {
+   "bytes": 122924,
+   "regex_tokens": 36699
+  },
+  "planner_input_X5b": {
+   "bytes": 42319,
+   "regex_tokens": 12667
+  }
+ },
+ "ratios": {
+  "bytes": {
+   "R_vs_P": 0.4916,
+   "R_vs_G": 0.0054,
+   "C_vs_P": 0.6522,
+   "X5b_vs_B2_planner_input": 0.3443,
+   "digest_vs_full_replica_check": 0.0015
+  },
+  "regex_tokens": {
+   "R_vs_P": 0.2176,
+   "R_vs_G": 0.0018,
+   "C_vs_P": 0.4278,
+   "X5b_vs_B2_planner_input": 0.3452,
+   "digest_vs_full_replica_check": 0.0002
+  }
+ },
+ "by_operation": {
+  "INHERIT": {
+   "steps": 504,
+   "G_full_scene_graph": {
+    "bytes": 3987646,
+    "regex_tokens": 2672124
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 30913,
+    "regex_tokens": 14560
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 22964,
+    "regex_tokens": 4918
+   },
+   "C_core_plus_digest": {
+    "bytes": 28747,
+    "regex_tokens": 9332
+   },
+   "R_vs_P_bytes": 0.7429
+  },
+  "DEL": {
+   "steps": 30,
+   "G_full_scene_graph": {
+    "bytes": 236809,
+    "regex_tokens": 158682
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 1532,
+    "regex_tokens": 690
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 812,
+    "regex_tokens": 150
+   },
+   "C_core_plus_digest": {
+    "bytes": 1052,
+    "regex_tokens": 270
+   },
+   "R_vs_P_bytes": 0.53
+  },
+  "FUSE": {
+   "steps": 95,
+   "G_full_scene_graph": {
+    "bytes": 751672,
+    "regex_tokens": 503707
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 5238,
+    "regex_tokens": 2609
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 4412,
+    "regex_tokens": 1235
+   },
+   "C_core_plus_digest": {
+    "bytes": 5932,
+    "regex_tokens": 2375
+   },
+   "R_vs_P_bytes": 0.8423
+  },
+  "ROUTE": {
+   "steps": 50,
+   "G_full_scene_graph": {
+    "bytes": 395616,
+    "regex_tokens": 265176
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 2526,
+    "regex_tokens": 1130
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 3032,
+    "regex_tokens": 700
+   },
+   "C_core_plus_digest": {
+    "bytes": 4682,
+    "regex_tokens": 1350
+   },
+   "R_vs_P_bytes": 1.2003
+  },
+  "SET": {
+   "steps": 135,
+   "G_full_scene_graph": {
+    "bytes": 1068811,
+    "regex_tokens": 716215
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 8861,
+    "regex_tokens": 4185
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 4320,
+    "regex_tokens": 810
+   },
+   "C_core_plus_digest": {
+    "bytes": 5940,
+    "regex_tokens": 1755
+   },
+   "R_vs_P_bytes": 0.4875
+  },
+  "REHOST": {
+   "steps": 44,
+   "G_full_scene_graph": {
+    "bytes": 347895,
+    "regex_tokens": 233044
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 27180,
+    "regex_tokens": 14182
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 1615,
+    "regex_tokens": 220
+   },
+   "C_core_plus_digest": {
+    "bytes": 2715,
+    "regex_tokens": 660
+   },
+   "R_vs_P_bytes": 0.0594
+  },
+  "SCALE": {
+   "steps": 38,
+   "G_full_scene_graph": {
+    "bytes": 300859,
+    "regex_tokens": 201570
+   },
+   "P_json_patch_plus_digest": {
+    "bytes": 1947,
+    "regex_tokens": 954
+   },
+   "R_rsos_plus_digest": {
+    "bytes": 1284,
+    "regex_tokens": 304
+   },
+   "C_core_plus_digest": {
+    "bytes": 1930,
+    "regex_tokens": 646
+   },
+   "R_vs_P_bytes": 0.6595
+  }
+ },
+ "per_task": [
+  {
+   "seed": 900,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 441636,
+     "regex_tokens": 295110
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4601,
+     "regex_tokens": 2248
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2423,
+     "regex_tokens": 545
+    },
+    "C_core_plus_digest": {
+     "bytes": 3221,
+     "regex_tokens": 1068
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7904,
+     "regex_tokens": 5277
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7730,
+     "regex_tokens": 2323
+    },
+    "X5b": {
+     "bytes": 2671,
+     "regex_tokens": 821
+    }
+   }
+  },
+  {
+   "seed": 901,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443865,
+     "regex_tokens": 296840
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 6113,
+     "regex_tokens": 2993
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2538,
+     "regex_tokens": 522
+    },
+    "C_core_plus_digest": {
+     "bytes": 3388,
+     "regex_tokens": 1036
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7931,
+     "regex_tokens": 5297
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7859,
+     "regex_tokens": 2304
+    },
+    "X5b": {
+     "bytes": 2829,
+     "regex_tokens": 802
+    }
+   }
+  },
+  {
+   "seed": 902,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 444503,
+     "regex_tokens": 298542
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4119,
+     "regex_tokens": 1994
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2438,
+     "regex_tokens": 530
+    },
+    "C_core_plus_digest": {
+     "bytes": 3235,
+     "regex_tokens": 1040
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7942,
+     "regex_tokens": 5335
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7713,
+     "regex_tokens": 2312
+    },
+    "X5b": {
+     "bytes": 2685,
+     "regex_tokens": 810
+    }
+   }
+  },
+  {
+   "seed": 903,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443673,
+     "regex_tokens": 297648
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 3940,
+     "regex_tokens": 1820
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2509,
+     "regex_tokens": 485
+    },
+    "C_core_plus_digest": {
+     "bytes": 3256,
+     "regex_tokens": 956
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7923,
+     "regex_tokens": 5319
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7648,
+     "regex_tokens": 2209
+    },
+    "X5b": {
+     "bytes": 2608,
+     "regex_tokens": 707
+    }
+   }
+  },
+  {
+   "seed": 904,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443871,
+     "regex_tokens": 297702
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4727,
+     "regex_tokens": 2314
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2339,
+     "regex_tokens": 515
+    },
+    "C_core_plus_digest": {
+     "bytes": 3174,
+     "regex_tokens": 1022
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7978,
+     "regex_tokens": 5319
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7610,
+     "regex_tokens": 2286
+    },
+    "X5b": {
+     "bytes": 2587,
+     "regex_tokens": 784
+    }
+   }
+  },
+  {
+   "seed": 905,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 446799,
+     "regex_tokens": 298522
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4321,
+     "regex_tokens": 2120
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2342,
+     "regex_tokens": 523
+    },
+    "C_core_plus_digest": {
+     "bytes": 3113,
+     "regex_tokens": 1032
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 8014,
+     "regex_tokens": 5347
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7646,
+     "regex_tokens": 2303
+    },
+    "X5b": {
+     "bytes": 2588,
+     "regex_tokens": 801
+    }
+   }
+  },
+  {
+   "seed": 906,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 440379,
+     "regex_tokens": 295588
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 5213,
+     "regex_tokens": 2579
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2360,
+     "regex_tokens": 530
+    },
+    "C_core_plus_digest": {
+     "bytes": 3205,
+     "regex_tokens": 1050
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7812,
+     "regex_tokens": 5245
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7722,
+     "regex_tokens": 2321
+    },
+    "X5b": {
+     "bytes": 2691,
+     "regex_tokens": 819
+    }
+   }
+  },
+  {
+   "seed": 907,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 440428,
+     "regex_tokens": 295522
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4072,
+     "regex_tokens": 1983
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2359,
+     "regex_tokens": 529
+    },
+    "C_core_plus_digest": {
+     "bytes": 3128,
+     "regex_tokens": 1034
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7850,
+     "regex_tokens": 5267
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7575,
+     "regex_tokens": 2283
+    },
+    "X5b": {
+     "bytes": 2536,
+     "regex_tokens": 781
+    }
+   }
+  },
+  {
+   "seed": 908,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 444482,
+     "regex_tokens": 297814
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4985,
+     "regex_tokens": 2480
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2343,
+     "regex_tokens": 542
+    },
+    "C_core_plus_digest": {
+     "bytes": 3112,
+     "regex_tokens": 1056
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7951,
+     "regex_tokens": 5327
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7691,
+     "regex_tokens": 2339
+    },
+    "X5b": {
+     "bytes": 2654,
+     "regex_tokens": 837
+    }
+   }
+  },
+  {
+   "seed": 909,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 440507,
+     "regex_tokens": 295362
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 5102,
+     "regex_tokens": 2476
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2509,
+     "regex_tokens": 507
+    },
+    "C_core_plus_digest": {
+     "bytes": 3297,
+     "regex_tokens": 992
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7889,
+     "regex_tokens": 5283
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7767,
+     "regex_tokens": 2266
+    },
+    "X5b": {
+     "bytes": 2734,
+     "regex_tokens": 764
+    }
+   }
+  },
+  {
+   "seed": 910,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443608,
+     "regex_tokens": 296384
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4739,
+     "regex_tokens": 2328
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2269,
+     "regex_tokens": 498
+    },
+    "C_core_plus_digest": {
+     "bytes": 3050,
+     "regex_tokens": 988
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7919,
+     "regex_tokens": 5285
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7607,
+     "regex_tokens": 2277
+    },
+    "X5b": {
+     "bytes": 2544,
+     "regex_tokens": 775
+    }
+   }
+  },
+  {
+   "seed": 911,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443282,
+     "regex_tokens": 297666
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4030,
+     "regex_tokens": 1927
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2403,
+     "regex_tokens": 502
+    },
+    "C_core_plus_digest": {
+     "bytes": 3124,
+     "regex_tokens": 974
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7937,
+     "regex_tokens": 5323
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7606,
+     "regex_tokens": 2262
+    },
+    "X5b": {
+     "bytes": 2589,
+     "regex_tokens": 760
+    }
+   }
+  },
+  {
+   "seed": 912,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443307,
+     "regex_tokens": 297476
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 3864,
+     "regex_tokens": 1851
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2412,
+     "regex_tokens": 538
+    },
+    "C_core_plus_digest": {
+     "bytes": 3159,
+     "regex_tokens": 1044
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7917,
+     "regex_tokens": 5315
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7685,
+     "regex_tokens": 2313
+    },
+    "X5b": {
+     "bytes": 2653,
+     "regex_tokens": 811
+    }
+   }
+  },
+  {
+   "seed": 913,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 440253,
+     "regex_tokens": 295484
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 8821,
+     "regex_tokens": 4526
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2326,
+     "regex_tokens": 514
+    },
+    "C_core_plus_digest": {
+     "bytes": 3134,
+     "regex_tokens": 1028
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7838,
+     "regex_tokens": 5247
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7651,
+     "regex_tokens": 2296
+    },
+    "X5b": {
+     "bytes": 2612,
+     "regex_tokens": 794
+    }
+   }
+  },
+  {
+   "seed": 914,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 445407,
+     "regex_tokens": 298158
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 5211,
+     "regex_tokens": 2570
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2445,
+     "regex_tokens": 525
+    },
+    "C_core_plus_digest": {
+     "bytes": 3213,
+     "regex_tokens": 1028
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7970,
+     "regex_tokens": 5325
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7694,
+     "regex_tokens": 2296
+    },
+    "X5b": {
+     "bytes": 2661,
+     "regex_tokens": 794
+    }
+   }
+  },
+  {
+   "seed": 915,
+   "steps": 56,
+   "keys_init": 300,
+   "channel": {
+    "G_full_scene_graph": {
+     "bytes": 443308,
+     "regex_tokens": 296700
+    },
+    "P_json_patch_plus_digest": {
+     "bytes": 4339,
+     "regex_tokens": 2101
+    },
+    "R_rsos_plus_digest": {
+     "bytes": 2424,
+     "regex_tokens": 532
+    },
+    "C_core_plus_digest": {
+     "bytes": 3189,
+     "regex_tokens": 1040
+    },
+    "digest_only_replica_check": {
+     "bytes": 12,
+     "regex_tokens": 1
+    },
+    "full_state_replica_check": {
+     "bytes": 7956,
+     "regex_tokens": 5311
+    }
+   },
+   "planner_input": {
+    "B2": {
+     "bytes": 7720,
+     "regex_tokens": 2309
+    },
+    "X5b": {
+     "bytes": 2677,
+     "regex_tokens": 807
+    }
+   }
+  }
+ ],
+ "sha256": "f5a7a3ae6e39401aecff2c1b154aedcd6b722f4114574eedcedc189854d81d6c"
+}

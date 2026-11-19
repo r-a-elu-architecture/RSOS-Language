@@ -64,9 +64,11 @@ program runs in two places:
   vibration codes.
 
 State programs written in the spatial syntax compile to the same Core IR as the text above. What is measured so far is
-the runtime and the planning protocol; whether the spatial representation itself compresses communication between
-agents or robots (for example over scene graphs) is a planned test, not yet a result ([NEXT_TESTS.md](NEXT_TESTS.md),
-SC1).
+the runtime and the planning protocol; the first grounded robot scene (SC1: 50 objects shared by six robots, 300 keys) is
+pre-registered with its predictions published before any model run. Measured with 0 model calls: the RSOS program
+plus state digest is 0.49× the bytes and 0.22× the tokens of a JSON Patch delta, and 0.0054× a full scene-graph sync;
+it is larger on conditional steps (1.20×). Exactness, drift and cost on real models are next
+([PREREGISTRATION_SC1.md](experiments/PREREGISTRATION_SC1.md)).
 
 **[Open the editor](docs/editor.html).** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.

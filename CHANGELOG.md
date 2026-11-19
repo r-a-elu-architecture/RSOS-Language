@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **SC1 pre-registered (19 Nov): a grounded robot scene.** 50 objects shared by six robots (grid x, y, height, owner robot, room, surface; 300 keys), 56 requests, 16 seeds; published mapping from symbols to state; StateBench `statebench_v1_SC1.jsonl`. Channel measured with 0 model calls: RSOS program + digest 0.49× the bytes (0.22× the tokens) of JSON Patch + digest, 0.0054× a full scene-graph sync, hand-overs 0.059×, conditional steps 1.20× (RSOS larger). Seven predictions fixed before the model runs, including five named hand-over steps (P4). `experiments/PREREGISTRATION_SC1.md`.
+
 ## 0.4.0 (19 Nov 2026)
 
 - **RSOS Core 1.0** (`rsoslang.core`): the technical layer. Neutral operation names (`set`, `copy`, `delete`, `derive`,

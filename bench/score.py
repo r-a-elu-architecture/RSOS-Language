@@ -12,7 +12,7 @@ import os
 import statistics as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SETS = ("S1", "S2", "L1", "L2", "L3")
+SETS = ("S1", "S2", "L1", "L2", "L3", "SC1")
 
 
 def tasks():

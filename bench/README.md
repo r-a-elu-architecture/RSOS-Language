@@ -11,6 +11,7 @@ agents**, write your final states to a JSONL file and score it. No RSOS code is 
 | `statebench_v1_S1.jsonl` | 16 tasks (seeds 100–107, 300–307), sha256 `0c76c17d7d57859e…` |
 | `statebench_v1_S2.jsonl` | 16 tasks (seeds 400–415), requests that depend on earlier values marked `Worker-computed:`, sha256 `11c5b8d4a8b460db…` |
 | `statebench_v1_L1.jsonl`, `_L2`, `_L3` | 16 tasks each (seeds 500–515, 600–615, 700–715) |
+| `statebench_v1_SC1.jsonl` | 16 tasks (seeds 900–915): a robot scene shared by six robots, 50 objects × 6 fields = 300 keys, 56 requests; mapping in `experiments/PREREGISTRATION_SC1.md`; sha256 `db6b59e77c0e4ca7…` |
 | `score.py` | the scorer (0 model calls); scores every set present in the submission |
 
 ```bash
