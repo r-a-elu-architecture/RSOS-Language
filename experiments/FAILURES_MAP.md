@@ -107,3 +107,9 @@ No A8 prediction failed on the Claude ladder (G1–G5 pass). Instrument note, no
 |---|---|---|---|---|---|
 | 43 | SC1 P4 on Gemini | Gemini's JSON Patch failed 906 step 45 (5 objects), not one of the five named hand-overs; P4 passed only on Mistral (913/53, 913/49). Selection by object count was too coarse: 906/45 is the only SC1 hand-over where every matched object arrived during the task | Scan / Start state | **Yes** | SC2: a frozen predictor of out-of-date matches, tasks from a public beacon |
 | 44 | SC1 X5b invalid operations | Mistral's RSOS planner proposed 3.3 invalid operations per task (53 in 16; Gemini 0); all rejected before running, all tasks exact | Grammar / Vocabulary | Partly | grammar examples in the scene vocabulary (later amendment, not in SC2) |
+
+## SC2 (19 Nov 2026)
+
+| # | Test | Failure | Objects | Dragon logic applies? | Next landing |
+|---|---|---|---|---|---|
+| 45 | SC2 Q4 | Channel on FLOW steps 0.104× the bytes of JSON Patch + digest, not ≤ 0.1× (measured at export, before any run); the 12-digit digest is 13 of the ~45 bytes of a FLOW message | Channel / Digest | Partly | report the program alone beside the program + digest |

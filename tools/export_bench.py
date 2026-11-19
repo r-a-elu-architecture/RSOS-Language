@@ -15,7 +15,9 @@ def export(set_name):
     import a5_run as R5
     import a7_tasks as T
     import sc1_tasks as SC
-    seeds = {**R5.SEEDS, **T.SEEDS, **SC.SEEDS}
+    import sc2_tasks as SC2
+    import sc2c_tasks as SC2C
+    seeds = {**R5.SEEDS, **T.SEEDS, **SC.SEEDS, **SC2.SEEDS, **SC2C.SEEDS}
     if set_name == "S2":
         import a4_latent as A4
         A4.patch()
@@ -23,6 +25,10 @@ def export(set_name):
         T.patch(set_name)
     if set_name in SC.CELLS:
         SC.patch(set_name)
+    if set_name in SC2.CELLS:
+        SC2.patch(set_name)
+    if set_name in SC2C.CELLS:
+        SC2C.patch(set_name)
     out = []
     for seed in seeds[set_name]:
         t = A.make_task(seed)

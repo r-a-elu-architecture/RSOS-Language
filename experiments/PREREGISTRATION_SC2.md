@@ -129,3 +129,35 @@ nothing in SC2-C; it still computes every value.
 Models: SC2-C runs on Mistral Large 4 and Gemini 3.8 Flash (SC2 runs on these and, if possible, on DeepSeek V4.1 Flash,
 GLM 5.3 and Claude Haiku 5.5 through the owner's Claude plan, label `haiku55`). Scoring: `experiments/sc2c_analyse.py`,
 written now. Nothing else changes.
+
+## Draw record (19 Nov 2026, 08:38 UTC; after beacon round 6654866, before any SC2 or SC2-C model call)
+
+Beacon fetched by the owner at 10:38 Vilnius: round 6654866, randomness
+`c59f38b3bd6ae5439f40425035a278b24133af8a63aa7ad262b466bbcf2097af`, verified as sha256 of the round's signature
+(`experiments/sc2_beacon.json`). Tasks exported: `bench/statebench_v1_SC2.jsonl` sha256
+`dc1b56b501dbed9c18b6198fb4863b8f8395e54fc9b5468bde2e7e65eaaa5918`; `bench/statebench_v1_SC2C.jsonl` sha256
+`2d8e0834d4f6de1090f362cc4255d13c36174687b655910431778d16fffa11c2`. Zero-call replay checks pass on both
+(`results/a7_replay_check_SC2_default.json`, `..._SC2C_default.json`).
+
+The frozen predictor (sha256 `0c976ed0…`, checked) on the drawn tasks (`results/sc2_predictions.json`):
+
+- expected JSON Patch failed steps per model: **7.63**, of which **6.43 on the 128 FLOW steps (5.0%)**; on the drawn
+  tasks the code and the sentence-law (Q2, ≥ 5%) now nearly agree. Q6 intervals (95%, pooled): 2 models 7–23, 3 models
+  13–33, 4 models 19–42, 5 models 26–51.
+- **Top 10 places (Q7)**, all FLOW steps (seed, 1-based step, p):
+
+| Rank | Seed | Step | p | Request |
+|---|---|---|---|---|
+| 1 | 1959694601287679767 | 55 | 0.399 | Move every object owned by rover 1 cell up |
+| 2 | 10840159190577930439 | 37 | 0.362 | Move every object owned by arm 2 cells right |
+| 3 | 7990942759714046115 | 46 | 0.270 | Move every object owned by rover 1 cell up |
+| 4 | 13043114479224168765 | 55 | 0.269 | Move every object owned by scout 1 cell right |
+| 5 | 13529441524361763318 | 45 | 0.253 | Move every object owned by arm 1 cell up |
+| 6 | 1959694601287679767 | 34 | 0.241 | Move every object owned by rover 1 cell up |
+| 7 | 11370350256784163472 | 43 | 0.215 | Move every object owned by crane 1 cell up |
+| 8 | 7990942759714046115 | 41 | 0.205 | Move every object owned by drone 1 cell right |
+| 9 | 13043114479224168765 | 54 | 0.200 | Move every object owned by arm 1 cell up |
+| 10 | 2112855733707263979 | 50 | 0.194 | Move every object owned by rover 1 cell right |
+
+- **Q4 (channel, measured at export): missed.** RSOS program + digest on the 128 FLOW steps: 5,726 bytes; JSON Patch +
+  digest: 54,826 bytes; ratio **0.104×**, not ≤ 0.1×. Published as a miss before any run.
