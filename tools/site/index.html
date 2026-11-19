@@ -9,10 +9,10 @@ redesigns the host it runs on. Consent and harm checks are part of the compiler.
 <div class="stats" aria-label="Headline results">
 <div class="stat"><div class="n">0.106×</div><div class="l">the channel tokens of a Slipstream-style anchor protocol, with every copy of the shared state true</div><div class="s">BPE tokens; with a local predictor (labelled) · 0.141× with zero model calls · A3c</div></div>
 <div class="stat"><div class="n">0 / 16</div><div class="l">tasks right for the anchor protocol once agents compute from their copies; RSOS stays right</div><div class="s">93 of 96 wrong values traced to hidden drift; palace 16 / 16 · A4</div></div>
-<div class="stat"><div class="n">80 / 80</div><div class="l">exact on tasks of 14 to 224 steps with the planner shown no state value; one-call JSON Patch 77 / 80, every error a value computed from changed state</div><div class="s">0 wrong steps in ~5,800 · 0.50× JSON Patch's cost per correct task at 300 keys · A7 · exact on Haiku, Sonnet and Opus · A8</div></div>
+<div class="stat"><div class="n">224 / 224</div><div class="l">tasks exact with the planner shown no state value, on Claude, Mistral and Gemini; we published which step the strongest JSON Patch would break on before testing two new families, and it broke there</div><div class="s">0 wrong steps · 0.45–0.61× JSON Patch's cost per correct task at 300 keys · A7, A8</div></div>
 </div>
-<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 56 predictions on real
-hosts: 34 passed, 22 failed. The failures are on the results page, next to the passes.</p>
+<p class="muted small">Pre-registered tests on real LLM agents (more than 23,000 model calls). 57 predictions on real
+hosts: 35 passed, 22 failed. The failures are on the results page, next to the passes.</p>
 </div>
 </div>
 

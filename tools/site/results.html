@@ -2,13 +2,37 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 56 predictions, 34 passed and 22 failed.</p>
+recorded, and each results file carries a hash. On real hosts: 57 predictions, 35 passed and 22 failed (G6–G8 still open while more families run).</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
 <a href="{REPO}/tree/main/results"><code>results/</code></a>.</p>
 </div>
 </div>
+
+<section id="g9"><div class="wrap">
+<h2>A8 · A prediction published before the run, then the run</h2>
+<p class="intro">On Claude, every JSON Patch failure was one request type ("everything owned by X is now owned by Y")
+and fell on the same named steps. Before running two model families never tested, we published which step would break:
+<b>on L3, one-call JSON Patch fails task 712 or 702 at step 35 on Mistral or Gemini, while RSOS blind stays exact on
+both</b> (chance level about 5%). Published <a href="{REPO}/commit/00e5121">18 Nov 2026, 22:26 UTC</a>; results
+published <a href="{REPO}/commit/d5f2f43">19 Nov 2026, 02:36 UTC</a>.</p>
+<div class="tw"><table>
+<thead><tr><th scope="col">Model</th><th scope="col">Cell</th><th scope="col" class="n">JSON Patch</th><th scope="col" class="n">RSOS blind</th><th scope="col">Where JSON Patch broke</th></tr></thead>
+<tbody>
+<tr><td>Gemini 3.8 Flash</td><td>S1</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td>—</td></tr>
+<tr><td>Gemini 3.8 Flash</td><td>L3</td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td><b>task 712, step 35</b>: its only failure in 32 tasks</td></tr>
+<tr><td>Mistral Large 4</td><td>S1</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td>—</td></tr>
+<tr><td>Mistral Large 4</td><td>L3</td><td class="n">12/16</td><td class="n"><b>16/16</b></td><td><b>task 702, step 35</b> (also 22, 42); tasks 707, 711, 712</td></tr>
+</tbody></table></div>
+<p><b>The prediction hit on both families.</b> RSOS blind is now 224 of 224 tasks exact across Claude Haiku, Sonnet,
+Opus, Mistral Large 4 and Gemini 3.8 Flash; every JSON Patch failure on the new families is a value computed from
+changed state. Cost per correct task on L3: 0.45× in USD on Mistral (list price fixed before the run), 0.61× in tokens
+on Gemini. Not met, and published: invalid operations proposed by other families were 1.7× Claude's, not the predicted
+3× (all were rejected before they ran), and no single failing step is shared by two new families yet. gpt-oss-120b on
+a free tier is incomplete (daily quota).</p>
+<a class="cta quiet" href="{REPO}/blob/main/experiments/A8_FAMILIES_REPORT.md">Read the report</a>
+</div></section>
 
 <section id="a8"><div class="wrap">
 <h2>A8 · Across Claude models, and a stronger JSON Patch</h2>
@@ -27,7 +51,7 @@ runs; all five passed. <span class="muted">sha256 <code>bbf7f31a…</code></span
 </tbody></table></div>
 <p>Every JSON Patch failure in A8 (8 of 8) was an owner transfer on a changed state, and the same request failed for
 Haiku, for Haiku told to track state and for Sonnet, with the same wrong keys. Only the largest model avoided it.
-Limit: one model family; other families (free tiers, local models) are next.</p>
+Other families: see the section above.</p>
 <a class="cta quiet" href="{REPO}/blob/main/experiments/A8_REPORT.md">Read the A8 report</a>
 </div></section>
 

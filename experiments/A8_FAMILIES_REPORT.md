@@ -71,3 +71,4 @@ REACH (instrument): families with blind exact = 3 (Anthropic, Mistral, Google) o
 
 `python experiments/a8_analyse.py` (0 model calls) → `results/a8.json`, results hash `e34e7762…` with all files;
 `d1fa7402…` without the incomplete gpt-oss cell.
+- Public: RSOS-Language d5f2f43 (19 Nov 2026 02:36 UTC): A8 families results after the G9 prediction (00e5121, 18 Nov 22:26 UTC).
