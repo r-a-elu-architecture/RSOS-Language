@@ -10,6 +10,68 @@ pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7
 </div>
 </div>
 
+<section id="sc1"><div class="wrap">
+<h2>SC1: A robot scene shared by six robots</h2>
+<p class="intro">Six robots keep one shared scene of 50 objects: where each object is on a 10 × 10 floor grid, its
+height, which robot is responsible for it, the room and the surface it rests on. That is 300 keys, 56 changes per task,
+16 tasks. Predictions were published before any model run (<a href="{REPO}/commit/b9c8fc8">b9c8fc8</a>, 19 Nov 2026,
+05:43 UTC). <span class="tag pred">model runs in progress</span></p>
+
+<div class="split">
+<div>
+<h3>How the scene maps to state</h3>
+<div class="tw"><table>
+<thead><tr><th scope="col">Key</th><th scope="col">In the scene</th><th scope="col">Values</th></tr></thead>
+<tbody>
+<tr><td><code>cup.x</code>, <code>cup.y</code></td><td>grid cell of the cup</td><td>0–9</td></tr>
+<tr><td><code>cup.height_mm</code></td><td>height above the floor</td><td>100–5000</td></tr>
+<tr><td><code>cup.owner</code></td><td>robot responsible for it</td><td>rover, drone, arm, crane, loader, scout</td></tr>
+<tr><td><code>cup.room</code></td><td>room</td><td>kitchen, lab, dock, hall</td></tr>
+<tr><td><code>cup.on</code></td><td>surface it rests on</td><td>table, shelf, floor, cart</td></tr>
+</tbody></table></div>
+</div>
+<div>
+<h3>One hand-over: task 913, step 53</h3>
+<p>"Everything owned by arm is now owned by drone." 29 objects change robot.</p>
+<pre aria-label="RSOS program"><code><span class="c"># RSOS: what the planner writes, 35 bytes with the digest</span>
+REHOST owner arm drone
+4f064f1e0158</code></pre>
+<p class="muted small">JSON Patch must list every object with its new value: 29 entries, 1,591 bytes
+(<code>cup.owner</code>, <code>mug.owner</code>, <code>box.owner</code> … <code>spring.owner</code>), and the model
+has to find all 29 itself. In RSOS the runtime finds them.</p>
+</div>
+</div>
+
+<h3>What is sent per change, measured with zero model calls</h3>
+<div class="tw"><table>
+<thead><tr><th scope="col">Encoding, all 896 steps</th><th scope="col" class="n">Bytes</th><th scope="col" class="n">Tokens</th><th scope="col" class="n">vs JSON Patch</th></tr></thead>
+<tbody>
+<tr><td>Full scene-graph sync after each change</td><td class="n">7,089,308</td><td class="n">4,750,518</td><td class="n">90.7×</td></tr>
+<tr><td>JSON Patch with values, plus state digest</td><td class="n">78,197</td><td class="n">38,310</td><td class="n">1×</td></tr>
+<tr class="us"><td><b>RSOS program, plus state digest</b></td><td class="n"><b>38,439</b></td><td class="n"><b>8,337</b></td><td class="n"><b>0.49× bytes, 0.22× tokens</b></td></tr>
+<tr><td>Hand-overs only (44 steps)</td><td class="n" colspan="2"></td><td class="n"><b>0.059×</b></td></tr>
+<tr><td>Conditional steps only (50 steps)</td><td class="n" colspan="2"></td><td class="n"><span class="fail">1.20×: RSOS larger</span></td></tr>
+</tbody></table></div>
+<p class="muted small">Tokens here are the regex count used since A1; model-token (BPE) counts come with the run. Checking
+a robot's copy takes the 12-digit digest instead of the full scene (0.0015×). sha256 <code>f5a7a3ae…</code></p>
+
+<h3>Predictions for the model runs (Mistral Large 4, Gemini 3.8 Flash)</h3>
+<div class="tw"><table>
+<thead><tr><th scope="col">ID</th><th scope="col">Prediction</th><th scope="col">Status</th></tr></thead>
+<tbody>
+<tr><td>P1</td><td>RSOS blind planning exact on 16/16 on each model</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P2</td><td>One-call JSON Patch at most 15/16 on at least one model</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P3</td><td>Every JSON Patch failure is a value computed from the changing state</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td><b>P4</b></td><td><b>JSON Patch fails at least one of five named hand-overs:</b> task 913 step 53, 908/53, 913/49, 909/54, 913/39</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P5</td><td>RSOS costs at most 0.7× per correct task</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P6</td><td>Every injected drift repaired with zero model calls</td><td><span class="tag pred">pending</span></td></tr>
+<tr><td>P7</td><td>The channel saving holds in model tokens, and so does the loss on conditional steps</td><td><span class="tag pred">pending</span></td></tr>
+</tbody></table></div>
+<p class="muted small">Limits stated in advance: a simulated scene without perception or motion; the request types of
+A7; the painting syntax is not measured here. <a href="{REPO}/blob/main/experiments/PREREGISTRATION_SC1.md">Full
+pre-registration</a>, <a href="{REPO}/blob/main/bench/statebench_v1_SC1.jsonl">the 16 tasks</a>.</p>
+</div></section>
+
 <section id="g9"><div class="wrap">
 <h2>A8: A prediction published before the run, then the run</h2>
 <p class="intro">On Claude, every JSON Patch failure was one request type ("everything owned by X is now owned by Y")
