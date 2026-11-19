@@ -134,12 +134,10 @@ protocol; whether the spatial syntax itself compresses communication between age
 <h2>Run it</h2>
 <p class="intro">Python 3.10 or later. Core itself uses only the standard library; the package adds the MCP server.
 Use it as a library, or add it to any MCP client (Claude Code, Cursor and others) with one command.</p>
-<p class="muted small">Core v1 ships in release 0.4.0. Until that release is on PyPI, install from the repository
-as shown.</p>
 <a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/STATE.md">State Runtime guide</a><a class="cta quiet" href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/REPLICATE.md">Reproduce the results</a>
 </div>
 <pre aria-label="Install and use"><code><span class="c"># install</span>
-pip install "git+https://github.com/r-a-elu-architecture/RSOS-Language"
+pip install rsoslang              <span class="c"># 0.4.0: Core 1.0</span>
 claude mcp add rsos -- rsoslang mcp
 
 <span class="c"># use</span>
