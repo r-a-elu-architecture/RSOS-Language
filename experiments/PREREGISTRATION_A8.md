@@ -135,3 +135,27 @@ alone. **Any tool use** (shell command, file change, web search, MCP call) is re
 are reported separately and do not count for G1 or G9. Tokens from the CLI's usage events; cost reported as plan
 (subscription) usage in tokens. The model id is pinned from the owner's CLI before the run and recorded here.
 `a7_run.py`: `A7_BACKEND=codex` installs it and skips the Claude scaffold. Replay check S1 passes (0 model calls).
+
+**Amendment 10 (19 Nov 2026, 04:50 Kyiv; before any Codex task).** Model list shown by the owner's Codex CLI
+(`codex-cli 0.170.0`, ChatGPT Pro): GPT-6.2 Sol (marked current), GPT-6.2 Astra, GPT-6.1 Terra and older. The OpenAI
+cell runs **`gpt-6.2-sol`** (the current default flagship) with the CLI's default reasoning level, label
+`codex_gpt62sol`, `A7_WORKERS=2`, **L3 first, then S1**; the id is confirmed by one test call that is not a task.
+The CLI reports no model in its events, so the id is pinned with `-m`. Token rule, fixed now: one null call
+("Reply with the single word OK.") used 16,965 input tokens (13,952 cached), the CLI's own agent instructions; the
+cost comparison is reported raw and with a per-call overhead subtracted, measured by 3 null calls before the run,
+equally for both arms (as the Claude CLI scaffold in A5-A8). Tool use is excluded as in amendment 9. Nothing else
+changes.
+Amendment 10 note (04:47 Kyiv, before any Codex task): the owner's Codex menu shows the reasoning levels low, medium,
+high, extra high; the default is **low**. The run uses that default (no level selected or passed); reported as
+"GPT-6.2 Sol, reasoning low (CLI default)".
+
+**Amendment 11 (19 Nov 2026, 04:55 Kyiv; before any Codex task; to be public before the run).** One more named-step
+prediction, for a family not yet run on L3 (OpenAI, GPT-6.2 Sol through Codex, reasoning low).
+
+| # | Prediction | Pass if |
+|---|---|---|
+| **G10** named step, OpenAI | the same request breaks the strongest one-call pattern on a fourth family | on L3, B2 fails seed 712 or seed 702 at step 35 on GPT-6.2 Sol, while X5b ends exact on both tasks |
+
+Basis: step 35 of 712 failed on Haiku, Sonnet, Haiku B2s and Gemini; step 35 of 702 on Haiku B2s and Mistral; Opus,
+the largest Claude model, passed both. Chance level as G9 (about 5% per family). A hit on 712 step 35 would also meet
+G8 (Gemini and OpenAI). Tasks with tool use do not count (amendment 9).
