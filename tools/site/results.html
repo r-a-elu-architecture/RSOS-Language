@@ -2,7 +2,7 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 57 predictions, 35 passed and 22 failed (G6–G8 still open while more families run).</p>
+recorded, and each results file carries a hash. On real hosts: 59 predictions, 37 passed and 22 failed (G6 and G7 still open while more families run).</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in
@@ -23,13 +23,15 @@ published <a href="{REPO}/commit/d5f2f43">19 Nov 2026, 02:36 UTC</a>.</p>
 <tr><td>Gemini 3.8 Flash</td><td>S1</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td>—</td></tr>
 <tr><td>Gemini 3.8 Flash</td><td>L3</td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td><b>task 712, step 35</b>: its only failure in 32 tasks</td></tr>
 <tr><td>Mistral Large 4</td><td>S1</td><td class="n">16/16</td><td class="n"><b>16/16</b></td><td>—</td></tr>
+<tr><td>GPT-6.2 Sol (Codex, reasoning low)</td><td>S1</td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td>task 107, step 14 (failed on Haiku too)</td></tr>
+<tr><td>GPT-6.2 Sol (Codex, reasoning low)</td><td>L3</td><td class="n">15/16</td><td class="n"><b>16/16</b></td><td><b>task 712, step 35</b>: predicted in public before the run (G10, <a href="{REPO}/commit/edcd42e">02:50 UTC</a>)</td></tr>
 <tr><td>Mistral Large 4</td><td>L3</td><td class="n">12/16</td><td class="n"><b>16/16</b></td><td><b>task 702, step 35</b> (also 22, 42); tasks 707, 711, 712</td></tr>
 </tbody></table></div>
-<p><b>The prediction hit on both families.</b> RSOS blind is now 224 of 224 tasks exact across Claude Haiku, Sonnet,
-Opus, Mistral Large 4 and Gemini 3.8 Flash; every JSON Patch failure on the new families is a value computed from
+<p><b>The prediction hit on both families, and a second one, published before GPT ran, hit on GPT-6.2 Sol.</b> Step 35 of task 712 has now broken the one-call JSON Patch pattern on models from Anthropic, Google and OpenAI. RSOS blind is 256 of 256 tasks exact across Claude Haiku, Sonnet,
+Opus, Mistral Large 4, Gemini 3.8 Flash and GPT-6.2 Sol; every JSON Patch failure on the new families is a value computed from
 changed state. Cost per correct task on L3: 0.45× in USD on Mistral (list price fixed before the run), 0.61× in tokens
 on Gemini. Not met, and published: invalid operations proposed by other families were 1.7× Claude's, not the predicted
-3× (all were rejected before they ran), and no single failing step is shared by two new families yet. gpt-oss-120b on
+3× (all were rejected before they ran). gpt-oss-120b on
 a free tier is incomplete (daily quota).</p>
 <a class="cta quiet" href="{REPO}/blob/main/experiments/A8_FAMILIES_REPORT.md">Read the report</a>
 </div></section>

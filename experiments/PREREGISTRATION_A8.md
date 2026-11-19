@@ -159,3 +159,10 @@ prediction, for a family not yet run on L3 (OpenAI, GPT-6.2 Sol through Codex, r
 Basis: step 35 of 712 failed on Haiku, Sonnet, Haiku B2s and Gemini; step 35 of 702 on Haiku B2s and Mistral; Opus,
 the largest Claude model, passed both. Chance level as G9 (about 5% per family). A hit on 712 step 35 would also meet
 G8 (Gemini and OpenAI). Tasks with tool use do not count (amendment 9).
+
+**Amendment 12 (19 Nov 2026, 04:58 Kyiv; before any Codex task).** The owner's Codex install carries a plugin
+(`superpowers`) whose skill makes the agent read skill files with a shell command before every answer; the first test
+call ran `Get-Content` on a SKILL.md. The run therefore uses a clean Codex home (`CODEX_HOME` = a new folder holding
+only the owner's sign-in and `config.toml` with `model_reasoning_effort = "low"`, the default the menu showed); no
+plugins, skills or instruction files. Overhead measured by 3 null calls in that home with `-m gpt-6.2-sol`: 16,244
+input tokens each (13,952 cached), 5 output, 0 reasoning, no tool items; this is the per-call overhead of amendment 10.

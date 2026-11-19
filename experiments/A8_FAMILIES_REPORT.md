@@ -72,3 +72,31 @@ REACH (instrument): families with blind exact = 3 (Anthropic, Mistral, Google) o
 `python experiments/a8_analyse.py` (0 model calls) → `results/a8.json`, results hash `e34e7762…` with all files;
 `d1fa7402…` without the incomplete gpt-oss cell.
 - Public: RSOS-Language d5f2f43 (19 Nov 2026 02:36 UTC): A8 families results after the G9 prediction (00e5121, 18 Nov 22:26 UTC).
+
+## Update, 19 Nov 2026 05:30 Kyiv: OpenAI (GPT-6.2 Sol via Codex, reasoning low) — G10 hit
+
+G10, published before any GPT task (RSOS-Language `edcd42e`, 02:50 UTC): *on L3, B2 fails seed 712 or 702 at step 35
+on GPT-6.2 Sol while X5b ends exact on both.*
+
+| Cell | B2 (M\*) exact | X5b (blind) exact | B2 failure |
+|---|---|---|---|
+| L3 | 15/16 | **16/16** | **seed 712, step 35** (REHOST, 3 attempts, 11 wrong final values): its only L3 failure |
+| S1 | 15/16 | **16/16** | seed 107, step 14 (REHOST): the step that failed on Haiku in A7 and A8 |
+
+**G10: pass.** Tool use: 0 of 154 calls (clean Codex home, amendment 12). **G8 now met:** step 35 of seed 712 has
+failed on Gemini and OpenAI (two non-Claude families) and on Haiku, Sonnet and Haiku B2s. The same named request has
+now broken the one-call JSON Patch pattern on models from three companies; Opus and Mistral passed it (Mistral failed
+712 at other steps).
+
+Tokens per correct task, L3, with the Codex per-call overhead (16,244 input tokens, measured before the run)
+subtracted: X5b 8,024 vs B2 13,183 = **0.61×**; raw 0.77×. S1: 0.93× net. Plan usage, not priced.
+
+Totals: RSOS blind **256/256** exact across Claude Haiku, Sonnet, Opus, Mistral Large 4, Gemini 3.8 Flash and
+GPT-6.2 Sol; 0 wrong steps. `a8_analyse.py` reports G1 and G5 false only from the incomplete gpt-oss cell (3 of 16
+tasks), as before. G6 holds (X5b range 0 across the three new families; B2 range 3). G7 part 2 still fails
+(non-Claude 0.10 vs Claude 0.09 invalid operations per blind task).
+
+    2f506b37de93b2da44c3651de0b273b5888584cf487076e8336f26043356e067  results/a7_results_L3_codex_gpt62sol.jsonl
+    cb7c22da64b6ad5bff4f5f2eeb42ed62ea6cdb05bf638fbd81f1856cf75a1c52  results/a7_results_S1_codex_gpt62sol.jsonl
+
+`a8.json` results hash `8cb9a1fd…`.

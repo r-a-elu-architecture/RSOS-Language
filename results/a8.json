@@ -1,19 +1,20 @@
 {
- "code_commit": "32de4fa1e64a2936fe831cf6a08b8a282aff520e",
+ "code_commit": "e9ea8530739a1a41c360a5148efa3fee8fe68cbb",
  "experiment": "a8",
  "numpy": "2.5.3",
  "predictions": {
   "G1_invariance": false,
   "G2_counts": {
    "blind_failed": 0,
-   "m_star_dependent": 23,
-   "m_star_failed": 23
+   "m_star_dependent": 25,
+   "m_star_failed": 25
   },
   "G2_error_class": true,
   "G3_cost_L3": true,
   "G4_stronger_m_star": true,
   "G5_no_family_where_m_star_wins": false,
   "REACH_families_blind_exact": [
+   "codex_gpt62sol",
    "default",
    "gemini_38flash",
    "mistral_large40",
@@ -22,9 +23,47 @@
   ]
  },
  "python": "3.13.18",
- "results_sha256": "e34e776226041b23ad6508c6c074c60c58ad92093de48ffc494f01555cf36df3",
- "run_utc": "2026-11-19T02:33:59Z",
+ "results_sha256": "8cb9a1fdb958e08411d5f3f084bb2d6bee4fc301bb3f39fce207af1b6550ba9a",
+ "run_utc": "2026-11-19T03:24:35Z",
  "tables": {
+  "codex_gpt62sol": {
+   "L3": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 15,
+     "failed_dependent": 1,
+     "failed_steps": 1,
+     "model": "gpt-6.2-sol",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "gpt-6.2-sol",
+     "tasks": 16
+    }
+   },
+   "S1": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 15,
+     "failed_dependent": 1,
+     "failed_steps": 1,
+     "model": "gpt-6.2-sol",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "gpt-6.2-sol",
+     "tasks": 16
+    }
+   }
+  },
   "default": {
    "L3": {
     "B2": {
