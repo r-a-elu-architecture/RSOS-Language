@@ -62,6 +62,24 @@ first.
 - **Q6: the frozen code underestimated.** It had never seen an operation that computes per match and treated FLOW like
   a hand-over; the sentence-law predicted the compounding. The code's places were right (Q7); its count was not.
 
+## Diagnosis from the transcripts (added 19 Nov, 18:58 UTC; verdicts unchanged)
+
+`results/a7_transcripts_SC2C_mistral_large40.jsonl` shows three causes behind the two RSOS failures on the control:
+
+1. **The output cap of the run (16,000 tokens per call, fixed for every arm in A8 amendment 4).** Mistral Large 4 spent
+   up to 15,999 of them thinking; the reply came back empty or cut mid-line (`INHERIT lamp.x`). Both failed RSOS tasks
+   hit the cap. It also touched **9 of JSON Patch's 10 failed control tasks** (and 3 of its 6 failed SC2 tasks); RSOS
+   with FLOW never reached it on SC2. The cap therefore also confounds Q10: on the control, truncation and "finding the
+   objects" cannot be separated.
+2. **A wrong error message in the harness's FLOW extension** (`experiments/sc2_tasks.py`, written for SC2). When the
+   planner wrote `FLOW y OVER name crate,bin,…`, it was told "unknown field in 'y'" instead of "unknown field 'name'".
+   The refusal was right; the feedback pointed at the wrong field, so the retries could not correct it.
+3. **The planner's own RSOS errors:** FLOW over a list of names (FLOW selects by a field such as `owner`), `FUSE lamp.x
+   lamp.x 2` (FUSE adds two keys, not a number), `INHERIT … 500` without `+`. The runtime refused every one.
+
+The pre-registered verdicts stand (Q10 and Q11 fail). A new pre-registered control, **SC2-C2**, will rerun the control
+with the error message corrected and no output cap below the model's maximum, before any claim about the cause.
+
 ## SC1 P7 (from the same session)
 
 BPE (o200k) on the owner's machine: RSOS program + digest **0.548×** the tokens of JSON Patch + digest over all SC1

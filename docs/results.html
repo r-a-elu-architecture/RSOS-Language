@@ -166,6 +166,10 @@ twice the scan rate, while RSOS blind planning stays exact. <span class="tag pas
 </tbody></table></div>
 <p class="muted small">Tasks drawn from drand round 6654866 after the predictor was frozen. RSOS 0.26× the tokens per
 correct task. Gemini incomplete (prepaid credit ran out). <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/SC2_REPORT.md">SC2 report</a>.</p>
+<p class="muted small"><b>Diagnosis of the control misses:</b> the transcripts show that both RSOS control failures,
+and 9 of JSON Patch's 10, hit the run's output cap (16,000 tokens per call, used up by the model's thinking), and that
+the harness's FLOW extension gave a wrong error message on retries. The pre-registered verdicts stand; the control is
+being rerun without these confounds (SC2-C2), pre-registered first.</p>
 <p class="small"><b>The law as frozen code.</b> A predictor of where JSON Patch fails, fitted on 14,560 earlier steps, is
 frozen by hash (<code>0c976ed0…</code>) before any FLOW task exists. The tasks are drawn from the public drand
 randomness beacon, round 6654866 (08:30 UTC, 19 Nov 2026), so nobody chooses them. The frozen predictor expects only
