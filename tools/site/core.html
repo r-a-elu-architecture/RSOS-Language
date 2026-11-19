@@ -49,7 +49,8 @@ the Core layer until an experiment uses it.</p>
 error is returned and the state is unchanged.</p></div>
 <div><h3>Deterministic</h3><p>Each operation is a pure function of state and program. No time, randomness, locale or
 key order in memory.</p></div>
-<div><h3>Values stay with the runtime</h3><p>The planner sees key names only. It never reads, copies or computes a
+<div><h3>Values stay with the runtime</h3><p>The planner sees key names only (an auditor model, where used, sees the values a step
+read and changed). The planner never reads, copies or computes a
 value, so it cannot mistype one.</p></div>
 <div><h3>Replica check without a model</h3><p>Every copy carries a 12-digit state digest. A mismatched copy is
 repaired from the agreed state with zero model calls.</p></div>

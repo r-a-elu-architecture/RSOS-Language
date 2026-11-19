@@ -13,8 +13,9 @@ runtime, and lets you check and repair any copy without a model call.</p>
 <div class="props">
 <div><h3>Exact values</h3><p>Arithmetic, caps, conditions and bulk reassignments are computed by the runtime, never
 written by the model. Across 256 benchmark tasks on six models, every final state was exact.</p></div>
-<div><h3>Data minimisation</h3><p>The planning model sees key names, not values. Customer data, prices or secrets
-held in the state are not sent to the model provider.</p></div>
+<div><h3>Less data to the planner</h3><p>The planning model sees key names, not values. In the measured protocol an auditor
+model checks each step and sees the values of the keys that step read and changed; an audit without values is a
+planned test.</p></div>
 <div><h3>Audit trail</h3><p>Every step is a short readable program with a digest, its diff and the resulting state
 digest. Replaying the log reproduces the state exactly.</p></div>
 <div><h3>Drift repair at no model cost</h3><p>Any agent's copy is compared by digest and restored from the agreed
@@ -39,7 +40,8 @@ with 30 to 300 keys. Results on your own workflows are what the pilot is for.</p
 <tbody>
 <tr><td>Several agents edit one shared record or configuration</td><td><span class="tag pass">Measured</span></td></tr>
 <tr><td>Updates involve arithmetic, caps, conditions or bulk reassignments</td><td><span class="tag pass">Measured</span></td></tr>
-<tr><td>Values must not be sent to the model provider</td><td><span class="tag pass">By design</span></td></tr>
+<tr><td>The planner must not see values</td><td><span class="tag pass">By design</span></td></tr>
+<tr><td>No model may see any value, including the auditor</td><td><span class="tag pred">Not yet shown</span></td></tr>
 <tr><td>Nested documents, lists or free text as state</td><td><span class="tag pred">Not yet shown</span></td></tr>
 <tr><td>Adversarial or tamper-resistant settings</td><td><span class="tag fail">Out of scope</span></td></tr>
 </tbody></table></div>

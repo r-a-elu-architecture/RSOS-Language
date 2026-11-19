@@ -170,7 +170,10 @@ MUST NOT be compared with 0.4.0 digests.
 
 ## 11. Security and privacy considerations
 
-11.1. **The planner never needs state values.** In the blind configuration the model sees key names only, which limits
+11.1. **The planner never needs state values.** In the blind configuration the planning model sees key names only. In the
+measured protocol (A7, A8, SC1) an auditor model checks each step and is shown the values of the keys the step read and
+changed; deployments that must keep every value from every model need an audit without values (not yet measured). The
+blind planner limits
 what a prompt-injected or curious model can disclose. Key names themselves may be sensitive; treat them accordingly.
 
 11.2. **Digests are not authentication.** The 12-digit `state_digest` detects accidental drift between replicas; it
