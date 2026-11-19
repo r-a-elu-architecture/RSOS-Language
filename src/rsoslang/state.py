@@ -14,7 +14,8 @@ How it works:
                                        and every drifted line is restored from the snapshot, with zero model calls.
 
 Operations (one per line; keys are dotted names such as auth.timeout_ms; values are single words or "quoted text"):
-  SET k v                    k = v (v may be another key: copy its value)
+  SET k v                    k = v (v may be another key: copy its value; a missing key is an error)
+  SET k "text"               k = the quoted text, never read as a key
   DEL k                      remove k
   INHERIT d s [+n] [CAP m]   d = s (+ n), at most m
   FUSE d a b [CAP m]         d = a + b, at most m
@@ -34,6 +35,7 @@ OPS = ("SET", "DEL", "INHERIT", "FUSE", "SCALE", "ROUTE", "REHOST")
 KEY_RX = re.compile(r"^[A-Za-z_][\w-]*(\.[A-Za-z_][\w-]*)+$")
 ROUTE_RX = re.compile(r"^ROUTE\s+(\S+)\s*=\s*(\S+)\s*:\s*(\S+)\s+(\S+)\s*\|\s*(\S+)$")
 STEP_RX = re.compile(r"^#\s*(\d+)\s*$")
+SET_QUOTED_RX = re.compile(r"""^SET\s+(\S+)\s*=?\s*(["'])(.*)\2$""", re.IGNORECASE)
 
 GRAMMAR = ("RSOS operations, one per line (keys are dotted names): SET k v | DEL k | INHERIT d s [+n] [CAP m] "
            "(d = s+n, max m) | FUSE d a b [CAP m] (d = a+b) | SCALE k f [CAP m] (k = k*f) | "
@@ -47,8 +49,10 @@ class OpError(ValueError):
 
 
 def dot(state: dict) -> str:
-    """The green dot: a short hash of the whole state. Equal dots = equal copies."""
-    canon = "\n".join(f"{k}={state[k]}" for k in sorted(state))
+    """The green dot: a short hash of the whole state. Equal dots = equal copies.
+    Keys and values are compared as text and encoded as sorted JSON, so no value can imitate a key boundary."""
+    canon = json.dumps({str(k): str(v) for k, v in state.items()}, sort_keys=True, ensure_ascii=False,
+                       separators=(",", ":"))
     return hashlib.sha256(canon.encode()).hexdigest()[:12]
 
 
@@ -89,6 +93,10 @@ def parse_ops(text: str) -> list:
         if not line or line.split()[0].upper() not in OPS:
             continue
         kw = line.split()[0].upper()
+        if kw == "SET":
+            q = SET_QUOTED_RX.match(line)
+            if q:
+                ops.append(("SET", _key(q.group(1)), q.group(3), True)); continue
         if kw == "ROUTE":
             m = ROUTE_RX.match(line)
             if not m:
@@ -129,8 +137,12 @@ def execute(state: dict, ops: list) -> dict:
     for op in ops:
         kw = op[0]
         if kw == "SET":
-            _, k, v = op
-            st[k] = st[v] if KEY_RX.match(v) and v in st else v
+            k, v, literal = op[1], op[2], len(op) > 3 and op[3]
+            if not literal and KEY_RX.match(v):
+                if v not in st:
+                    raise OpError(f"SET {k}: source key {v} does not exist (quote the value to set it as text)")
+                v = st[v]
+            st[k] = v
         elif kw == "DEL":
             if op[1] not in st:
                 raise OpError(f"DEL {op[1]}: no such key")
@@ -146,7 +158,9 @@ def execute(state: dict, ops: list) -> dict:
         elif kw == "SCALE":
             _, k, f, cap = op
             v = _int(st, k) * f
-            st[k] = str(_cap(int(v) if float(v).is_integer() else v, cap))
+            if not float(v).is_integer():
+                raise OpError(f"SCALE {k} {f:g}: result {v:g} is not a whole number")
+            st[k] = str(_cap(int(v), cap))
         elif kw == "ROUTE":
             _, s, x, d, v1, v2 = op
             if s not in st:

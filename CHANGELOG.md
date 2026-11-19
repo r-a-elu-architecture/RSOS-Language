@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **State Runtime fixes** (`rsoslang.state`): `SET k other.key` with a key that does not exist is now an error, not the
+  literal text `other.key` (quote a value to set text: `SET k "a.b"`); `SCALE` to a fraction is now an error instead
+  of storing a value that later operations reject; the green dot is computed from sorted JSON, so a value with a line
+  break can no longer produce another state's dot. **The green dot's values change** (stored dots from earlier versions
+  will not match). A5 runtime equivalence still passes; the A7/A8 harness does not use this module.
 - **Predictions fixed before the next runs** (`experiments/PREREGISTRATION_A8.md`, amendments 2 and 3): G6 decoupling, G7 immunity, G8 same request across families, and **G9 named step**: on L3, one-call JSON Patch fails seed 712 or 702 at step 35 on Mistral or Gemini while RSOS blind stays exact. Basis: across Claude models, all 8 JSON Patch failures were one request type ("Everything owned by X is now owned by Y"; 8 of 553 vs 0 of 472 for RSOS blind). Amendment 2 also corrects amendment 1's header text against the code and keeps the first-run gpt-oss-120b failure (S1 X5b seed 302).
 - **A7b long tasks** (56–224 steps, up to 300 keys): RSOS blind 48/48 exact, 0 wrong steps; one-call JSON Patch 46/48,
   all 7 failed steps state-dependent; cost per correct task 0.50–0.68×. P9 and P10 failed (published). StateBench v1
