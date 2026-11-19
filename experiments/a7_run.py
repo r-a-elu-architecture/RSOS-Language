@@ -34,7 +34,7 @@ FROZEN = ["a1_agents.py", "a3_run.py", "a3b_hologram.py", "a3b_hdragon.py", "a4_
 
 
 def scaffold(set_name, phase):
-    if BACKEND in ("ollama", "openai"):                  # no CLI, no scaffold: every token is the agent's own
+    if BACKEND in ("ollama", "openai", "codex"):         # no Claude CLI, no scaffold: every token is the agent's own
         return
     """Null calls: the CLI scaffold of this machine, removed in the api basis (as A5). Own file, A5's untouched."""
     import a5_llm as L
@@ -64,6 +64,9 @@ def setup(set_name):
     if BACKEND == "openai":
         import a7_openai
         a7_openai.install()
+    if BACKEND == "codex":
+        import a7_codex
+        a7_codex.install()
 
 
 def run_one(arm, set_name, seed, tag=None):
@@ -172,7 +175,7 @@ def main_run(set_name, arms):
     if not todo:
         return
     scaffold(set_name, "start")
-    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "2" if BACKEND == "openai" else "4"))) as ex:
+    with ThreadPoolExecutor(int(os.environ.get("A7_WORKERS", "1" if BACKEND == "ollama" else "2" if BACKEND in ("openai", "codex") else "4"))) as ex:
         futs = {ex.submit(run_one, a, set_name, s): (a, s) for a, s in todo}
         errors = []
         for fu in as_completed(futs):

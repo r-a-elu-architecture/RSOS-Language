@@ -1,27 +1,29 @@
 {
- "code_commit": "873d4a26d118ece0f25e8eb1c5791ea38cbece88",
+ "code_commit": "32de4fa1e64a2936fe831cf6a08b8a282aff520e",
  "experiment": "a8",
  "numpy": "2.5.3",
  "predictions": {
-  "G1_invariance": true,
+  "G1_invariance": false,
   "G2_counts": {
    "blind_failed": 0,
-   "m_star_dependent": 8,
-   "m_star_failed": 8
+   "m_star_dependent": 23,
+   "m_star_failed": 23
   },
   "G2_error_class": true,
   "G3_cost_L3": true,
   "G4_stronger_m_star": true,
-  "G5_no_family_where_m_star_wins": true,
+  "G5_no_family_where_m_star_wins": false,
   "REACH_families_blind_exact": [
    "default",
+   "gemini_38flash",
+   "mistral_large40",
    "opus55",
    "sonnet55"
   ]
  },
  "python": "3.13.18",
- "results_sha256": "bbf7f31a635f7e882b69caf71fbf235d5ad66246d24e6292ba662b28d75b2fdd",
- "run_utc": "2026-11-18T18:51:49Z",
+ "results_sha256": "e34e776226041b23ad6508c6c074c60c58ad92093de48ffc494f01555cf36df3",
+ "run_utc": "2026-11-19T02:33:59Z",
  "tables": {
   "default": {
    "L3": {
@@ -69,6 +71,64 @@
     }
    }
   },
+  "gemini_38flash": {
+   "L3": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 15,
+     "failed_dependent": 1,
+     "failed_steps": 1,
+     "model": "gemini-3.8-flash",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "gemini-3.8-flash",
+     "tasks": 16
+    }
+   },
+   "S1": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "gemini-3.8-flash",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "gemini-3.8-flash",
+     "tasks": 16
+    }
+   }
+  },
+  "groq_gptoss120b": {
+   "S1": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "openai/gpt-oss-120b",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 3,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "openai/gpt-oss-120b",
+     "tasks": 3
+    }
+   }
+  },
   "haiku_b2s": {
    "L3": {
     "B2s": {
@@ -87,6 +147,44 @@
      "failed_dependent": 1,
      "failed_steps": 1,
      "model": "claude-haiku-5-5",
+     "tasks": 16
+    }
+   }
+  },
+  "mistral_large40": {
+   "L3": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 12,
+     "failed_dependent": 14,
+     "failed_steps": 14,
+     "model": "mistral-large-4-0",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "mistral-large-4-0",
+     "tasks": 16
+    }
+   },
+   "S1": {
+    "B2": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "mistral-large-4-0",
+     "tasks": 16
+    },
+    "X5b": {
+     "cost_per_correct": null,
+     "exact": 16,
+     "failed_dependent": 0,
+     "failed_steps": 0,
+     "model": "mistral-large-4-0",
      "tasks": 16
     }
    }

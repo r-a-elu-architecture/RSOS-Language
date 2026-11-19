@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **A8, other families (19 Nov):** RSOS blind exact on Mistral Large 4 and Gemini 3.8 Flash, 64/64 (S1 and L3); one-call JSON Patch 59/64, all failures state-dependent. **The named-step prediction published before the runs (G9) hit:** Gemini failed seed 712 at step 35, Mistral failed seed 702 at step 35, RSOS blind exact on both. G7 (invalid operations proposed ≥ 3× Claude) and G8 (same step on two new families) not met; published. Report: `experiments/A8_FAMILIES_REPORT.md`.
 - **Predictions fixed before the next runs** (`experiments/PREREGISTRATION_A8.md`, amendments 2 and 3): G6 decoupling, G7 immunity, G8 same request across families, and **G9 named step**: on L3, one-call JSON Patch fails seed 712 or 702 at step 35 on Mistral or Gemini while RSOS blind stays exact. Basis: across Claude models, all 8 JSON Patch failures were one request type ("Everything owned by X is now owned by Y"; 8 of 553 vs 0 of 472 for RSOS blind). Amendment 2 also corrects amendment 1's header text against the code and keeps the first-run gpt-oss-120b failure (S1 X5b seed 302).
 - **A7b long tasks** (56–224 steps, up to 300 keys): RSOS blind 48/48 exact, 0 wrong steps; one-call JSON Patch 46/48,
   all 7 failed steps state-dependent; cost per correct task 0.50–0.68×. P9 and P10 failed (published). StateBench v1

@@ -81,3 +81,57 @@ pass 12, Mendeleev landing). Basis (Claude, A7 + A8): M\* failed L3 seed 712 ste
 Chance level, if M\* failures landed on REHOST requests at random: about 5% (2 named of 54 REHOST requests per L3 run,
 about 1.5 failures expected over the two families). A miss is recorded in the failure map as the named-step effect not
 generalising.
+
+**Amendment 4 (19 Nov 2026, 00:45 Kyiv; before any Mistral run).** Model ids listed by the owner's Mistral key
+(00:41). The Mistral cell runs the pinned id **`mistral-large-4-0`** (label `mistral_large40`), S1 then L3, arms B2 and
+X5b, `A7_WORKERS=2`, base `https://api.mistral.ai/v1`. The same key also lists `deepseek-v4-1-flash-1017` (DeepSeek),
+`zai-glm-5-3` (Zhipu GLM) and `ministral-3b-2512` / `ministral-8b-2512` / `ministral-14b-2512` (a size ladder inside
+one family); any of them run later only under the same cells, arms and predictions, labels `mistral_<id>`.
+Price sheet fixed now (Mistral list price, sale ended 22 Oct 2026; USD per million tokens): mistral-large-4-0 input
+1.36, cached input 0.14, output 4.18. The run is paid from the owner's Mistral plan credit; cost is reported per
+correct task in USD and in tokens. Nothing else changes.
+
+**Amendment 5 (19 Nov 2026, 01:00 Kyiv; after a failed start, before any Mistral task completed).** The first Mistral
+call was refused: `HTTP 400 ... "top_p must be 1 when using greedy sampling"` (code 3054); 0 tasks ran. `a7_openai.py`
+now sends `top_p: 1` with `temperature: 0`. With temperature 0 the sampling is greedy, and 1 is the default top_p on
+OpenAI-compatible APIs, so outputs are unchanged on every provider. The owner's kit also had the runner from before the
+fix (a provider error raised out of the run instead of stopping one task); the owner replaces `a7_run.py` and
+`a7_openai.py` with the versions at this commit. Nothing else changes.
+
+**Amendment 6 (19 Nov 2026, 01:35 Kyiv; before any Mistral task completed).** Second failed start: Mistral Large 4
+returns `message.content` as a list of chunks (thinking, then text), and the backend passed the list on, so every task
+stopped with `'list' object has no attribute 'split'` before any plan was parsed (logged in
+`a7_errors_S1_mistral_large40.jsonl`; each cost one planner call, results 0). `a7_openai.py` now keeps only the `text`
+chunks as the answer; a plain string answer is unchanged, so other providers are unaffected. Nothing else changes.
+
+**Amendment 7 (19 Nov 2026, 01:50 Kyiv; analysis rule only, fixed while S1 runs and before any L3 result).** Mistral
+Large 4 thinks far longer than Claude: the first nine S1 B2 tasks used 5,588–13,768 thinking tokens (seed 107 the most,
+14,369 output tokens over 2 calls), against the 16,000 `max_tokens` cap fixed for every arm. The harness is not
+changed. In the analysis, any call whose completion tokens are ≥ 15,900 (from the transcripts) is flagged
+**cap-limited**; tasks with such a call are counted as the protocol counts them and are also reported separately, per
+arm, so a failure caused by the cap is never read as a property of the method.
+
+**Run note (19 Nov 2026, 03:30 Kyiv; Mistral L3 in progress, no result file seen yet).** The owner disconnected and
+reconnected the drive holding the kit during L3. Nine B2 tasks (seeds 702, 704–711) stopped with `Errno 2` when writing
+the transcript, after their model calls; no result or outcome was recorded or seen for any of them (console log
+`results/a8_mistral_large40_console_run1.txt`). They are re-run from scratch by the resume command; the rerun is their
+first observed outcome. B2 seed 702 is one of G9's two named tasks: its lost attempt has no outcome and is reported as
+lost. Not a provider error, not a harness change.
+
+**Amendment 8 (19 Nov 2026, 04:10 Kyiv; before any Gemini run).** Model ids listed by the owner's Google AI Studio key
+(04:06). The Gemini cell runs the pinned id **`gemini-3.8-flash`** (label `gemini_38flash`), base
+`https://generativelanguage.googleapis.com/v1beta/openai`, arms B2 and X5b, `A7_WORKERS=2`, **L3 first, then S1** (the
+free tier's daily request limit is unknown; L3 decides G9). Project shown as free tier; the owner's prepaid credit
+(EUR 5.84, auto-reload off) caps any charge. Cost reported in tokens. A cell cut short by the daily quota is reported
+as incomplete with its completed tasks, never dropped. Nothing else changes.
+
+**Amendment 9 (19 Nov 2026, 04:25 Kyiv; before any run on it).** A new backend, `a7_codex.py`: OpenAI models through the
+Codex CLI (`codex exec --json`) on the owner's ChatGPT Pro plan, the counterpart of `claude -p` on the Claude plan
+(owner, 04:08: "i have pro … if we can start now"). Same arms (B2, X5b), cells (L3 first, then S1), prompts, settings
+the CLI exposes, retries and predictions; label `codex_<model>`. The CLI has no system field, so the system text goes
+before the task text in the one message, for both arms alike; temperature is not settable through the CLI (reported).
+Each call runs in an empty temporary folder with a read-only sandbox and the instruction to answer from the message
+alone. **Any tool use** (shell command, file change, web search, MCP call) is recorded per call; tasks with any tool use
+are reported separately and do not count for G1 or G9. Tokens from the CLI's usage events; cost reported as plan
+(subscription) usage in tokens. The model id is pinned from the owner's CLI before the run and recorded here.
+`a7_run.py`: `A7_BACKEND=codex` installs it and skips the Claude scaffold. Replay check S1 passes (0 model calls).

@@ -7,7 +7,7 @@ Used by a7_run.py when A7_BACKEND=openai. Environment:
                         https://openrouter.ai/api/v1                             (OpenRouter, ':free' models)
   A7_OPENAI_KEY    the provider's key (never committed)
   A7_OPENAI_MODEL  the provider's model id
-Settings for every arm and call: temperature 0, max_tokens 16000. Records prompt and completion tokens (and reasoning
+Settings for every arm and call: temperature 0, top_p 1 (Mistral refuses greedy sampling without it), max_tokens 16000. Records prompt and completion tokens (and reasoning
 tokens when the provider reports them); cost 0 on a free tier (re-price later from the token counts). Standard library.
 """
 
@@ -23,7 +23,7 @@ MODEL = os.environ.get("A7_OPENAI_MODEL", "")
 
 
 def raw_call(system, prompt, timeout=900):
-    body = json.dumps({"model": MODEL, "temperature": 0, "max_tokens": 16000,
+    body = json.dumps({"model": MODEL, "temperature": 0, "top_p": 1, "max_tokens": 16000,
                        "messages": [{"role": "system", "content": system},
                                     {"role": "user", "content": prompt}]}).encode()
     req = urllib.request.Request(BASE + "/chat/completions", data=body,
@@ -38,7 +38,10 @@ def raw_call(system, prompt, timeout=900):
     rec = {"in": u.get("prompt_tokens", 0), "cache_w": 0, "cache_w5m": 0, "cache_w1h": 0, "cache_r": 0,
            "out": u.get("completion_tokens", 0), "think": think, "sec": time.time() - t0, "api_ms": None,
            "turns": 1, "cost": 0.0, "model": MODEL}
-    return d["choices"][0]["message"]["content"] or "", None, rec
+    content = d["choices"][0]["message"].get("content") or ""
+    if isinstance(content, list):   # reasoning models (e.g. Mistral Large 4) return chunks: keep the answer text only
+        content = "".join(c.get("text", "") for c in content if isinstance(c, dict) and c.get("type") == "text")
+    return content, None, rec
 
 
 def llm(system, prompt, schema=None, log=None, model=None):
