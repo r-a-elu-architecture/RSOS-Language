@@ -2,50 +2,59 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24304403.svg)](https://doi.org/10.5281/zenodo.24304403) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE) [![tests](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml/badge.svg)](https://github.com/r-a-elu-architecture/RSOS-Language/actions/workflows/tests.yml)
 
-*RSOS: an executable spatial-symbolic language for human–AI and AI–AI communication.* Whitepaper: R. A. Elu (2026),
-[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403) (all versions). Code: Apache 2.0. Software:
-[doi:10.5281/zenodo.24358277](https://doi.org/10.5281/zenodo.24358277) (v0.3.2; all versions: [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)).
+**Exact shared state for AI agents.** The model names what should change; a deterministic runtime computes every
+value, checks every agent's copy against a 12-digit state digest and repairs drift with zero model calls. The planner
+never sees a state value. Software: [doi:10.5281/zenodo.24358277](https://doi.org/10.5281/zenodo.24358277) (v0.3.2;
+all versions [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)). Whitepaper:
+[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403). Code: Apache 2.0.
 
 ## Blind planning: the model names keys, the runtime computes values
 
-**For multi-agent workflows that edit shared state.** The planner writes the whole task as operations that name keys
-and relations (`INHERIT auth.retries search.retries CAP 8`), never values; a deterministic runtime computes every
-value, hash-checks every agent's copy and heals drift with zero model calls.
+```
+reassign_where(field=owner, from=bruno, to=chen)          # Core syntax
+REHOST owner bruno chen                                   # RSOS syntax: same IR, same digest
+```
 
-**Against the most efficient market pattern we could build** (A7, pre-registered: one call writes the whole task as
-JSON Patch, one audit call; the same model, seeds, hash check and audit rule), across **80 tasks of 14 to 224 steps
-and up to 300 keys**: **RSOS blind was exact on 80/80, with 0 wrong steps in about 5,800, while the planner never saw a
-single state value.** One-call JSON Patch was exact on 77/80, and **all 8 of its failed steps were values it had to
-compute from changed state** (owner transfers, copies of changed values); they stayed wrong although the auditor named
-the error. RSOS's cost per correct task: **0.79× and 0.91×** of JSON Patch at 30 keys and 14 steps, **0.66–0.68×** on
-56–224 steps, **0.50× at 300 keys** (95% CI below 1 in every cell). Against one model call per step (A5): 2.2–2.4 calls
-instead of 42–43, 0.27–0.35× the cost.
+The planner writes each change request as operations over key names; the runtime finds every matching key, does the
+arithmetic, applies caps and conditions, and executes each step atomically.
 
-**Across Claude models** (A8): blind planning was exact on **16/16 in all six cells** (Haiku, Sonnet and Opus 5.5 ×
-14 steps and 300 keys). JSON Patch's failures were **one reproducible class**: "everything owned by X is now owned by Y"
-on a 300-key state failed **on the same request** for Haiku, for Haiku **told to track the state**, and for Sonnet;
-Opus tied at 16/16. Telling JSON Patch to track state made it worse (29/32 vs 30/32). Cost per correct task at 300
-keys: **0.50× (Haiku), 0.54× (Sonnet)**; Opus used 0.78× the input and 0.39× the thinking.
+| Measured (pre-registered) | RSOS blind planning | One-call JSON Patch (strongest pattern we could build) |
+|---|---|---|
+| A7: 80 tasks, 14–224 steps, up to 300 keys (Claude Haiku) | **80/80 exact**, 0 wrong steps in about 5,800 | 77/80; all 8 failed steps were values computed from changed state |
+| A8: six models from Anthropic, Google, Mistral and OpenAI | **256/256 exact** | failures on one request type: "everything owned by X is now owned by Y" |
+| Cost per correct task at 300 keys | **0.45–0.61×** (USD on Mistral; tokens on Gemini, GPT) and 0.50–0.54× (Claude) | 1× |
+| Against one model call per step (A5) | 2.2–2.4 calls instead of 42–43 | |
 
-**Limits:** one task family, one model family (Claude: Haiku, Sonnet, Opus 5.5), 16 tasks per cell; JSON Patch lost only 3 of 80
-tasks, so the exactness gap is small; the predictions that JSON Patch would collapse on long tasks (P9) and that
-blind input would stay under 1.5× at 10× the state (P10, 1.53×) failed. The next tests, with predictions fixed in advance, are in **[NEXT_TESTS.md](NEXT_TESTS.md)**.
+**Predicted in public, then confirmed.** Before running three model families we had never tested, we published where
+JSON Patch would break: task 712 or 702, step 35 (G9, commit `00e5121`, 18 Nov 22:26 UTC; G10, `edcd42e`, 19 Nov 02:50
+UTC). Gemini 3.8 Flash, Mistral Large 4 and GPT-6.2 Sol each failed at that step; RSOS blind stayed exact on all of
+them. Report: [`experiments/A8_FAMILIES_REPORT.md`](experiments/A8_FAMILIES_REPORT.md).
 
-**Try to break it.** Score any framework on the same 80 tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a
-scorer, no harness needed), or re-run A7 on a Claude plan for $0. Every result, confirming or not, is listed.
+**Limits.** One task family (configuration-style key–value state), 16 tasks per cell; JSON Patch is strong, so the
+exactness gap is small and concentrated in one request type; the tool-calling and code-writing rivals are not yet run;
+22 of 59 predictions failed and are published. Next tests, with predictions fixed in advance:
+**[NEXT_TESTS.md](NEXT_TESTS.md)**.
+
+**Try to break it.** Score any framework on the same tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a
+scorer), or re-run every analysis from the recorded transcripts with zero model calls ([REPLICATE.md](REPLICATE.md)).
 
 ```bash
-pip install rsoslang                             # or, from a clone: pip install -e .
+pip install rsoslang                             # 0.4.0: RSOS Core 1.0 and the State Runtime
 claude mcp add rsos -- rsoslang mcp              # or with no install: claude mcp add rsos -- uvx rsoslang mcp
 python experiments/a5_runtime_equivalence.py     # from a clone: this runtime replays every measured plan, 32/32 match
 ```
 
-**MCP:** listed in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos) as `io.github.r-a-elu-architecture/rsos` (0.3.1). Works in any MCP
-client over stdio (Claude Code, Claude Desktop, Cursor, …). Verified on 18 Nov 2026 on Windows 11: `pip install rsoslang`
-then `claude mcp add` → Connected; `uvx rsoslang mcp` starts with no install step.
+**RSOS Core 1.0** is the specification behind this: eight operations, a JSON IR with a schema and a digest, stable
+error codes, conformance tests and an operator registry ([`spec/core/STATE_OPS.md`](spec/core/STATE_OPS.md),
+[`registry/operators.json`](registry/operators.json)). An operation enters Core only once it is tested and backed by
+an experiment.
 
-**[Drop it in (Python or MCP) →](STATE.md)** · **[StateBench →](bench/)** · **[Replicate it →](REPLICATE.md)** ·
-**[All results, failures included →](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)**
+**MCP:** in the [official MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.r-a-elu-architecture/rsos)
+as `io.github.r-a-elu-architecture/rsos`. Works in any MCP client over stdio (Claude Code, Claude Desktop, Cursor and
+others). [State Runtime guide](STATE.md), [website](https://r-a-elu-architecture.github.io/RSOS-Language/),
+[all results, failures included](https://r-a-elu-architecture.github.io/RSOS-Language/results.html).
+
+## The language
 
 **A spatial-symbolic programming language for humans and AI.** You write a program the way you think it: objects in
 a scene, placed, touched, pierced, entered, coloured, connected by lines, kept in the rooms of a house. The same
@@ -54,12 +63,17 @@ program runs in two places:
 - in a **person**: a practised mental model, delivered as a timed session of images, words, sounds, scents and
   vibration codes.
 
-**[Open the editor →](docs/editor.html)** A real 12-module support agent, painted. Put a guest at the head, heart,
+State programs written in the spatial syntax compile to the same Core IR as the text above. What is measured so far is
+the runtime and the planning protocol; whether the spatial representation itself compresses communication between
+agents or robots (for example over scene graphs) is a planned test, not yet a result ([NEXT_TESTS.md](NEXT_TESTS.md),
+SC1).
+
+**[Open the editor](docs/editor.html).** A real 12-module support agent, painted. Put a guest at the head, heart,
 brain or beside a module, and see the measured effect.
 
-**All results** (pre-registered, real LLM agents, every failure reported; 56 predictions so far, 34 passed, 22
-failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A8** (Haiku, Sonnet and Opus;
-a stronger JSON Patch), **A7b** (long tasks and large states), **A7a** (blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
+**All results** (pre-registered, real LLM agents, every failure reported; 59 predictions so far, 37 passed, 22
+failed): [results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html). Newest first: **A8** (six models from four companies;
+a stronger JSON Patch; G9 and G10 hit), **A7b** (long tasks and large states), **A7a** (blind planning vs one-call JSON Patch, above), **A5** (one plan vs one call per step), **A4** (hidden drift becomes
 wrong answers for an anchor protocol without a hash check: 0/16), **A3c** (0.141× the channel tokens of a
 Slipstream-style anchor protocol at zero model calls). Whitepaper v2 ([doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392),
 17 Nov) covers A1–A3b and HT1; A3c–A8 are in `experiments/` and will be in the next version.
