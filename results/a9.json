@@ -1,0 +1,392 @@
+{
+ "labels": [
+  "claude_haiku",
+  "codex_sol"
+ ],
+ "cells": {
+  "claude_haiku|Z100|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.0,
+   "in_tok_per_task": 10354.125,
+   "out_tok_per_task": 14865.125
+  },
+  "claude_haiku|Z100|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 2293.875,
+   "out_tok_per_task": 8514.625
+  },
+  "claude_haiku|Z100|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 3345.875,
+   "out_tok_per_task": 7245.25
+  },
+  "claude_haiku|Z100|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.0,
+   "in_tok_per_task": 9583.0,
+   "out_tok_per_task": 11566.25
+  },
+  "claude_haiku|Z30|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.0,
+   "in_tok_per_task": 8152.625,
+   "out_tok_per_task": 14611.75
+  },
+  "claude_haiku|Z30|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 7,
+   "steps_wrong": 5,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 2224.5,
+   "out_tok_per_task": 8382.0
+  },
+  "claude_haiku|Z30|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 2480.125,
+   "out_tok_per_task": 6626.0
+  },
+  "claude_haiku|Z30|TC": {
+   "tasks": 4,
+   "complete": true,
+   "exact": 3,
+   "steps_wrong": 1,
+   "steps_failed": 0,
+   "calls_per_task": 104.25,
+   "in_tok_per_task": 98278.25,
+   "out_tok_per_task": 15135.75
+  },
+  "claude_haiku|Z30|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.75,
+   "in_tok_per_task": 9116.0,
+   "out_tok_per_task": 12045.75
+  },
+  "claude_haiku|Z300|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 7,
+   "steps_wrong": 0,
+   "steps_failed": 1,
+   "calls_per_task": 2.75,
+   "in_tok_per_task": 16287.125,
+   "out_tok_per_task": 18930.125
+  },
+  "claude_haiku|Z300|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 2290.875,
+   "out_tok_per_task": 7825.625
+  },
+  "claude_haiku|Z300|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 5527.625,
+   "out_tok_per_task": 7349.625
+  },
+  "claude_haiku|Z300|TC": {
+   "tasks": 4,
+   "complete": true,
+   "exact": 4,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 102.75,
+   "in_tok_per_task": 97623.25,
+   "out_tok_per_task": 15994.75
+  },
+  "claude_haiku|Z300|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.25,
+   "in_tok_per_task": 11377.0,
+   "out_tok_per_task": 12475.25
+  },
+  "codex_sol|Z30|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.5,
+   "in_tok_per_task": 65466.25,
+   "out_tok_per_task": 1343.875
+  },
+  "codex_sol|Z30|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 24080.25,
+   "out_tok_per_task": 1462.25
+  },
+  "codex_sol|Z30|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 22677.875,
+   "out_tok_per_task": 1452.125
+  },
+  "codex_sol|Z30|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.5,
+   "in_tok_per_task": 64411.5,
+   "out_tok_per_task": 857.625
+  },
+  "codex_sol|Z300|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.375,
+   "in_tok_per_task": 54870.625,
+   "out_tok_per_task": 1913.875
+  },
+  "codex_sol|Z300|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 19946.875,
+   "out_tok_per_task": 1570.625
+  },
+  "codex_sol|Z300|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 23226.875,
+   "out_tok_per_task": 1530.0
+  },
+  "codex_sol|Z300|TC": {
+   "tasks": 4,
+   "complete": true,
+   "exact": 4,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 99.0,
+   "in_tok_per_task": 1983395.0,
+   "out_tok_per_task": 2982.75
+  },
+  "codex_sol|Z300|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.25,
+   "in_tok_per_task": 50903.75,
+   "out_tok_per_task": 1062.0
+  },
+  "gemini_flash|Z300|CAv": {
+   "tasks": 2,
+   "complete": false,
+   "exact": 2,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 3901.5,
+   "out_tok_per_task": 2042.0
+  }
+ },
+ "quarters": {
+  "B2": {
+   "rates": [
+    0.0,
+    0.0,
+    0.0,
+    0.0017857142857142857
+   ],
+   "wrong": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "steps": [
+    560,
+    560,
+    560,
+    560
+   ],
+   "mh_q4_vs_q1": {
+    "or": Infinity,
+    "lo": null,
+    "hi": null
+   }
+  },
+  "X5b": {
+   "rates": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "wrong": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "steps": [
+    560,
+    560,
+    560,
+    560
+   ],
+   "mh_q4_vs_q1": {
+    "or": null,
+    "lo": null,
+    "hi": null
+   }
+  },
+  "CAv": {
+   "rates": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "wrong": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "steps": [
+    560,
+    560,
+    560,
+    560
+   ],
+   "mh_q4_vs_q1": {
+    "or": null,
+    "lo": null,
+    "hi": null
+   }
+  },
+  "CAb": {
+   "rates": [
+    0.0017857142857142857,
+    0.0035714285714285713,
+    0.0035714285714285713,
+    0.0
+   ],
+   "wrong": [
+    1,
+    2,
+    2,
+    0
+   ],
+   "steps": [
+    560,
+    560,
+    560,
+    560
+   ],
+   "mh_q4_vs_q1": {
+    "or": null,
+    "lo": null,
+    "hi": null
+   }
+  },
+  "TC": {
+   "rates": [
+    0.0,
+    0.005952380952380952,
+    0.0,
+    0.0
+   ],
+   "wrong": [
+    0,
+    1,
+    0,
+    0
+   ],
+   "steps": [
+    168,
+    168,
+    168,
+    168
+   ],
+   "mh_q4_vs_q1": {
+    "or": null,
+    "lo": null,
+    "hi": null
+   }
+  }
+ },
+ "verdicts": {
+  "Q1_blind_exact": true,
+  "Q2a_B2_rises": true,
+  "Q2b_readers_flat": true,
+  "Q3a_B2_worse_with_size": true,
+  "Q3b_blind_flat_with_size": true,
+  "Q4_blind_code_as_exact": true,
+  "Q5a_rsos_shorter_than_python": false,
+  "Q5b_cheapest_per_correct_Z300": true,
+  "Q6a_TC_calls_20x": true,
+  "Q6b_TC_steps_beat_B2_Z300": true,
+  "Q6c_TC_input_grows_with_size": true,
+  "Q7_blind_at_least_TC_Z300": true
+ },
+ "incomplete": [
+  "gemini_flash|Z300|CAv"
+ ]
+}
