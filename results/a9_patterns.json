@@ -1,0 +1,39 @@
+{
+ "verdicts": {
+  "PA1": true,
+  "PA2": true,
+  "PA3": true,
+  "PA4": true,
+  "PA5": true,
+  "PA6": null,
+  "PA7": true
+ },
+ "detail": {
+  "tasks": {
+   "X5b_Z100": 8,
+   "CAb_Z100": 8,
+   "CAv_Z100": 8,
+   "B2_Z100": 8,
+   "TC_Z30": 4
+  },
+  "B2_bad_steps": [
+   [
+    45,
+    "FUSE"
+   ],
+   [
+    47,
+    "INHERIT"
+   ],
+   [
+    48,
+    "INHERIT"
+   ],
+   [
+    49,
+    "INHERIT"
+   ]
+  ],
+  "code_wrong_steps": []
+ }
+}

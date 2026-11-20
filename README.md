@@ -41,7 +41,7 @@ Report: [`experiments/SC1_REPORT.md`](experiments/SC1_REPORT.md).
 exactness gap is small and concentrated in one request type; the tool-calling and code-writing rivals are not yet run;
 26 of 76 predictions failed and are published, including the first two RSOS blind task failures (SC2 control). Next tests, with predictions fixed in advance:
 
-**A9, round 1 (20 Nov 2026): the strongest rival patterns.** On tasks drawn from a beacon after the predictions were public, every arm that never computes values from a copy of the state stayed exact: RSOS blind 40/40, Python seeing the state 40/40, blind Python 39/40 (one silent reversed copy). Tool-calling: 11/12 exact at about 100 calls per task. The principle, not the syntax, makes agents exact; RSOS blind was the only arm with no failure, and it was not more compact than Python (a miss). Codex's remaining cells are running. [`experiments/A9_REPORT.md`](experiments/A9_REPORT.md)
+**A9 (20 Nov 2026): the strongest rival patterns.** On tasks drawn from a beacon after the predictions were public: RSOS blind 48/48, Python seeing the state 48/48, blind Python 47/48 (one silent reversed copy), one-call JSON Patch 46/48 (errors only in the last quarter of the plan, as a second seal predicted), tool-calling 15/16 at about 100 calls per task. The principle, not the syntax, makes agents exact; RSOS was not more compact than Python (a miss). [`experiments/A9_REPORT.md`](experiments/A9_REPORT.md)
 
 **Sealed research, opened 20 Nov 2026:** [`research/`](research/README.md): the seed of RSOS in formal form, its laws as theorems, a self-growing engine and a seven-node sphere; eight studies, each sealed before its code, every miss kept (layer 2: computation built, run and measured).
 **[NEXT_TESTS.md](NEXT_TESTS.md)**.

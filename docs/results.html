@@ -54,14 +54,14 @@ pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7
 
 <section id="research"><div class="wrap">
 <h2>A9: The strongest rival patterns, predicted by one law</h2>
-<p>Families: claude_haiku, codex_sol. Tasks from drand round 6657746, drawn after the predictions were public. 11 of 12 predictions held, 1 failed. <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/A9_REPORT.md">Report</a> · <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/PREREGISTRATION_A9.md">Pre-registration</a></p>
-<p><b>Round 1, 20 Nov 2026, 14:20 (UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius.</b> Complete cells: Claude Haiku 5.5 (all) and GPT-6.2 Sol (300 and 30 keys, except tool-calling at 30 keys). Codex's remaining cells are running; round 2 is added with its own commit. In plain words: every arm that never computes values from a copy of the state stayed exact, so the <i>principle</i> holds and the syntax is not what makes it exact (written in advance as the outcome against RSOS). RSOS blind was the only arm with no failure of any kind (40/40); blind Python failed one task silently (a reversed copy). Tool-calling was exact in 11 of 12 tasks at about 100 calls per task. Missed: RSOS was not more compact than Python. Two JSON Patch predictions pass only on a single refused step, which is not evidence for a curve.</p>
+<p>Families: claude_haiku, codex_sol. Tasks from drand round 6657746, drawn after the predictions were public. 10 of 12 predictions held, 2 failed. <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/A9_REPORT.md">Report</a> · <a href="https://github.com/r-a-elu-architecture/RSOS-Language/blob/main/experiments/PREREGISTRATION_A9.md">Pre-registration</a></p>
+<p><b>Final for Claude Haiku 5.5 and GPT-6.2 Sol, 20 Nov 2026, 15:00 (UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius.</b> RSOS blind 48/48 and Python seeing the state 48/48, the only arms with no failure; blind Python 47/48 (one silent reversed copy); JSON Patch 46/48 (its errors all in the last quarter of the plan); tool-calling 15/16 at about 100 calls per task. The <i>principle</i> (never show the model the values) is what makes agents exact; RSOS's syntax did not beat Python and was not more compact (a miss). A second seal, made at 13:32 before Codex's last cells ran, predicted where JSON Patch would break: all four bad steps landed in the predicted half.</p>
 <table><thead><tr><th>Arm (complete cells, pooled)</th><th>Tasks exact</th><th>Calls per task</th><th>Tokens per task</th></tr></thead><tbody>
-<tr><td>RSOS blind</td><td>40/40</td><td>2.4</td><td>36,680</td></tr>
-<tr><td>Python, blind</td><td>39/40</td><td>1.0</td><td>15,718</td></tr>
-<tr><td>Python, sees state</td><td>40/40</td><td>1.0</td><td>16,292</td></tr>
-<tr><td>Tool-calling agent</td><td>11/12</td><td>102.0</td><td>737,803</td></tr>
-<tr><td>One-call JSON Patch</td><td>39/40</td><td>2.3</td><td>41,359</td></tr>
+<tr><td>RSOS blind</td><td>48/48</td><td>2.4</td><td>39,332</td></tr>
+<tr><td>Python, blind</td><td>47/48</td><td>1.0</td><td>16,741</td></tr>
+<tr><td>Python, sees state</td><td>48/48</td><td>1.0</td><td>17,198</td></tr>
+<tr><td>Tool-calling agent</td><td>15/16</td><td>102.1</td><td>1,053,081</td></tr>
+<tr><td>One-call JSON Patch</td><td>46/48</td><td>2.4</td><td>45,899</td></tr>
 </tbody></table>
 <figure><img src="a9_quarters.svg" alt="Wrong-step rate by quarter of the plan, per arm" style="max-width:100%"><figcaption>Wrong-step rate by quarter of the plan (complete cells, pooled). Lines at zero overlap.</figcaption></figure>
 <table><thead><tr><th>Prediction</th><th>Verdict</th></tr></thead><tbody>
@@ -75,7 +75,7 @@ pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7
 <tr><td>RSOS cheapest per correct task at 300 keys</td><td>held</td></tr>
 <tr><td>Tool-calling needs at least 20× the calls</td><td>held</td></tr>
 <tr><td>Tool-calling beats JSON Patch on steps</td><td>held</td></tr>
-<tr><td>Tool-calling input grows with size</td><td>held</td></tr>
+<tr><td>Tool-calling input grows with size</td><td>failed</td></tr>
 <tr><td>RSOS blind at least as exact as tool-calling</td><td>held</td></tr>
 </tbody></table>
 

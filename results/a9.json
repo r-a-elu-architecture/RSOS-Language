@@ -144,6 +144,46 @@
    "in_tok_per_task": 11377.0,
    "out_tok_per_task": 12475.25
   },
+  "codex_sol|Z100|B2": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 7,
+   "steps_wrong": 3,
+   "steps_failed": 1,
+   "calls_per_task": 2.75,
+   "in_tok_per_task": 66906.625,
+   "out_tok_per_task": 1689.75
+  },
+  "codex_sol|Z100|CAb": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 20280.5,
+   "out_tok_per_task": 1575.75
+  },
+  "codex_sol|Z100|CAv": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 1.0,
+   "in_tok_per_task": 20185.75,
+   "out_tok_per_task": 1541.875
+  },
+  "codex_sol|Z100|X5b": {
+   "tasks": 8,
+   "complete": true,
+   "exact": 8,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 2.5,
+   "in_tok_per_task": 51547.625,
+   "out_tok_per_task": 1047.0
+  },
   "codex_sol|Z30|B2": {
    "tasks": 8,
    "complete": true,
@@ -173,6 +213,16 @@
    "calls_per_task": 1.0,
    "in_tok_per_task": 22677.875,
    "out_tok_per_task": 1452.125
+  },
+  "codex_sol|Z30|TC": {
+   "tasks": 4,
+   "complete": true,
+   "exact": 4,
+   "steps_wrong": 0,
+   "steps_failed": 0,
+   "calls_per_task": 102.5,
+   "in_tok_per_task": 1996254.75,
+   "out_tok_per_task": 2659.75
   },
   "codex_sol|Z30|X5b": {
    "tasks": 8,
@@ -251,19 +301,19 @@
     0.0,
     0.0,
     0.0,
-    0.0017857142857142857
+    0.00744047619047619
    ],
    "wrong": [
     0,
     0,
     0,
-    1
+    5
    ],
    "steps": [
-    560,
-    560,
-    560,
-    560
+    672,
+    672,
+    672,
+    672
    ],
    "mh_q4_vs_q1": {
     "or": Infinity,
@@ -285,10 +335,10 @@
     0
    ],
    "steps": [
-    560,
-    560,
-    560,
-    560
+    672,
+    672,
+    672,
+    672
    ],
    "mh_q4_vs_q1": {
     "or": null,
@@ -310,10 +360,10 @@
     0
    ],
    "steps": [
-    560,
-    560,
-    560,
-    560
+    672,
+    672,
+    672,
+    672
    ],
    "mh_q4_vs_q1": {
     "or": null,
@@ -323,9 +373,9 @@
   },
   "CAb": {
    "rates": [
-    0.0017857142857142857,
-    0.0035714285714285713,
-    0.0035714285714285713,
+    0.001488095238095238,
+    0.002976190476190476,
+    0.002976190476190476,
     0.0
    ],
    "wrong": [
@@ -335,10 +385,10 @@
     0
    ],
    "steps": [
-    560,
-    560,
-    560,
-    560
+    672,
+    672,
+    672,
+    672
    ],
    "mh_q4_vs_q1": {
     "or": null,
@@ -349,7 +399,7 @@
   "TC": {
    "rates": [
     0.0,
-    0.005952380952380952,
+    0.004464285714285714,
     0.0,
     0.0
    ],
@@ -360,10 +410,10 @@
     0
    ],
    "steps": [
-    168,
-    168,
-    168,
-    168
+    224,
+    224,
+    224,
+    224
    ],
    "mh_q4_vs_q1": {
     "or": null,
@@ -383,7 +433,7 @@
   "Q5b_cheapest_per_correct_Z300": true,
   "Q6a_TC_calls_20x": true,
   "Q6b_TC_steps_beat_B2_Z300": true,
-  "Q6c_TC_input_grows_with_size": true,
+  "Q6c_TC_input_grows_with_size": false,
   "Q7_blind_at_least_TC_Z300": true
  },
  "incomplete": [
