@@ -29,6 +29,9 @@ if os.name == "nt":            # amendment 1 (transport only): on Windows `claud
     import a5_llm as _L        # login; a5_llm.py stays frozen, its environment filter is extended here at run time
     _L.KEEP = tuple(_L.KEEP) + ("USERPROFILE", "APPDATA", "LOCALAPPDATA", "SYSTEMROOT", "SystemRoot", "TEMP", "TMP",
                                 "HOMEDRIVE", "HOMEPATH", "PATHEXT", "COMSPEC", "ProgramData", "ProgramFiles")
+if R7.BACKEND == "ollama":     # amendment 2: open-weights family on a free GPU; a 300-key task needs more than A7c's
+    import a7_local as _O      # 8,192-token context, so A9 raises it at run time (a7_local.py unchanged)
+    _O.OPTIONS["num_ctx"] = int(os.environ.get("A9_NUM_CTX", "32768"))
 N_TC = 4
 ORDER = [("Z300", ["TC", "CAv", "CAb", "B2", "X5b"]), ("Z30", ["TC", "CAv", "CAb", "B2", "X5b"]),
          ("Z100", ["B2", "X5b", "CAv", "CAb"])]

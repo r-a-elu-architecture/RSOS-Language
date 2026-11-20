@@ -95,3 +95,11 @@ Transport only. On the owner's Windows machine the Claude smoke failed: `claude 
 A5's frozen environment filter (`a5_llm.KEEP`) passes no Windows profile variables. `a9_run.py` now extends that filter
 at run time on Windows only (USERPROFILE, APPDATA, LOCALAPPDATA, SYSTEMROOT, TEMP, TMP, HOMEDRIVE, HOMEPATH, PATHEXT,
 COMSPEC, ProgramData, ProgramFiles). `a5_llm.py` is unchanged. No arm, prompt, task, prediction or score changes.
+
+## Amendment 2 (20 Nov 2026, 09:35 Vilnius; before the beacon round and before any call of this family)
+
+An open-weights family is added: **colab_qwen25_7b** = Qwen2.5 7B Instruct (`qwen2.5:7b` in Ollama), run through the
+A7c local backend on a free Google Colab T4 GPU (`experiments/a9_colab.ipynb`), temperature 0, seed 0, with the context
+raised to 32,768 tokens at run time (A7c's 8,192 cannot hold a 300-key task; `a7_local.py` unchanged). Same tasks,
+arms, order and scoring. If the model cannot be pulled or the session ends, its cells are reported as not run or
+incomplete under section 4. This family answers "only commercial models" and can be re-run by anyone at no cost.
