@@ -88,3 +88,10 @@ runs): B2 per-step error 0.19 % → 2.33 % from Q1 to Q4. These set the predicti
 Model-written code is executed only after the static gate, in a separate process with no environment and a timeout.
 Limits known now: 8 tasks per cell (4 for TC); one task family; TC capped at 4 turns per request; no auditor for the
 new arms.
+
+## Amendment 1 (20 Nov 2026, 09:20 Vilnius; before the beacon round and before any scored call)
+
+Transport only. On the owner's Windows machine the Claude smoke failed: `claude -p` could not find its login because
+A5's frozen environment filter (`a5_llm.KEEP`) passes no Windows profile variables. `a9_run.py` now extends that filter
+at run time on Windows only (USERPROFILE, APPDATA, LOCALAPPDATA, SYSTEMROOT, TEMP, TMP, HOMEDRIVE, HOMEPATH, PATHEXT,
+COMSPEC, ProgramData, ProgramFiles). `a5_llm.py` is unchanged. No arm, prompt, task, prediction or score changes.

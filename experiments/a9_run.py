@@ -25,6 +25,10 @@ import a7_run as R7            # noqa: E402
 import a9_arms as N            # noqa: E402
 
 R7.SEEDS.update({c: s for c, s in Z.load_seeds().items()})
+if os.name == "nt":            # amendment 1 (transport only): on Windows `claude -p` needs the user profile to find its
+    import a5_llm as _L        # login; a5_llm.py stays frozen, its environment filter is extended here at run time
+    _L.KEEP = tuple(_L.KEEP) + ("USERPROFILE", "APPDATA", "LOCALAPPDATA", "SYSTEMROOT", "SystemRoot", "TEMP", "TMP",
+                                "HOMEDRIVE", "HOMEPATH", "PATHEXT", "COMSPEC", "ProgramData", "ProgramFiles")
 N_TC = 4
 ORDER = [("Z300", ["TC", "CAv", "CAb", "B2", "X5b"]), ("Z30", ["TC", "CAv", "CAb", "B2", "X5b"]),
          ("Z100", ["B2", "X5b", "CAv", "CAb"])]
