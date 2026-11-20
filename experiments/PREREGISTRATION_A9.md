@@ -108,3 +108,9 @@ incomplete under section 4. This family answers "only commercial models" and can
 
 To fit the free tier, **gemini_flash** runs every cell except TC (about 300 requests instead of about 1,100), with
 2 workers. Its TC cells are declared **not run** now, not afterwards. All other rules unchanged.
+
+## Amendment 4 (20 Nov 2026, 10:10 Vilnius; before the beacon round and before any scored call)
+
+Transport only. The Gemini smoke ended on HTTP 503 ("model experiencing high demand"). For OpenAI-compatible backends,
+`a9_run.py` now retries a call that ends on HTTP 503/500 for up to about 15 minutes before the task counts as not run.
+`a7_openai.py` unchanged; no arm, prompt, task, prediction or score changes.

@@ -32,6 +32,22 @@ if os.name == "nt":            # amendment 1 (transport only): on Windows `claud
 if R7.BACKEND == "ollama":     # amendment 2: open-weights family on a free GPU; a 300-key task needs more than A7c's
     import a7_local as _O      # 8,192-token context, so A9 raises it at run time (a7_local.py unchanged)
     _O.OPTIONS["num_ctx"] = int(os.environ.get("A9_NUM_CTX", "32768"))
+if R7.BACKEND == "openai":     # amendment 4 (transport only): a provider "overloaded" answer (HTTP 503/500) is
+    import time as _t           # retried for up to ~15 minutes before a task counts as not run; a7_openai.py unchanged
+    import a7_openai as _OA
+    _inner = _OA.llm
+
+    def _patient(system, prompt, schema=None, log=None, model=None):
+        for wait in (30, 60, 120, 240, 300, 300):
+            try:
+                return _inner(system, prompt, schema, log, model)
+            except RuntimeError as e:
+                if not any(c in str(e) for c in ("HTTP 503", "HTTP 500", "UNAVAILABLE")):
+                    raise
+                print(f"provider busy, waiting {wait}s", flush=True)
+                _t.sleep(wait)
+        return _inner(system, prompt, schema, log, model)
+    _OA.llm = _patient
 N_TC = 4
 ORDER = [("Z300", ["TC", "CAv", "CAb", "B2", "X5b"]), ("Z30", ["TC", "CAv", "CAb", "B2", "X5b"]),
          ("Z100", ["B2", "X5b", "CAv", "CAb"])]
