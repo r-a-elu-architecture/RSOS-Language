@@ -5,6 +5,9 @@
 2. Runs the zero-cost checks: the engine library tests, the protocol conformance tests, and the AGENTS2 analysis
    (0 model calls) against the published results files, re-run in a temporary folder; its output must equal the
    sealed RESULTS_AGENTS2.json byte for byte.
+3. A9 (experiments/): recomputes the A9 seal from the sealed commit, and once results/a9.json exists, re-scores every
+   results/a9_results_*.jsonl with the sealed a9_analyse.py in a temporary folder; verdicts and cells must equal the
+   published a9.json.
 """
 import hashlib
 import os
@@ -40,6 +43,43 @@ SEALS = {
 }
 
 
+A9_SEAL = ("fc44d4d", ["PREREGISTRATION_A9.md", "a9_tasks.py", "a9_beacon.py", "a9_arms.py", "a9_run.py",
+                       "a9_analyse.py", "test_a9.py"])
+
+
+def check_a9(seals):
+    import glob, json, shutil, tempfile
+    ok_all = True
+    commit, files = A9_SEAL
+    try:
+        blob = b"".join(subprocess.run(["git", "-C", ROOT, "show", f"{commit}:experiments/{f}"], capture_output=True,
+                                       check=True).stdout for f in files)
+        h = hashlib.sha256(blob).hexdigest()
+        ok = h in seals
+        print(f"{'OK ' if ok else 'BAD'} seal A9             {h[:16]}… (from commit {commit})")
+        ok_all &= ok
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("--  seal A9: needs a git clone (git show of the sealed commit); skipped")
+    pub = os.path.join(ROOT, "results", "a9.json")
+    if not os.path.exists(pub):
+        print("--  A9 re-score: results/a9.json not published yet; skipped")
+        return ok_all
+    sys.path.insert(0, os.path.join(ROOT, "experiments"))
+    import a9_analyse as AN
+    tmp = tempfile.mkdtemp()
+    for p in glob.glob(os.path.join(ROOT, "results", "a9_results_*.jsonl")):
+        shutil.copy(p, tmp)
+    AN.R = tmp
+    import contextlib, io
+    with contextlib.redirect_stdout(io.StringIO()):
+        AN.main()
+    mine, theirs = json.load(open(os.path.join(tmp, "a9.json"))), json.load(open(pub))
+    ok = all(json.dumps(mine[k], sort_keys=True) == json.dumps(theirs[k], sort_keys=True)
+             for k in ("verdicts", "cells", "quarters", "incomplete"))
+    print(f"{'OK ' if ok else 'BAD'} A9 re-score from raw results (sealed a9_analyse.py) equals results/a9.json")
+    return ok_all and ok
+
+
 def main():
     seals = open(os.path.join(ROOT, "SEALS.md")).read()
     ok_all = True
@@ -64,6 +104,7 @@ def main():
             ok = r.returncode == 0
         ok_all &= ok
         print(f"{'OK ' if ok else 'BAD'} {label}")
+    ok_all &= check_a9(seals)
     print("ALL OK" if ok_all else "SOMETHING FAILED")
     sys.exit(0 if ok_all else 1)
 
