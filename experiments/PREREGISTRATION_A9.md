@@ -114,3 +114,14 @@ To fit the free tier, **gemini_flash** runs every cell except TC (about 300 requ
 Transport only. The Gemini smoke ended on HTTP 503 ("model experiencing high demand"). For OpenAI-compatible backends,
 `a9_run.py` now retries a call that ends on HTTP 503/500 for up to about 15 minutes before the task counts as not run.
 `a7_openai.py` unchanged; no arm, prompt, task, prediction or score changes.
+
+## Amendment 5 (20 Nov 2026, 10:12 Vilnius; before the beacon round and before any scored call)
+
+**Capability floor for a family, applied to every family alike:** a family enters the scored pool only if at least
+one arm is exact on its smoke task (Z30, seed 999). Smokes: claude_haiku 5 of 5 arms exact; codex_sol 5 of 5;
+gemini_flash X5b exact (the rest stopped on provider overload, HTTP 503); **colab_qwen25_7b 0 of 4** (X5b 55 of 56
+steps not executed, 159 invalid operations; B2 17 wrong and 11 failed steps; CAb 13 wrong, 22 failed; CAv 9 wrong,
+1 failed). The open-weights family is therefore **withdrawn before any scored call** and reported as below the floor
+of every arm at 7B, including RSOS blind. Its smoke results are published (`results/a9_smoke_colab_qwen25_7b.jsonl`
+when uploaded). Reason for the rule: predictions are pooled across families, and a family that cannot do the task in
+any arm would measure the model, not the arms.
