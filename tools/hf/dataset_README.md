@@ -9,22 +9,26 @@ tags:
   - mcp
   - pre-registered
   - negative-results
+  - langgraph
 ---
 
-# RSOS pre-registered multi-agent experiments (A1–A5)
+# RSOS pre-registered multi-agent experiments (A1–A9)
 
 Results, transcripts, pre-registrations and reports of the RSOS experiments on real LLM agents. Every experiment was
 pre-registered before it ran; every failed prediction is included.
 
-**Headline (A5):** in a three-agent workflow that edits a shared 30-line state over 14 change requests with injected
-drift, the RSOS State Runtime used **2.2–2.4 model calls per task instead of 42–43**, **0.27–0.35× the cost** of the
-same agents run one model call per step (our per-step protocol, API prices), and was **32/32 exact**. Under drift where agents compute from
-their own copies (A4), a Slipstream-style anchor protocol (our re-implementation, without the hash check and restore) got
-0/16 tasks right. A7 (80 tasks, 14–224 steps, up to 300 keys): against one-call JSON Patch with the same hash check, RSOS blind was
-80/80 exact vs 77/80, the planner shown no state value; cost per correct task 0.50–0.91×.
+**Headline (A9, 20 Nov 2026):** against the strongest rival patterns we know, on tasks drawn from a public randomness
+beacon after the predictions were public: RSOS blind planning 48/48 exact, Python seeing the state 48/48, blind Python
+47/48 (one silent reversed copy), one-call JSON Patch 46/48 (errors only in the last quarter of the plan, as sealed),
+a tool-calling agent 15/16 at about 100 calls per task. The principle (the model never computes a value) drives
+exactness more than the RSOS syntax; RSOS was not more compact than Python (a published miss).
 
-**Limits:** one model family, one task family, 16 tasks per set. The 10× cost target was missed. 51 pre-registered
-predictions so far: 29 passed, 22 failed.
+**Earlier:** A7 (80 tasks, up to 300 keys): RSOS blind 80/80 vs one-call JSON Patch 77/80. A8 (six models from four
+companies): RSOS blind 256/256; JSON Patch failed at the step named in public beforehand. A5: 2.2–2.4 model calls per
+task instead of 42–43. Every injected drift repaired with 0 model calls.
+
+**Limits:** one task family (configuration-style key–value state), 16 tasks per cell, one writer per step (concurrent
+writes not yet tested). Failed predictions are listed in `experiments/FAILURES_MAP.md` in the code repository.
 
 ## Contents
 
@@ -47,5 +51,6 @@ Code, analysis scripts and the one-hour replication guide (under $1):
 
 ## Cite
 
-R. A. Elu (2026), *RSOS whitepaper v2*, [doi:10.5281/zenodo.24320392](https://doi.org/10.5281/zenodo.24320392).
-Software: [doi:10.5281/zenodo.24321030](https://doi.org/10.5281/zenodo.24321030).
+Software v0.5.0: [doi:10.5281/zenodo.24401943](https://doi.org/10.5281/zenodo.24401943) (all versions:
+[doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)). Whitepaper:
+[doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403).
