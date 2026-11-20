@@ -26,6 +26,33 @@ the time); its reach (particles land where they are needed); infinite under zoom
 | SPHERE1 | seven nodes connected by one protocol | the bound held at node and sphere level; protocol 0 wrong adoptions; Law 0 87 / 87; 3 pass, 4 fail (under-powered estimates) | `sealed/seed/sphere/` |
 | Protocol v0 | one message format between hosts | 7 conformance tests pass | `sealed/seed/protocol/` |
 
+## Related work (checked 20 Nov 2026)
+
+Much of what these studies do has close relatives; what is ours is the integration under one seed, sealed in public
+before each run.
+
+- **Evolutionary discovery with automated evaluators:** AlphaEvolve (Novikov et al., Google DeepMind, 2025,
+  arXiv:2506.13131); FunSearch (Romera-Paredes et al., 2023). ENGINE1 is a small instance of this idea.
+- **Diagnosis before repair in agent systems:** FlowFixer (arXiv:2607.02882); "Diagnosis Before Recovery"
+  (arXiv:2608.11772); AgentTether (arXiv:2607.06273). ENGINE2's finding (naming the cause beats undirected search)
+  agrees with theirs in a different setting.
+- **Sealed acceptance against an incumbent:** SEAL (arXiv:2607.24300); gated quality-diversity harness evolution with
+  a sealed test (arXiv:2607.13683).
+- **Invariants and constitutions in self-improving runtimes:** Falsifiable Release Gates / Antahkarana
+  (arXiv:2607.13070); Ouroboros (arXiv:2608.08311); runtime verification. Law 0's monitor belongs to this family.
+- **Falsifiable records in research loops:** immutable experiment cards ("An AI Scientist that Doesn't Drift",
+  ICML 2026); the Hypothesis Evolution Protocol (arXiv:2607.09195); SealedBench (2026).
+- **Decoding superposed vector-symbolic structures:** resonator networks (Frady, Kent, Olshausen, Sommer, 2020) and
+  explaining-away decoders. The soft joint reading is in this line.
+- **Keys-only planning with a deterministic runtime:** the dual-LLM pattern and CaMeL (security); here used for
+  exactness.
+- **Cliff effect and graceful degradation:** hybrid digital-analog coding and joint source-channel coding. T2c
+  measures the same trade-off for a holographic store.
+
+Not found in this check: one operator algebra and one set of laws (including a theorem's predicted exception) tested
+across unrelated hosts from memory to a real database and LLM agents; public commit-reveal before code for every
+study; and one language intended for both human cognition and machines (specified, not yet tested on people).
+
 ## Verify a seal
 
 ```bash
