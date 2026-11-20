@@ -8,6 +8,26 @@ never sees a state value. Software: [doi:10.5281/zenodo.24359268](https://doi.or
 all versions [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)). Whitepaper:
 [doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403). Code: Apache 2.0.
 
+**Where it fits.** Concurrency guards (CRDTs, optimistic locking, MESI-style coherence) stop agents from overwriting
+each other's writes. RSOS addresses a different failure: the model itself computing or copying a value wrong. The two
+combine: RSOS can sit under a lock or a CRDT store. RSOS assumes one writer per step; concurrent writes are not yet
+tested.
+
+## Use it in LangGraph (drop-in)
+
+```python
+from rsoslang.adapters.langgraph import add_rsos
+
+add_rsos(graph, call_model, after="intake", before="respond")   # graph = your StateGraph(YourState)
+# YourState: state (dict of dotted keys), requests (list of str), optional copies (dict of agent copies)
+```
+
+Three nodes join your graph: `rsos_plan` (one model call for all requests, prompt built from key names only),
+`rsos_apply` (the runtime computes every value; a failed step is re-asked once with its error code and key names, never
+a value) and `rsos_sync` (every agent copy checked against the digest and healed, 0 model calls). The report field
+records `model_calls`, `values_shown` (the adapter's audit of state values in any prompt: expected 0), failed steps and
+the digest. Field names are configurable to fit an existing schema. Tests: [`tests/test_adapter_langgraph.py`](tests/test_adapter_langgraph.py).
+
 ## Blind planning: the model names keys, the runtime computes values
 
 ```
@@ -39,12 +59,11 @@ Report: [`experiments/SC1_REPORT.md`](experiments/SC1_REPORT.md).
 
 **Limits.** One task family (configuration-style key–value state), 16 tasks per cell; JSON Patch is strong, so the
 exactness gap is small and concentrated in one request type; the tool-calling and code-writing rivals are not yet run;
-26 of 76 predictions failed and are published, including the first two RSOS blind task failures (SC2 control). Next tests, with predictions fixed in advance:
+26 of 76 predictions failed and are published, including the first two RSOS blind task failures (SC2 control).
 
 **A9 (20 Nov 2026): the strongest rival patterns.** On tasks drawn from a beacon after the predictions were public: RSOS blind 48/48, Python seeing the state 48/48, blind Python 47/48 (one silent reversed copy), one-call JSON Patch 46/48 (errors only in the last quarter of the plan, as a second seal predicted), tool-calling 15/16 at about 100 calls per task. The principle, not the syntax, makes agents exact; RSOS was not more compact than Python (a miss). [`experiments/A9_REPORT.md`](experiments/A9_REPORT.md)
 
-**Sealed research, opened 20 Nov 2026:** [`research/`](research/README.md): the seed of RSOS in formal form, its laws as theorems, a self-growing engine and a seven-node sphere; eight studies, each sealed before its code, every miss kept (layer 2: computation built, run and measured).
-**[NEXT_TESTS.md](NEXT_TESTS.md)**.
+Next tests, with predictions fixed in advance: **[NEXT_TESTS.md](NEXT_TESTS.md)**.
 
 **Try to break it.** Score any framework on the same tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a
 scorer), or re-run every analysis from the recorded transcripts with zero model calls ([REPLICATE.md](REPLICATE.md)).
@@ -65,7 +84,33 @@ as `io.github.r-a-elu-architecture/rsos`. Works in any MCP client over stdio (Cl
 others). [State Runtime guide](STATE.md), [website](https://r-a-elu-architecture.github.io/RSOS-Language/),
 [all results, failures included](https://r-a-elu-architecture.github.io/RSOS-Language/results.html).
 
-## The language
+## Use it from Claude or any MCP assistant
+
+```bash
+pip install rsoslang
+claude mcp add rsos -- rsoslang mcp              # or: claude mcp add rsos -- uvx rsoslang mcp
+```
+
+Any other MCP client: a stdio server with command `rsoslang` and argument `mcp`
+(`{"mcpServers": {"rsos": {"command": "rsoslang", "args": ["mcp"]}}}`).
+
+**State Runtime tools:** `rsos_state_new`, `rsos_state_prompt`, `rsos_state_apply`, `rsos_state_sync`,
+`rsos_state_get` (see [STATE.md](STATE.md)). **Language tools:** `rsos_statements`, `rsos_check`, `rsos_compile`,
+`rsos_session`, `rsos_paint_workflow`, `rsos_apply_gestures`, `rsos_paint_graph`. Person-facing sessions need the
+cue framework (`RSOS_CUE_FRAMEWORK=/path/to/RSOS-Multimodal-Cue-Framework`).
+
+## Results
+
+Every pre-registered test, the ones that failed included, on the
+[results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html); the failure map is
+[`experiments/FAILURES_MAP.md`](experiments/FAILURES_MAP.md); the next tests are in [NEXT_TESTS.md](NEXT_TESTS.md).
+Earlier simulation and code results: [`results/BUILD_REPORT.md`](results/BUILD_REPORT.md).
+
+## Beyond the runtime: the RSOS language and the research programme
+
+Everything above is the measured part. Below is the wider project, each part with its build status. The language and the person-facing sessions are built and tested in code; the 24-domain [research programme](https://r-a-elu-architecture.github.io/RSOS-Language/programme.html) is specified, and only AI agent systems have been run on a real host. Sealed research, opened 20 Nov 2026: [`research/`](research/README.md) (the seed in formal form, its laws as theorems, a self-growing engine; eight studies, each sealed before its code, every miss kept).
+
+### The language
 
 **A spatial-symbolic programming language for humans and AI.** You write a program the way you think it: objects in
 a scene, placed, touched, pierced, entered, coloured, connected by lines, kept in the rooms of a house. The same
@@ -93,15 +138,7 @@ Slipstream-style anchor protocol at zero model calls). Whitepaper v2 ([doi:10.52
 
 **First real-host test (A1, 17 Nov 2026, pre-registered):** three LLM agents (planner, worker, checker) on 8 tasks. The RSOS palace protocol used about 7× fewer channel tokens than JSON with full state (2,563 vs 17,311), finished 7/8 tasks exactly correct (JSON 5/8), and caught and healed 24/24 injected drifts with 0 model calls (38 tokens per repair). Summaries + retrieval: 0/8 correct, 24/24 drifts kept. One model family, 8 tasks. Report: [`experiments/A1_REPORT.md`](experiments/A1_REPORT.md).
 
-## Purpose
-
-RSOS grew from one seed: healing, transforming, signalling and evolving. It integrates the whole of human
-experience, including its shadow, so that what is integrated can be transformed rather than denied. Because its seed
-is healing, RSOS is used with consent and for the good of the person or system it works with, never to harm or
-coerce. See [`RESPONSIBLE_USE.md`](RESPONSIBLE_USE.md),
-[`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`TRADEMARKS.md`](TRADEMARKS.md).
-
-## What makes it different
+### What makes it different
 
 - **Where you place an operator decides what it does.** The same spell corrector placed at a module's head, heart,
   brain or beside it gives four different results, measured on held-out data.
@@ -118,7 +155,15 @@ coerce. See [`RESPONSIBLE_USE.md`](RESPONSIBLE_USE.md),
 - **Every result is reproducible.** Pre-registered experiments, seeds, result hashes; negatives published with
   positives.
 
-## Quick start
+### Purpose
+
+RSOS grew from one seed: healing, transforming, signalling and evolving. It integrates the whole of human
+experience, including its shadow, so that what is integrated can be transformed rather than denied. Because its seed
+is healing, RSOS is used with consent and for the good of the person or system it works with, never to harm or
+coerce. See [`RESPONSIBLE_USE.md`](RESPONSIBLE_USE.md),
+[`GOVERNANCE.md`](GOVERNANCE.md), [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`TRADEMARKS.md`](TRADEMARKS.md).
+
+### Quick start
 
 ```bash
 pip install -e .
@@ -127,28 +172,6 @@ python -m rsoslang ir examples/sol_remote.rsl
 RSOS_CUE_FRAMEWORK=/path/to/RSOS-Multimodal-Cue-Framework python -m rsoslang session examples/healing.rsl
 ./reproduce.sh
 ```
-
-## Use it from Claude or any MCP assistant
-
-```bash
-pip install rsoslang
-claude mcp add rsos -- rsoslang mcp              # or: claude mcp add rsos -- uvx rsoslang mcp
-```
-
-Any other MCP client: a stdio server with command `rsoslang` and argument `mcp`
-(`{"mcpServers": {"rsos": {"command": "rsoslang", "args": ["mcp"]}}}`).
-
-**State Runtime tools:** `rsos_state_new`, `rsos_state_prompt`, `rsos_state_apply`, `rsos_state_sync`,
-`rsos_state_get` (see [STATE.md](STATE.md)). **Language tools:** `rsos_statements`, `rsos_check`, `rsos_compile`,
-`rsos_session`, `rsos_paint_workflow`, `rsos_apply_gestures`, `rsos_paint_graph`. Person-facing sessions need the
-cue framework (`RSOS_CUE_FRAMEWORK=/path/to/RSOS-Multimodal-Cue-Framework`).
-
-## Results
-
-Every pre-registered test, the ones that failed included, on the
-[results page](https://r-a-elu-architecture.github.io/RSOS-Language/results.html); the failure map is
-[`experiments/FAILURES_MAP.md`](experiments/FAILURES_MAP.md); the next tests are in [NEXT_TESTS.md](NEXT_TESTS.md).
-Earlier simulation and code results: [`results/BUILD_REPORT.md`](results/BUILD_REPORT.md).
 
 ## Licence
 

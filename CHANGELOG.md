@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- **LangGraph adapter (20 Nov).** `rsoslang.adapters.langgraph.add_rsos` adds three nodes to an existing graph: one
+  blind planning call (prompt from key names only, audited as `values_shown`), the runtime step with one re-ask per
+  failed step (error code and key names only), and digest sync of agent copies at 0 model calls. Optional extra
+  `rsoslang[langgraph]`; 7 tests (+1 that runs when LangGraph is installed). README leads with the runtime and states
+  its scope (one writer per step; concurrent writes not yet tested); the language and the research programme follow
+  with their build status.
 - **SC2 run (19 Nov): the predicted property of FLOW held; the stated cause did not.** Tasks from drand round 6654866,
   predictions and frozen predictor public before the draw. Mistral Large 4: RSOS blind exact on 16/16 with FLOW, learnt
   from one line; one-call JSON Patch failed 14.8% of FLOW requests (predicted ≥ 5%), 3.1% of hand-overs, 0.4% of
