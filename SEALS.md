@@ -26,6 +26,7 @@ anyone, the author can open the document and anyone can check it against the has
 | 2026-11-20 05:55 (predictions and code), 05:57 (results) | SPHERE2: the sphere's open predictions with large samples (predictions, code, results data, results text; four files concatenated) | `128c8a58749b1399fb8898d6c6c023f8dfe8a6fedc32cfcb97d0da91edde91d7` |
 | 2026-11-20 05:59 (predictions and code), 06:00 (results) | SPHERE3: the compounding theorem and its predicted exception, with ε measured inside the operations (predictions, code, results data, results text; four files concatenated) | `afa682fb94e4c25f49da9799f24a16e9f9df60ff5e461c548313a70c911c1888` |
 | 2026-11-20 06:05 (predictions and code), 06:07 (results) | SQLITE2: the error-events law on a real database engine (predictions, code, results data, results text; four files concatenated) | `bfc0d8862fb058d9d1f0c200ecb6677cc500a5bbedbe422f6d520c4845b8be12` |
+| 2026-11-20 06:10 (predictions, code and results; the analysis runs in seconds) | AGENTS2: where real LLM agent errors fall along a plan (predictions, code, results data, results text; four files concatenated) | `b080f85293457d8bf18e0d424757c7cc223ec8de477010baf7e738da5b6c64fe` |
 
 Check: `sha256sum <document>` (for the roots structure, of the four files concatenated) must print the hash above. The sealed documents are long and specific, and the first also contains a random nonce, so no hash can be
 reproduced by guessing its text.
