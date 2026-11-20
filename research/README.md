@@ -28,6 +28,7 @@ the time); its reach (particles land where they are needed); infinite under zoom
 | SPHERE2 | SPHERE1's open predictions with large samples | the time-window law predicts the orbit node within 1 pp at every scope; estimating ε from a separate family amplifies its error ~9×; 1 pass, 4 fail | `sealed/seed/sphere2/` |
 | SPHERE3 | Theorem 1 with ε measured inside the same operations | the bound is reached (independent), undercut (bursts) and **exceeded where successes compete (+2.82 pp, ~7 SE), as predicted**; 3 pass, 1 fail | `sealed/seed/sphere3/` |
 | SQLITE2 | the error-events law on the real database | the read-scope ordering returns when operations span lock windows (30.7 → 72.0 %), stays nearly flat when they don't; 2 pass, 1 fail | `sealed/seed/sqlite2/` |
+| AGENTS2 | do real LLM agent errors belong to steps or to a growing window? (25 result files, 0 model calls) | one-call JSON Patch errors rise along the plan: 0.19 % → 2.33 % per step, stratified odds ratio 12.3 (6.1–24.7); blind planning flat; 2 pass, 1 fail | `sealed/seed/agents2/` |
 | Protocol v0 | one message format between hosts | 7 conformance tests pass | `sealed/seed/protocol/` |
 
 ## Related work (checked 20 Nov 2026)
