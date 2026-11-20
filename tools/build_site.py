@@ -44,7 +44,7 @@ JSONLD = """
 {"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"RSOS Core and RSOS Language",
 "description":"Exact shared state for AI agents: a specification, JSON IR, deterministic runtime and MCP server.",
 "codeRepository":"https://github.com/r-a-elu-architecture/RSOS-Language","programmingLanguage":"Python",
-"license":"https://www.apache.org/licenses/LICENSE-2.0","version":"0.4.0","identifier":"https://doi.org/10.5281/zenodo.24359268",
+"license":"https://www.apache.org/licenses/LICENSE-2.0","version":"0.5.0","identifier":"https://doi.org/10.5281/zenodo.24401943",
 "author":{"@type":"Person","name":"R. A. Elu","identifier":"https://orcid.org/0009-0000-1456-2467"}}
 </script>"""
 
@@ -98,7 +98,7 @@ FOOT = """</main>
 Code under Apache 2.0, text under CC BY 4.0.</p>
 <p>Research and development software. Not a medical device.</p></div>
 <div><p><a href="{repo}">Source on GitHub</a></p><p><a href="{repo}/blob/main/spec/core/STATE_OPS.md">Core specification</a></p>
-<p><a href="https://doi.org/10.5281/zenodo.24359268">Software DOI</a></p><p><a href="{repo}/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
+<p><a href="https://doi.org/10.5281/zenodo.24401943">Software DOI</a></p><p><a href="{repo}/blob/main/RESPONSIBLE_USE.md">Responsible use</a></p>
 <p><a href="{repo}/blob/main/SECURITY.md">Security</a></p></div>
 <div><p><a href="try.html">The RSOS language: editor and keyboard</a></p><p><a href="origins.html">Origins of the operations</a></p>
 <p><a href="programme.html">Research programme</a></p><p><a href="family.html">The RSOS family</a></p></div>
