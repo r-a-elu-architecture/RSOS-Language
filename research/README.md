@@ -63,6 +63,15 @@ study; and one language intended for both human cognition and machines (specifie
 `rsos_engine/rsos_engine.py`: the Ω Root Genome, the six children, Father, Mother, SCORE × TOTE and Law 0 in one
 module (5 tests in `rsos_engine/test_rsos_engine.py`). Cosmology-Architecture imports it for its alias lane.
 
+## Verify everything in one command
+
+```bash
+python3 research/verify.py
+```
+
+It recomputes all twelve opened seals, runs the engine and protocol tests, and re-runs the AGENTS2 analysis from the
+published results (0 model calls), checking that its output equals the sealed file byte for byte.
+
 ## Verify a seal
 
 ```bash
