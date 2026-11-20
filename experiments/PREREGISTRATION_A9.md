@@ -103,3 +103,8 @@ A7c local backend on a free Google Colab T4 GPU (`experiments/a9_colab.ipynb`), 
 raised to 32,768 tokens at run time (A7c's 8,192 cannot hold a 300-key task; `a7_local.py` unchanged). Same tasks,
 arms, order and scoring. If the model cannot be pulled or the session ends, its cells are reported as not run or
 incomplete under section 4. This family answers "only commercial models" and can be re-run by anyone at no cost.
+
+## Amendment 3 (20 Nov 2026, 09:40 Vilnius; before the beacon round and before any scored call of this family)
+
+To fit the free tier, **gemini_flash** runs every cell except TC (about 300 requests instead of about 1,100), with
+2 workers. Its TC cells are declared **not run** now, not afterwards. All other rules unchanged.
