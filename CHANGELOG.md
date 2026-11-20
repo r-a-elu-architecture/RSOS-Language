@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 0.5.0 (20 Nov 2026)
+
+- **Provenance.** Fingerprints of the private research corpus (SHA-256 of its private file list; they reveal nothing
+  about content and date what the corpus held): 18 Nov 2026 `a1059c07b5cdcd0169a044ddbd5effc336c2f3b53da7ee985876282ae0ca9187`
+  (320 files); 20 Nov 2026 `f1b0a556814974d93484a770c50fa4ec29bacee42a21333ed199dc45d63a1d61` (563 files). Earlier
+  public record of RSOS: Zenodo 10.5281/zenodo.16944508 (v1.0) and 10.5281/zenodo.16944758 (v2), 25 Aug 2025.
+- **A9 (20 Nov):** RSOS blind 48/48, Python seeing the state 48/48, blind Python 47/48, one-call JSON Patch 46/48
+  (errors only in the last quarter), tool-calling 15/16 at about 100 calls per task; misses Q5a and Q6c published.
+  Pattern seal A9-PAT: 6 pass, 1 not scorable. `experiments/A9_REPORT.md`. Sealed research opened: `research/`.
 - **LangGraph adapter (20 Nov).** `rsoslang.adapters.langgraph.add_rsos` adds three nodes to an existing graph: one
   blind planning call (prompt from key names only, audited as `values_shown`), the runtime step with one re-ask per
   failed step (error code and key names only), and digest sync of agent copies at 0 model calls. Optional extra
