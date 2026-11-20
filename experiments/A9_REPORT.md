@@ -1,6 +1,6 @@
 # A9 report (round 1, 20 Nov 2026): the strongest rival patterns, three sizes, one law
 
-**Status: round 1.** Scored at 14:20 Vilnius with the sealed `a9_analyse.py` on every complete cell: Claude Haiku 5.5
+**Status: round 1.** Scored at 14:20 (UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius with the sealed `a9_analyse.py` on every complete cell: Claude Haiku 5.5
 (all 13 cells) and GPT-6.2 Sol through Codex (300- and 30-key cells except tool-calling at 30 keys). Codex's remaining
 cells (tool-calling at 30 keys, all 100-key cells) are running after a usage-limit reset; Gemini 3.8 Flash completed 2
 tasks before its free quota ran out (incomplete). Round 2 re-scores with the same script and is added with its own
