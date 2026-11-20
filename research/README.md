@@ -24,6 +24,8 @@ the time); its reach (particles land where they are needed); infinite under zoom
 | ENGINE1 | a self-growing engine (Ω genome, six children, Father, Mother) | a generated operator held on a sealed hold-out (SEE precision 0.13 → 1.00); 5 pass, 1 fail | `sealed/seed/engine/` |
 | ENGINE2 | SCORE × TOTE: named causes grow primitives; relations and the information limit | both targets moved (LAND recall 0.31 → 0.54; 90 % reading 55.3 → 59.3 %); relations 3× today's method beyond its cliff; 8 pass, 2 fail | `sealed/seed/engine2/` |
 | SPHERE1 | seven nodes connected by one protocol | the bound held at node and sphere level; protocol 0 wrong adoptions; Law 0 87 / 87; 3 pass, 4 fail (under-powered estimates) | `sealed/seed/sphere/` |
+| SPHERE2 | SPHERE1's open predictions with large samples | the time-window law predicts the orbit node within 1 pp at every scope; estimating ε from a separate family amplifies its error ~9×; 1 pass, 4 fail | `sealed/seed/sphere2/` |
+| SPHERE3 | Theorem 1 with ε measured inside the same operations | the bound is reached (independent), undercut (bursts) and **exceeded where successes compete (+2.82 pp, ~7 SE), as predicted**; 3 pass, 1 fail | `sealed/seed/sphere3/` |
 | Protocol v0 | one message format between hosts | 7 conformance tests pass | `sealed/seed/protocol/` |
 
 ## Related work (checked 20 Nov 2026)
@@ -52,6 +54,11 @@ before each run.
 Not found in this check: one operator algebra and one set of laws (including a theorem's predicted exception) tested
 across unrelated hosts from memory to a real database and LLM agents; public commit-reveal before code for every
 study; and one language intended for both human cognition and machines (specified, not yet tested on people).
+
+## The engine as a library
+
+`rsos_engine/rsos_engine.py`: the Ω Root Genome, the six children, Father, Mother, SCORE × TOTE and Law 0 in one
+module (5 tests in `rsos_engine/test_rsos_engine.py`). Cosmology-Architecture imports it for its alias lane.
 
 ## Verify a seal
 
