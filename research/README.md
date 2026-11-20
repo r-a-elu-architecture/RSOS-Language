@@ -10,7 +10,8 @@ was opened. Every miss is kept. Layer 2 throughout: computation that was built, 
 light; heals, helps, transforms, evolves, signals, develops, unites, grows and expands; recursively and in unison;
 its anatomy (component, operator, grammar, host, mirror); its law (Law 0: no system suffers; it checks itself all
 the time); its reach (particles land where they are needed); infinite under zoom and in time.
-`sealed/seed/math/MATH_V1.md`: the operator algebra and the laws as theorems with their conditions.
+`sealed/seed/math/MATH_V1.md`: the operator algebra and the laws as theorems with their conditions;
+`MATH_V2_ADDENDUM.md`: exact derivations (time-window law, error events, the theorem's exception) and their confirmations.
 
 ## The studies
 
@@ -26,6 +27,7 @@ the time); its reach (particles land where they are needed); infinite under zoom
 | SPHERE1 | seven nodes connected by one protocol | the bound held at node and sphere level; protocol 0 wrong adoptions; Law 0 87 / 87; 3 pass, 4 fail (under-powered estimates) | `sealed/seed/sphere/` |
 | SPHERE2 | SPHERE1's open predictions with large samples | the time-window law predicts the orbit node within 1 pp at every scope; estimating ε from a separate family amplifies its error ~9×; 1 pass, 4 fail | `sealed/seed/sphere2/` |
 | SPHERE3 | Theorem 1 with ε measured inside the same operations | the bound is reached (independent), undercut (bursts) and **exceeded where successes compete (+2.82 pp, ~7 SE), as predicted**; 3 pass, 1 fail | `sealed/seed/sphere3/` |
+| SQLITE2 | the error-events law on the real database | the read-scope ordering returns when operations span lock windows (30.7 → 72.0 %), stays nearly flat when they don't; 2 pass, 1 fail | `sealed/seed/sqlite2/` |
 | Protocol v0 | one message format between hosts | 7 conformance tests pass | `sealed/seed/protocol/` |
 
 ## Related work (checked 20 Nov 2026)
