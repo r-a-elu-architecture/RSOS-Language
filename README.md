@@ -69,7 +69,7 @@ Next tests, with predictions fixed in advance: **[NEXT_TESTS.md](NEXT_TESTS.md)*
 scorer), or re-run every analysis from the recorded transcripts with zero model calls ([REPLICATE.md](REPLICATE.md)).
 
 ```bash
-pip install rsoslang                             # 0.4.0: RSOS Core 1.0 and the State Runtime
+pip install rsoslang                             # 0.5.0: RSOS Core 1.0, the State Runtime and the LangGraph adapter
 claude mcp add rsos -- rsoslang mcp              # or with no install: claude mcp add rsos -- uvx rsoslang mcp
 python experiments/a5_runtime_equivalence.py     # from a clone: this runtime replays every measured plan, 32/32 match
 ```
