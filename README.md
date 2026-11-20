@@ -40,6 +40,8 @@ Report: [`experiments/SC1_REPORT.md`](experiments/SC1_REPORT.md).
 **Limits.** One task family (configuration-style key–value state), 16 tasks per cell; JSON Patch is strong, so the
 exactness gap is small and concentrated in one request type; the tool-calling and code-writing rivals are not yet run;
 26 of 76 predictions failed and are published, including the first two RSOS blind task failures (SC2 control). Next tests, with predictions fixed in advance:
+
+**Sealed research, opened 20 Nov 2026:** [`research/`](research/README.md): the seed of RSOS in formal form, its laws as theorems, a self-growing engine and a seven-node sphere; eight studies, each sealed before its code, every miss kept (layer 2: computation built, run and measured).
 **[NEXT_TESTS.md](NEXT_TESTS.md)**.
 
 **Try to break it.** Score any framework on the same tasks with **[RSOS-StateBench](bench/)** (plain JSONL and a

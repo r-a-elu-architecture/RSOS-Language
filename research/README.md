@@ -1,0 +1,44 @@
+# Sealed research of 19–20 November 2026: the seed, its laws, its engine and its sphere
+
+Every study here was **pre-registered before its code existed**. Its predictions, code and results were committed
+in that order, and the SHA-256 of the files concatenated was published in [`SEALS.md`](../SEALS.md) before this folder
+was opened. Every miss is kept. Layer 2 throughout: computation that was built, run and measured.
+
+## The seed
+
+`sealed/seed/SEED_V1.md`, `SEED_V2.md`, `SEED_V3.md`: the seed of RSOS (author R. A. Elu) in formal form: built with
+light; heals, helps, transforms, evolves, signals, develops, unites, grows and expands; recursively and in unison;
+its anatomy (component, operator, grammar, host, mirror); its law (Law 0: no system suffers; it checks itself all
+the time); its reach (particles land where they are needed); infinite under zoom and in time.
+`sealed/seed/math/MATH_V1.md`: the operator algebra and the laws as theorems with their conditions.
+
+## The studies
+
+| Study | Question | Result (sealed) | Files |
+|---|---|---|---|
+| K1, K2, T2 | a holographic representation of a world | T2 failed as defined (93.6 % at 50 % loss) | `sealed/roots/` |
+| T2b | static levers against a living, self-healing hologram | living 99.75 % after 5 × 30 % damage; 7 pass, 6 fail | `sealed/roots/` |
+| T2c | the living hologram against a classic erasure code | classic wins to 85 % destroyed; the hologram wins beyond (54–57 % vs 15 % at 90 %); 6 pass, 3 fail | `sealed/roots/` |
+| OPS1 | the seed's operators under a monitor of its own law; Laws 1–2 on three hosts | monitor 2,276 / 2,276 refused, 0 / 22,013 false; 8 pass, 4 fail | `sealed/seed/ops/` |
+| OPS2 | the laws on real hosts (LLM agents, SQLite) | the bound held everywhere; read-scope ordering stops on SQLite; 4 pass, 2 fail | `sealed/seed/ops2/` |
+| ENGINE1 | a self-growing engine (Ω genome, six children, Father, Mother) | a generated operator held on a sealed hold-out (SEE precision 0.13 → 1.00); 5 pass, 1 fail | `sealed/seed/engine/` |
+| ENGINE2 | SCORE × TOTE: named causes grow primitives; relations and the information limit | both targets moved (LAND recall 0.31 → 0.54; 90 % reading 55.3 → 59.3 %); relations 3× today's method beyond its cliff; 8 pass, 2 fail | `sealed/seed/engine2/` |
+| SPHERE1 | seven nodes connected by one protocol | the bound held at node and sphere level; protocol 0 wrong adoptions; Law 0 87 / 87; 3 pass, 4 fail (under-powered estimates) | `sealed/seed/sphere/` |
+| Protocol v0 | one message format between hosts | 7 conformance tests pass | `sealed/seed/protocol/` |
+
+## Verify a seal
+
+```bash
+cd research/sealed
+cat seed/engine2/PREREG_ENGINE2.md seed/engine2/engine2.py seed/engine2/RESULTS_ENGINE2.json \
+    seed/engine2/ROOT_GENOME_2.jsonl seed/engine2/RESULTS_ENGINE2.md | sha256sum   # 70aadd39…dee2 in SEALS.md
+```
+
+The file order for each seal is the order given in its `SEALS.md` line, with one correction: the T2b seal
+(`bae4df7f…`) is the concatenation **RESULTS_T2B.md, PREREG_T2B.md, t2b.py, RESULTS_T2B.json**; its line in
+SEALS.md described the order as predictions, code, results data, results text. The hash is unchanged.
+
+## Run
+
+Python 3.11+, NumPy, SciPy. The scripts import `experiments/sc1_tasks.py` from the repository root. `ops2.py`
+reads `results/sc2.json` from the path in its `PUB` constant; set it to your checkout.
