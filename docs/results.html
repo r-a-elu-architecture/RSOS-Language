@@ -25,6 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
 <link rel="stylesheet" href="site.css">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -44,7 +45,7 @@
 <div class="hero">
 <h1>Every pre-registered test, failures included.</h1>
 <p class="lead">Each experiment was pre-registered and committed before it ran. Every message and model call is
-recorded, and each results file carries a hash. On real hosts: 76 predictions, 50 passed and 26 failed. Results from four model families are archived at <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>.</p>
+recorded, and each results file carries a hash. On real hosts: 76 predictions, 50 passed and 26 failed. Results from four model families are archived at <a href="https://doi.org/10.5281/zenodo.24358277">doi:10.5281/zenodo.24358277</a>. Paper: <a href="https://doi.org/10.5281/zenodo.24555298">doi:10.5281/zenodo.24555298</a>. Every RSOS claim across all releases, with number, baseline and caveat: <a href="https://github.com/r-a-elu-architecture/rsos-one-seed/blob/main/CLAIMS.md">CLAIMS.md</a>.</p>
 <p class="muted small">Host for A1–A5: planner → worker → checker, all <code>claude-haiku-5-5</code>, 14 change
 requests on a 30-line shared state, 3 injected drifts per task. Channel tokens use a regex count; every compactness
 pass also holds in BPE tokens (o200k). Source of every number: whitepaper v2 §7–§9, the A3c, A4 and A5 reports, and the files in

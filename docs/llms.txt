@@ -1,0 +1,19 @@
+# RSOS Language: exact shared state for AI agents
+
+> The model names what should change; a deterministic runtime computes every value, checks every agent's copy against a state digest and repairs drift with zero model calls. The planner never sees a state value. Apache 2.0. Every prediction is published before its run; failures are kept.
+
+Results (pre-registered, sealed):
+- 318 of 320 tasks exact across six models from four companies, at 0.45-0.61x the cost per correct task; the 2 failures were refused by the runtime, none silent.
+- A9, tasks drawn from a public randomness beacon after predictions were public: blind planning 48/48; Python that sees the state 48/48; blind Python 47/48; one-call JSON Patch 46/48 (all bad steps in the last quarter of the plan); tool-calling agent 15/16 at about 100 model calls per task.
+- Error-window law: one-call JSON Patch per-step error rises from 0.19 % to 2.33 % across a plan (Mantel-Haenszel OR 12.3, 95 % CI 6.1-24.7); blind planning stays flat; the same pattern in a real SQLite engine.
+- Not held: 26 of 76 agent predictions failed (all reported); blind planning was not more compact than plain Python.
+
+## Evidence
+- [Results, failures included](https://r-a-elu-architecture.github.io/RSOS-Language/results.html)
+- [Paper: Blind planning and the error-window law](https://doi.org/10.5281/zenodo.24555298)
+- [Every RSOS claim across all releases (number, baseline, caveat)](https://github.com/r-a-elu-architecture/rsos-one-seed/blob/main/CLAIMS.md)
+- [Transcripts and data](https://huggingface.co/datasets/r-a-elu-architecture/rsos-experiments)
+
+## Use
+- [Repository: runtime, MCP server, LangGraph adapter, StateBench](https://github.com/r-a-elu-architecture/RSOS-Language)
+- [Related: One Selector, Many Domains](https://doi.org/10.5281/zenodo.24555154) · [SRC-X.5 open record](https://r-a-elu-architecture.github.io/srcx5/)

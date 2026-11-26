@@ -8,6 +8,8 @@ never sees a state value. Software: [doi:10.5281/zenodo.24401943](https://doi.or
 all versions [doi:10.5281/zenodo.24317657](https://doi.org/10.5281/zenodo.24317657)). Whitepaper:
 [doi:10.5281/zenodo.24304403](https://doi.org/10.5281/zenodo.24304403). Code: Apache 2.0.
 
+**Results at a glance.** Blind planning: 318 of 320 pre-registered tasks exact across six models; 48/48 on tasks drawn from a public randomness beacon (A9), where plain Python also reached 48/48 and one-call JSON Patch 46/48. Paper: [doi:10.5281/zenodo.24555298](https://doi.org/10.5281/zenodo.24555298). Every RSOS claim across all releases, with number, baseline, criteria and caveat: [CLAIMS.md](https://github.com/r-a-elu-architecture/rsos-one-seed/blob/main/CLAIMS.md).
+
 **Where it fits.** Concurrency guards (CRDTs, optimistic locking, MESI-style coherence) stop agents from overwriting
 each other's writes. RSOS addresses a different failure: the model itself computing or copying a value wrong. The two
 combine: RSOS can sit under a lock or a CRDT store. RSOS assumes one writer per step; concurrent writes are not yet
